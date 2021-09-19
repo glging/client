@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="dku.gyeongsotone.gulging.campusplogging.ui.auth.SignUpViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- 타이틀 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            style="@style/text_sub_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="120dp"
+            android:bufferType="spannable"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="반갑습니다!\n캠퍼스플로깅을 시작해봐요" />
+
+        <!-- 아이디 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_id"
+            style="@style/text_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:text="아이디"
+            app:layout_constraintStart_toStartOf="@+id/tv_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_id"
+            style="@style/text_12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:hint="8~16자, 영문 소문자 및 숫자 혼용만 가능"
+            android:nextFocusDown="@id/et_password1"
+            android:onTextChanged="@{(s, start, before, count) -> viewModel.onUserIdTextChanged(s, start, before, count)}"
+            android:singleLine="true"
+            android:text="@={viewModel.userId}"
+            android:textColorHint="@color/deep_gray"
+            app:layout_constraintEnd_toStartOf="@+id/btn_check_id_duplication"
+            app:layout_constraintStart_toStartOf="@+id/tv_id"
+            app:layout_constraintTop_toBottomOf="@+id/tv_id" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_id_description"
+            style="@style/text_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="-4dp"
+            android:textSize="11dp"
+            app:layout_constraintStart_toStartOf="@+id/et_id"
+            app:layout_constraintTop_toBottomOf="@+id/et_id"
+            app:setUserIdDescription="@{viewModel.userIdStatus}"
+            tools:text="사용 가능한 아이디입니다." />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_check_id_duplication"
+            style="@style/text_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginVertical="8dp"
+            android:layout_marginEnd="40dp"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.onClickUserIdDupCheckBtn()}"
+            android:paddingHorizontal="14dp"
+            android:text="중복 확인"
+            android:textColor="@color/white"
+            android:textSize="11dp"
+            app:layout_constraintBottom_toBottomOf="@+id/et_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/et_id"
+            app:setUserIdDupBtn="@{viewModel.userIdStatus}"
+            tools:background="@drawable/default_btn_background_before" />
+
+        <!-- 비밀번호 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_password1"
+            style="@style/text_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:text="비밀번호"
+            app:layout_constraintStart_toStartOf="@+id/tv_title"
+            app:layout_constraintTop_toBottomOf="@+id/et_id" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_password1"
+            style="@style/text_12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="8~16자, 영문 소문자 및 숫자 혼용만 가능"
+            android:nextFocusDown="@id/et_password2"
+            android:onTextChanged="@{(s, start, before, count) -> viewModel.onPassword1TextChanged(s, start, before, count)}"
+            android:singleLine="true"
+            android:text="@={viewModel.password1}"
+            android:textColorHint="@color/deep_gray"
+            app:layout_constraintEnd_toEndOf="@+id/btn_check_id_duplication"
+            app:layout_constraintStart_toStartOf="@+id/tv_password1"
+            app:layout_constraintTop_toBottomOf="@+id/tv_password1"
+            app:setPasswordVisible="@{viewModel.showPassword1}" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_show_password1"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:onClick="@{() -> viewModel.onClickShowPassword1Btn()}"
+            android:src="@drawable/ic_show_password"
+            android:tint="@{viewModel.showPassword1 ? @color/main_yellow : @color/black}"
+            app:layout_constraintBottom_toBottomOf="@+id/et_password1"
+            app:layout_constraintEnd_toEndOf="@+id/et_password1"
+            app:layout_constraintTop_toTopOf="@+id/et_password1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_password1_description"
+            style="@style/text_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="-4dp"
+            android:textColor="@color/alert_red"
+            android:textSize="11dp"
+            app:layout_constraintStart_toStartOf="@+id/et_password1"
+            app:layout_constraintTop_toBottomOf="@+id/et_password1"
+            app:setPassword1Description="@{viewModel.password1Status}"
+            tools:text="사용 가능한 아이디입니다." />
+
+        <!-- 비밀번호 확인 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_password2"
+            style="@style/text_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:text="비밀번호 확인"
+            app:layout_constraintStart_toStartOf="@+id/tv_title"
+            app:layout_constraintTop_toBottomOf="@+id/et_password1" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_password2"
+            style="@style/text_12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onTextChanged="@{(s, start, before, count) -> viewModel.onPassword2TextChanged(s, start, before, count)}"
+            android:singleLine="true"
+            android:text="@={viewModel.password2}"
+            android:textColorHint="@color/deep_gray"
+            app:layout_constraintEnd_toEndOf="@+id/btn_check_id_duplication"
+            app:layout_constraintStart_toStartOf="@+id/tv_password2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_password2"
+            app:setPasswordVisible="@{viewModel.showPassword2}" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_show_password2"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:onClick="@{() -> viewModel.onClickShowPassword2Btn()}"
+            android:src="@drawable/ic_show_password"
+            android:tint="@{viewModel.showPassword2 ? @color/main_yellow : @color/black}"
+            app:layout_constraintBottom_toBottomOf="@+id/et_password2"
+            app:layout_constraintEnd_toEndOf="@+id/et_password2"
+            app:layout_constraintTop_toTopOf="@+id/et_password2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_password_check_description"
+            style="@style/text_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="-4dp"
+            android:textColor="@color/alert_red"
+            android:textSize="11dp"
+            app:layout_constraintStart_toStartOf="@+id/et_password2"
+            app:layout_constraintTop_toBottomOf="@+id/et_password2"
+            app:setPassword2Description="@{viewModel.password2Status}"
+            tools:text="사용 가능한 아이디입니다." />
+
+        <!-- 다음으로 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_next"
+            style="@style/text_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/default_btn_background_before"
+            android:onClick="@{() -> viewModel.onClickSignUpBtn()}"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="8dp"
+            android:text="다음으로"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_password2"
+            app:password1Status="@{viewModel.password1Status}"
+            app:password2Status="@{viewModel.password2Status}"
+            app:userIdStats="@{viewModel.userIdStatus}" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

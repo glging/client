@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="dku.gyeongsotone.gulging.campusplogging.ui.auth.SignInViewModel" />
+
+        <import type="android.text.InputType" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- 타이틀 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            style="@style/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="150dp"
+            android:text="캠퍼스 플로깅"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 아이디 입력 -->
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/tv_id"
+            style="@style/text_16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="60dp"
+            android:layout_marginTop="60dp"
+            android:background="@{viewModel.userId.length() == 0 ? @drawable/sing_in_tv_background_before : @drawable/sing_in_tv_background_after}"
+            android:fontFamily="@font/notosans_regular"
+            android:hint="아이디"
+            android:nextFocusDown="@id/et_password"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="18dp"
+            android:singleLine="true"
+            android:text="@={viewModel.userId}"
+            android:textColorHint="@color/dark_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            tools:background="@drawable/sing_in_tv_background_before" />
+
+        <!-- 비밀번호 입력 -->
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_password"
+            style="@style/text_16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="60dp"
+            android:layout_marginTop="24dp"
+            android:background="@{viewModel.password.length() == 0  ? @drawable/sing_in_tv_background_before : @drawable/sing_in_tv_background_after}"
+            android:fontFamily="@font/notosans_regular"
+            android:hint="비밀번호"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="18dp"
+            android:singleLine="true"
+            android:text="@={viewModel.password}"
+            android:textColorHint="@color/dark_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_id"
+            app:setPasswordVisible="@{viewModel.showPassword}"
+            tools:background="@drawable/sing_in_tv_background_before" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_show_password"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="20dp"
+            android:onClick="@{() -> viewModel.onClickShowPasswordBtn()}"
+            android:src="@drawable/ic_show_password"
+            android:tint="@{viewModel.showPassword ? @color/main_yellow : @color/black}"
+            app:layout_constraintBottom_toBottomOf="@+id/et_password"
+            app:layout_constraintEnd_toEndOf="@+id/et_password"
+            app:layout_constraintTop_toTopOf="@+id/et_password" />
+
+        <!-- 로그인 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_sign_in"
+            style="@style/text_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:onClick="@{() -> viewModel.onClickLoginBtn()}"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="8dp"
+            android:text="로그인"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_password"
+            app:password="@{viewModel.password}"
+            app:userId="@{viewModel.userId}"
+            tools:background="@drawable/default_btn_background_after" />
+
+        <!-- 회원 가입 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_sign_up"
+            style="@style/text_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:bufferType="spannable"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_sign_in"
+            tools:text="혹시 처음 오셨나요? 회원가입하러 가기" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

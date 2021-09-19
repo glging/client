@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- 타이틀 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="120dp"
+            android:fontFamily="@font/spoqa_bold"
+            android:lineSpacingExtra="8dp"
+            android:text="학교 메일로 인증하기"
+            android:textColor="@color/black"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:fontFamily="@font/spoqa_medium"
+            android:text="*현재 단국대학교 죽전캠퍼스만 인증 가능합니다"
+            android:textColor="@color/alert_red"
+            android:textSize="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+        <!-- 학번 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_student_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="100dp"
+            android:fontFamily="@font/spoqa_medium"
+            android:text="학번"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_student_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:ems="8"
+            android:fontFamily="@font/spoqa_regular"
+            android:textColor="@color/black"
+            android:textColorHint="@color/deep_gray"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_student_number"
+            app:layout_constraintTop_toBottomOf="@+id/tv_student_number" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/spoqa_regular"
+            android:text="\@dankook.ac.kr"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/et_student_number"
+            app:layout_constraintStart_toEndOf="@+id/et_student_number"
+            app:layout_constraintTop_toTopOf="@+id/et_student_number" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_send_verification_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/default_btn_background_before"
+            android:fontFamily="@font/spoqa_bold"
+            android:gravity="center"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp"
+            android:text="인증번호 전송"
+            android:textColor="@color/white"
+            android:textSize="11dp"
+            app:layout_constraintBottom_toBottomOf="@+id/et_student_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/et_student_number" />
+
+        <!-- 인증번호 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_verification_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/spoqa_medium"
+            android:text="인증번호"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_student_number" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_verification_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:ems="8"
+            android:fontFamily="@font/spoqa_regular"
+            android:textColor="@color/black"
+            android:textColorHint="@color/deep_gray"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_verification_code"
+            app:layout_constraintStart_toStartOf="@+id/tv_verification_code"
+            app:layout_constraintTop_toBottomOf="@+id/tv_verification_code" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_verification_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/default_btn_background_before"
+            android:fontFamily="@font/spoqa_bold"
+            android:gravity="center"
+            android:paddingVertical="2dp"
+            android:text="인증하기"
+            android:textColor="@color/white"
+            android:textSize="11dp"
+            app:layout_constraintBottom_toBottomOf="@+id/et_verification_code"
+            app:layout_constraintEnd_toEndOf="@+id/btn_send_verification_code"
+            app:layout_constraintStart_toStartOf="@+id/btn_send_verification_code"
+            app:layout_constraintTop_toTopOf="@+id/et_verification_code" />
+
+        <!-- 완료 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/default_btn_background_before"
+            android:backgroundTint="@color/gray"
+            android:fontFamily="@font/spoqa_medium"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="8dp"
+            android:text="완료"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_verification_code" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

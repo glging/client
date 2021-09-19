@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_univ_certification"
+    app:startDestination="@id/noCertInfoFragment">
+
+
+    <fragment
+        android:id="@+id/noCertInfoFragment"
+        android:name="dku.gyeongsotone.gulging.campusplogging.ui.univcertification.NoCertInfoFragment"
+        android:label="fragment_no_cert_info"
+        tools:layout="@layout/fragment_no_cert_info">
+        <action
+            android:id="@+id/action_noCertInfoFragment_to_authStartFragment"
+            app:destination="@id/authStartFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/authStartFragment"
+        android:name="dku.gyeongsotone.gulging.campusplogging.ui.univcertification.AuthStartFragment"
+        android:label="AuthStartFragment"
+        tools:layout="@layout/fragment_auth_start">
+        <action
+            android:id="@+id/action_authStartFragment_to_mailAuthFragment"
+            app:destination="@id/mailAuthFragment" />
+        <action
+            android:id="@+id/action_authStartFragment_to_studentIdAuthFragment"
+            app:destination="@id/studentIdAuthFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mailAuthFragment"
+        android:name="dku.gyeongsotone.gulging.campusplogging.ui.univcertification.MailAuthFragment"
+        android:label="MailAuthFragment"
+        tools:layout="@layout/fragment_mail_auth" />
+    <fragment
+        android:id="@+id/studentIdAuthFragment"
+        android:name="dku.gyeongsotone.gulging.campusplogging.ui.univcertification.StudentIdAuthFragment"
+        android:label="StudentIdAuthFragment"
+        tools:layout="@layout/fragment_student_id_auth" />
+</navigation>

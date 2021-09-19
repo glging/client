@@ -9,13 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CampusPlogging">
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.main.MainActivity"></activity>
+        <!-- 로그인/회원가입 액티비티 -->
+        <activity android:name=".ui.auth.AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity> <!-- 재학 인증 액티비티 -->
+        <activity android:name=".ui.univcertification.UnivCertificationActivity" />
     </application>
 
 </manifest>
