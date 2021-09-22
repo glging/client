@@ -90,7 +90,7 @@ class PloggingFragment : Fragment() {
 
     private fun setPloggingServiceDistanceObserver() {
         PloggingService.distanceInMeters.observe(viewLifecycleOwner) { meter ->
-            viewModel.distance.set(meter.mToKm())
+            viewModel.updateDistance(meter.mToKm())
         }
     }
 

@@ -186,7 +186,6 @@ class PloggingService : LifecycleService() {
     private fun killService() {
         isFirstRun = true
         pauseService()
-        postInitialValues()
         stopForeground(true)
         stopSelf()
     }

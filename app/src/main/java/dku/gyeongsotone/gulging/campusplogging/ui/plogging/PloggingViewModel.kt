@@ -1,11 +1,15 @@
 package dku.gyeongsotone.gulging.campusplogging.ui.plogging
 
+import android.graphics.Bitmap
 import androidx.databinding.ObservableDouble
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant
+import kotlin.math.floor
+import kotlin.math.roundToInt
 
 class PloggingViewModel : ViewModel() {
     // 모든 데이터는 현재 플로깅 기준 (누적X, 모두 0부터 시작)
@@ -24,8 +28,19 @@ class PloggingViewModel : ViewModel() {
     val vinyls = ObservableInt(0)
     val glasses = ObservableInt(0)
     val cans = ObservableInt(0)
-    val pagers = ObservableInt(0)
+    val papers = ObservableInt(0)
     val generals = ObservableInt(0)
+
+    // 사진
+    var picture: Bitmap? = null
+
+    /** distance 갱신하고 그에 따라서 leve, progress도 갱신 */
+    fun updateDistance(data: Double) {
+        distance.set(data)
+        data % Constant.UNIV_DISTANCE // 현재 레벨에서의 진행된 거리
+        level.set(floor(data / Constant.UNIV_DISTANCE).toInt())
+        progress.set((data / Constant.UNIV_DISTANCE * 100).roundToInt() % 100)
+    }
 
 
     /** pause, resume, stop 버튼 클릭 */

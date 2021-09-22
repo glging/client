@@ -35,7 +35,7 @@ class MainPloggingViewModel(private val ploggingDao: PloggingDao) : ViewModel() 
 
             val currentDistance: Double = totalDistance % UNIV_DISTANCE // 현재 레벨에서의 진행된 거리
             level.set(floor(totalDistance / UNIV_DISTANCE).toInt())
-            progress.set((currentDistance / UNIV_DISTANCE * 100).roundToInt())
+            progress.set((currentDistance / UNIV_DISTANCE * 100).roundToInt() % 100)
             remainDistance.set(UNIV_DISTANCE - currentDistance)
         }
     }

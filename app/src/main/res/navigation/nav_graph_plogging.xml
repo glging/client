@@ -5,10 +5,6 @@
     android:id="@+id/nav_graph_plogging"
     app:startDestination="@id/waitingFragment">
 
-    <action android:id="@+id/action_global_to_plogging_fragment"
-        app:destination="@id/ploggingFragment"
-        app:launchSingleTop="true" />
-
     <fragment
         android:id="@+id/waitingFragment"
         android:name="dku.gyeongsotone.gulging.campusplogging.ui.plogging.WaitingFragment"
@@ -32,9 +28,9 @@
     </fragment>
     <fragment
         android:id="@+id/trashInputFragment"
-        android:name="dku.gyeongsotone.gulging.campusplogging.ui.plogging.TrashInputFragment"
+        android:name="dku.gyeongsotone.gulging.campusplogging.ui.plogging.TrashCountFragment"
         android:label="TrashInputFragment"
-        tools:layout="@layout/fragment_trash_input">
+        tools:layout="@layout/fragment_trash_count">
         <action
             android:id="@+id/action_trashInputFragment_to_ploggingFinishFragment"
             app:destination="@id/ploggingFinishFragment"
@@ -44,5 +40,5 @@
         android:id="@+id/ploggingFinishFragment"
         android:name="dku.gyeongsotone.gulging.campusplogging.ui.plogging.PloggingFinishFragment"
         android:label="PloggingFinishFragment"
-        tools:layout="@layout/fragment_plogging_finish"/>
+        tools:layout="@layout/fragment_plogging_finish" />
 </navigation>

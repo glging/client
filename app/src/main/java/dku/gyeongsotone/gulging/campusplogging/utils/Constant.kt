@@ -1,12 +1,14 @@
 package dku.gyeongsotone.gulging.campusplogging.utils
 
 object Constant {
+    const val FILE_PROVIDER = "dku.gyeongsotone.gulging.campusplogging.fileprovider"
+
     /** main activity 관련 상수 */
     val MAIN_TAB_NAMES = listOf("플로깅")
 
     /** 학교 관련 상수 */
     const val UNIV_NAME = "단국대학교"
-    const val UNIV_DISTANCE = 6.4
+    const val UNIV_DISTANCE = 3.2  // 6.4
 
     /** 플러깅 관련 상수 */
     val TRASH_TYPES_ENG = listOf("plastic", "vinyl", "glass", "can", "paper", "general")
