@@ -7,7 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <!-- 타이틀 및 설명 -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_title"
@@ -50,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
-            android:background="@drawable/default_btn_background_after"
+            android:background="@drawable/background_btn_default_after"
             android:paddingHorizontal="18dp"
             android:paddingVertical="6dp"
             android:text="시작하기"

@@ -2,6 +2,7 @@ package dku.gyeongsotone.gulging.campusplogging.ui.univcertification
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.databinding.ActivityAuthBinding
@@ -21,5 +22,13 @@ class UnivCertificationActivity : AppCompatActivity() {
         )
 
         setContentView(binding.root)
+    }
+
+    fun keyboardHide() {
+        val manager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        manager.hideSoftInputFromWindow(
+            currentFocus?.windowToken,
+            InputMethodManager.HIDE_NOT_ALWAYS
+        )
     }
 }

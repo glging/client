@@ -11,24 +11,21 @@
         <!-- 타이틀 -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_title"
+            style="@style/text_sub_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginTop="120dp"
-            android:fontFamily="@font/spoqa_bold"
-            android:lineSpacingExtra="8dp"
-            android:text="당신의 학교는 어디인가요?"
-            android:textColor="@color/black"
-            android:textSize="24dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="당신의 학교는 어디인가요?" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_description"
+            style="@style/text_12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:fontFamily="@font/spoqa_medium"
             android:text="*현재 단국대학교 죽전캠퍼스만 인증 가능합니다"
             android:textColor="@color/alert_red"
             android:textSize="10dp"
@@ -38,65 +35,59 @@
         <!-- 학교 인증 안내 -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_info"
+            style="@style/text_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginTop="24dp"
-            android:fontFamily="@font/spoqa_bold"
             android:text="학교 인증 안내"
-            android:textColor="@color/black"
-            android:textSize="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_description" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_info_detail"
+            style="@style/text_14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="50dp"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/spoqa_regular"
-            android:lineSpacingExtra="2dp"
-            android:textColor="@color/black"
+            android:layout_marginTop="8dp"
+            android:paddingStart="8dp"
+            android:fontFamily="@font/notosans_regular"
             android:textSize="13dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_info"
-            tools:text="학번, 웹메일 도용 등 올바르지 않은 경로를 통해 인증을 시도할 경우, 관련 법에 따라 법적 책임이 따를 수 있습니다.\n\아래 두 가지 방법 중 하나를 선택하여 인증할 수 있습니다. 학교 포털 스크린을 이용한 인증은 위조 가능성이 높아 인증 수단으로 사용하지 않습니다." />
+            tools:text="학번, 웹메일 도용 등 올바르지 않은 경로를 통해 인증을 시도할 경우, 관련 법에 따라 법적 책임이 따를 수 있습니다.\n\n아래 두 가지 방법 중 하나를 선택하여 인증할 수 있습니다. 학교 포털 스크린을 이용한 인증은 위조 가능성이 높아 인증 수단으로 사용하지 않습니다." />
 
         <!-- 인증 방법 선택 -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_using_mail"
+            style="@style/text_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/default_btn_background_before"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/background_btn_default_before"
             android:backgroundTint="@color/orange_transparent"
-            android:fontFamily="@font/spoqa_regular"
             android:gravity="center"
             android:paddingVertical="8dp"
             android:text="학교 메일로 인증하기"
-            android:textColor="@color/black"
-            android:textSize="16dp"
             app:layout_constraintBottom_toTopOf="@+id/btn_using_student_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_using_student_card"
+            style="@style/text_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
-            android:layout_marginBottom="80dp"
-            android:background="@drawable/default_btn_background_before"
+            android:layout_marginBottom="120dp"
+            android:background="@drawable/background_btn_default_before"
             android:backgroundTint="@color/orange_transparent"
-            android:fontFamily="@font/spoqa_regular"
             android:gravity="center"
             android:paddingVertical="8dp"
             android:text="학생증으로 인증하기"
-            android:textColor="@color/black"
-            android:textSize="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

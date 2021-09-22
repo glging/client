@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dku.gyeongsotone.gulging.campusplogging.R
@@ -17,11 +18,11 @@ import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentSignUpBinding
 
 class SignUpFragment : Fragment() {
     companion object {
-        private val TAG = this::class.java.canonicalName
+        private val TAG = this::class.java.name
     }
 
     private lateinit var binding: FragmentSignUpBinding
-    private lateinit var viewModel: SignUpViewModel
+    private val viewModel: SignUpViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +44,6 @@ class SignUpFragment : Fragment() {
             container,
             false
         )
-        viewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 

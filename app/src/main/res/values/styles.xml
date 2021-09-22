@@ -9,9 +9,15 @@
 
     <style name="text_sub_title">
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">25dp</item>
+        <item name="android:textSize">26dp</item>
         <item name="android:fontFamily">@font/notosans_bold</item>
         <item name="android:lineSpacingExtra">3dp</item>
+    </style>
+
+    <style name="text_plogging">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:fontFamily">@font/notosans_bold</item>
     </style>
 
     <style name="text_16">
@@ -20,10 +26,22 @@
         <item name="android:fontFamily">@font/notosans_bold</item>
     </style>
 
+    <style name="text_15">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:fontFamily">@font/notosans_regular</item>
+    </style>
+
     <style name="text_14">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">14dp</item>
         <item name="android:fontFamily">@font/notosans_bold</item>
+    </style>
+
+    <style name="text_13">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">13dp</item>
+        <item name="android:fontFamily">@font/notosans_regular</item>
     </style>
 
     <style name="text_12">
@@ -36,5 +54,11 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16dp</item>
         <item name="android:fontFamily">@font/notosans_medium</item>
+    </style>
+
+
+    <style name="main_tab_style" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="tabTextAppearance">@style/text_13</item>
+        <item name="tabIndicatorColor">@color/gray</item>
     </style>
 </resources>

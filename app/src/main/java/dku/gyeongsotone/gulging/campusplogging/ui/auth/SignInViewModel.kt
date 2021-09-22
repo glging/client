@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 
 class SignInViewModel : ViewModel() {
     companion object {
-        private val TAG = this::class.java.canonicalName
+        private val TAG = this::class.java.name
     }
 
     // 사용자가 입력한 아이디/비밀번호 정보

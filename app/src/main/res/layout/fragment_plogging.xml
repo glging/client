@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="dku.gyeongsotone.gulging.campusplogging.ui.plogging.PloggingViewModel" />
+
+        <import type="dku.gyeongsotone.gulging.campusplogging.ui.plogging.PloggingStatus" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_yellow">
+
+        <!-- 이동 거리 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_distance"
+            style="@style/text_plogging"
+            android:layout_width="150dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="@{@string/decimal_first(viewModel.distance)}"
+            android:textSize="52dp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.35"
+            tools:text="58.2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_distance_title"
+            style="@style/text_plogging"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="km"
+            app:layout_constraintEnd_toEndOf="@+id/tv_distance"
+            app:layout_constraintStart_toStartOf="@+id/tv_distance"
+            app:layout_constraintTop_toBottomOf="@+id/tv_distance" />
+
+        <!-- 시간 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_time"
+            style="@style/text_plogging"
+            android:layout_width="150dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:text="@{String.valueOf(viewModel.time)}"
+            android:textSize="52dp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.35"
+            tools:text="127" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_time_title"
+            style="@style/text_plogging"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="min"
+            app:layout_constraintEnd_toEndOf="@+id/tv_time"
+            app:layout_constraintStart_toStartOf="@+id/tv_time"
+            app:layout_constraintTop_toBottomOf="@+id/tv_time" />
+
+        <!-- 프로그래스바 -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="12dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="84dp"
+            android:progress="@{viewModel.progress}"
+            android:progressDrawable="@drawable/progressbar_plogging"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_distance_title"
+            tools:progress="80" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_current_level"
+            style="@style/text_13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="4dp"
+            android:paddingHorizontal="2dp"
+            android:text="@{viewModel.level + ` 학교`}"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar"
+            tools:text="4학교" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_next_level"
+            style="@style/text_13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="50dp"
+            android:paddingHorizontal="2dp"
+            android:text="@{(viewModel.level + 1) + ` 학교`}"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar"
+            tools:text="5학교" />
+
+        <!-- 시작, 정지, 일시중지 버튼 -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_pause"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="64dp"
+            android:onClick="@{() -> viewModel.onClickPauseBtn()}"
+            android:src="@drawable/ic_pause"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_stop_and_resume"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar"
+            tools:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_stop"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:onClick="@{() -> viewModel.onClickStopBtn()}"
+                android:src="@drawable/ic_stop"
+                app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_resume"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:onClick="@{() -> viewModel.onClickResumeBtn()}"
+                android:src="@drawable/ic_resume"
+                app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

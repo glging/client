@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 
 class SignUpViewModel : ViewModel() {
     companion object {
-        private val TAG = this::class.java.canonicalName
+        private val TAG = this::class.java.name
         val regex = Regex("^[a-z0-9+]{8,16}")
     }
 
@@ -17,7 +17,7 @@ class SignUpViewModel : ViewModel() {
     val password1 = ObservableField<String>()
     val password2 = ObservableField<String>()
 
-    // 아이디/비밀번호 상태
+    // 아이디/비밀번호 입력 상태
     val userIdStatus = ObservableField<UserIdStatus>(UserIdStatus.EMPTY)
     val password1Status = ObservableField<Password1CheckStatus>(Password1CheckStatus.EMPTY)
     val password2Status = ObservableField<Password2CheckStatus>(Password2CheckStatus.EMPTY)
@@ -40,7 +40,7 @@ class SignUpViewModel : ViewModel() {
         showPassword2.set(!showPassword2.get())
     }
 
-    /** text 입력 후에 정규식 일치하는지 검사 */
+    /** text 입력 후에 조건에 따라 입력 상태 변경 */
     fun onUserIdTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         when {
             count == 0 -> userIdStatus.set(UserIdStatus.EMPTY)

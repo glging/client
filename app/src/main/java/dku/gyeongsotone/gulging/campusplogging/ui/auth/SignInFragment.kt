@@ -13,19 +13,20 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentSignInBinding
-import dku.gyeongsotone.gulging.campusplogging.ui.main.MainActivity
+import dku.gyeongsotone.gulging.campusplogging.ui.univcertification.UnivCertificationActivity
 
 class SignInFragment : Fragment() {
     companion object {
-        private val TAG = this::class.java.canonicalName
+        private val TAG = this::class.java.name
     }
 
     private lateinit var binding: FragmentSignInBinding
-    private lateinit var viewModel: SignInViewModel
+    private val viewModel: SignInViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +48,6 @@ class SignInFragment : Fragment() {
             container,
             false
         )
-        viewModel = ViewModelProvider(this).get(SignInViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
@@ -89,9 +89,16 @@ class SignInFragment : Fragment() {
         viewModel.signInResult.observe(viewLifecycleOwner) { result ->
             Log.d(TAG, "login result: $result")
             if (result == SignInStatus.SUCCESS) {
-                val intent = Intent(context, MainActivity::class.java)
+
+                // 학교 인증 안 되어있다고 가정
+                val intent = Intent(context, UnivCertificationActivity::class.java)
                 startActivity(intent)
                 requireActivity().finish()
+
+                // 학교 인증 되어있으면 메인으로 이동
+//                val intent = Intent(context, MainActivity::class.java)
+//                startActivity(intent)
+//                requireActivity().finish()
             }
         }
     }

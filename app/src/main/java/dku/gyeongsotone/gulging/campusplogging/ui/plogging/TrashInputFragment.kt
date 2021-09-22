@@ -1,4 +1,4 @@
-package dku.gyeongsotone.gulging.campusplogging.ui.univcertification
+package dku.gyeongsotone.gulging.campusplogging.ui.plogging
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,10 +14,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [AuthStartFragment.newInstance] factory method to
+ * Use the [TrashInputFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AuthStartFragment : Fragment() {
+class TrashInputFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -35,7 +35,8 @@ class AuthStartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_auth_start, container, false)
+        (requireActivity() as PloggingActivity).setBackPressable(false)
+        return inflater.inflate(R.layout.fragment_trash_input, container, false)
     }
 
     companion object {
@@ -45,12 +46,12 @@ class AuthStartFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment AuthStartFragment.
+         * @return A new instance of fragment TrashInputFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            AuthStartFragment().apply {
+            TrashInputFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

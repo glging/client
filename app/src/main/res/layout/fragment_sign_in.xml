@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="60dp"
             android:layout_marginTop="60dp"
-            android:background="@{viewModel.userId.length() == 0 ? @drawable/sing_in_tv_background_before : @drawable/sing_in_tv_background_after}"
+            android:background="@{viewModel.userId.length() == 0 ? @drawable/background_et_sign_in_before : @drawable/background_et_sign_in_after}"
             android:fontFamily="@font/notosans_regular"
             android:hint="아이디"
             android:nextFocusDown="@id/et_password"
@@ -49,7 +49,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title"
-            tools:background="@drawable/sing_in_tv_background_before" />
+            tools:background="@drawable/background_et_sign_in_before" />
 
         <!-- 비밀번호 입력 -->
         <androidx.appcompat.widget.AppCompatEditText
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="60dp"
             android:layout_marginTop="24dp"
-            android:background="@{viewModel.password.length() == 0  ? @drawable/sing_in_tv_background_before : @drawable/sing_in_tv_background_after}"
+            android:background="@{viewModel.password.length() == 0  ? @drawable/background_et_sign_in_before : @drawable/background_et_sign_in_after}"
             android:fontFamily="@font/notosans_regular"
             android:hint="비밀번호"
             android:paddingHorizontal="24dp"
@@ -71,7 +71,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_id"
             app:setPasswordVisible="@{viewModel.showPassword}"
-            tools:background="@drawable/sing_in_tv_background_before" />
+            tools:background="@drawable/background_et_sign_in_before" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_show_password"
@@ -102,7 +102,7 @@
             app:layout_constraintTop_toBottomOf="@+id/et_password"
             app:password="@{viewModel.password}"
             app:userId="@{viewModel.userId}"
-            tools:background="@drawable/default_btn_background_after" />
+            tools:background="@drawable/background_btn_default_after" />
 
         <!-- 회원 가입 -->
         <androidx.appcompat.widget.AppCompatTextView

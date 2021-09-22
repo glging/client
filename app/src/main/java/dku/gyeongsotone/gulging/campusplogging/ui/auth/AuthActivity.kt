@@ -9,7 +9,7 @@ import dku.gyeongsotone.gulging.campusplogging.databinding.ActivityAuthBinding
 
 class AuthActivity : AppCompatActivity() {
     companion object {
-        private val TAG = this::class.java.canonicalName
+        private val TAG = this::class.java.name
     }
 
     private lateinit var binding: ActivityAuthBinding

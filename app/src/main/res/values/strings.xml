@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">CampusPlogging</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">캠퍼스 플로깅</string>
+    <string name="decimal_first">%1$.1f</string>
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

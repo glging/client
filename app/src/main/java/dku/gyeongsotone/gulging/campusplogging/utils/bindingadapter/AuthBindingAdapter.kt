@@ -1,8 +1,6 @@
-package dku.gyeongsotone.gulging.campusplogging.utils
+package dku.gyeongsotone.gulging.campusplogging.utils.bindingadapter
 
-import android.graphics.drawable.Drawable
 import android.text.InputType
-import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -14,6 +12,7 @@ import dku.gyeongsotone.gulging.campusplogging.ui.auth.Password2CheckStatus
 
 /**
  * AuthActivity 와 관련된 bindingAdapter
+ *
  */
 
 /** 로그인 - 아이디, 비밀번호 입력 여부 확인 */
@@ -22,10 +21,10 @@ fun TextView.setSignInBtn(userId: String? = null, password: String? = null) {
     val signInAllInfoInput = !userId.isNullOrEmpty() && !password.isNullOrEmpty()
     if (signInAllInfoInput) {
         isClickable = true
-        setBackgroundResource(R.drawable.default_btn_background_after)
+        setBackgroundResource(R.drawable.background_btn_default_after)
     } else {
         isClickable = false
-        setBackgroundResource(R.drawable.default_btn_background_before)
+        setBackgroundResource(R.drawable.background_btn_default_before)
     }
 }
 
@@ -64,11 +63,11 @@ fun TextView.setUserIdDescription(status: UserIdStatus) {
 fun TextView.setUserIdDupBtn(status: UserIdStatus) {
     isClickable = when (status) {
         UserIdStatus.EMPTY, UserIdStatus.IMPOSSIBLE, UserIdStatus.POSSIBLE -> {
-            setBackgroundResource(R.drawable.default_btn_background_before)
+            setBackgroundResource(R.drawable.background_btn_default_before)
             false
         }
         UserIdStatus.BEFORE_CHECK -> {
-            setBackgroundResource(R.drawable.default_btn_background_after)
+            setBackgroundResource(R.drawable.background_btn_default_after)
             true
         }
     }
@@ -104,9 +103,9 @@ fun TextView.setSignUpBtn(
 
     if (signUpAllInfoInput) {
         isClickable = true
-        setBackgroundResource(R.drawable.default_btn_background_after)
+        setBackgroundResource(R.drawable.background_btn_default_after)
     } else {
         isClickable = false
-        setBackgroundResource(R.drawable.default_btn_background_before)
+        setBackgroundResource(R.drawable.background_btn_default_before)
     }
 }
