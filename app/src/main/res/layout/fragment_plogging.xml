@@ -22,9 +22,9 @@
             android:id="@+id/tv_distance"
             style="@style/text_plogging"
             android:layout_width="150dp"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
+            android:gravity="center"
             android:text="@{@string/decimal_first(viewModel.distance)}"
             android:textSize="52dp"
             android:textStyle="italic"
@@ -50,9 +50,9 @@
             android:id="@+id/tv_time"
             style="@style/text_plogging"
             android:layout_width="150dp"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
+            android:gravity="center"
             android:text="@{String.valueOf(viewModel.time)}"
             android:textSize="52dp"
             android:textStyle="italic"
@@ -119,14 +119,15 @@
         <!-- 시작, 정지, 일시중지 버튼 -->
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_pause"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_marginTop="64dp"
             android:onClick="@{() -> viewModel.onClickPauseBtn()}"
             android:src="@drawable/ic_pause"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+            app:layout_constraintTop_toBottomOf="@+id/progressBar"
+            tools:visibility="gone" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/layout_stop_and_resume"
@@ -134,16 +135,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
             android:orientation="horizontal"
-            android:paddingHorizontal="80dp"
+            android:paddingHorizontal="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/progressBar"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btn_stop"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_weight="1"
                 android:onClick="@{() -> viewModel.onClickStopBtn()}"
                 android:src="@drawable/ic_stop"
@@ -151,8 +152,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btn_resume"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_weight="1"
                 android:onClick="@{() -> viewModel.onClickResumeBtn()}"
                 android:src="@drawable/ic_resume"

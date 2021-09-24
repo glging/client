@@ -13,11 +13,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
-import com.google.android.gms.location.LocationResult
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_PAUSE_SERVICE
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_START_OR_RESUME_SERVICE
@@ -45,15 +42,18 @@ class PloggingService : LifecycleService() {
     }
 
     var isFirstRun = true
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     override fun onCreate() {
         super.onCreate()
+
         postInitialValues()
-        fusedLocationProviderClient = FusedLocationProviderClient(this)
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(this)
 
         isPlogging.observe(this) {
-            updateLocationPlogging(it)
+            if (it == true) setLocationUpdateCallback()
+            else removeLocationUpdateCallback()
         }
     }
 
@@ -84,7 +84,7 @@ class PloggingService : LifecycleService() {
         return super.onStartCommand(intent, flags, startId)
     }
 
-    /** 플러깅 진행 시간 계산 */
+    /** 플로깅 진행 시간 계산 */
     private var isTimerEnabled = false
     private var lapTime = 0L
     private var timeRun = 0L
@@ -106,25 +106,24 @@ class PloggingService : LifecycleService() {
         }
     }
 
-    /** location client 등록 */
     @SuppressLint("MissingPermission")
-    private fun updateLocationPlogging(isPlogging: Boolean) {
-        if (isPlogging) {
-            if (PermissionsUtil.checkPermissions(this)) {
-                val locationRequest = LocationRequest().apply {
-                    interval = LOCATION_UPDATE_INTERVAL
-                    fastestInterval = FASTEST_LOCATION_INTERVAL
-                    priority = PRIORITY_HIGH_ACCURACY
-                }
-                fusedLocationProviderClient.requestLocationUpdates(
-                    locationRequest,
-                    locationCallback,
-                    Looper.getMainLooper()
-                )
-            } else {
-                fusedLocationProviderClient.removeLocationUpdates(locationCallback)
-            }
+    private fun setLocationUpdateCallback() {
+        val locationRequest = LocationRequest.create().apply {
+            interval = LOCATION_UPDATE_INTERVAL
+            fastestInterval = FASTEST_LOCATION_INTERVAL
+            priority = PRIORITY_HIGH_ACCURACY
         }
+
+        fusedLocationProviderClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.getMainLooper()
+        )
+    }
+
+    private fun removeLocationUpdateCallback() {
+        preLocation = null
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
     }
 
     /** location 변화에 따라 거리 계산 */
@@ -133,23 +132,24 @@ class PloggingService : LifecycleService() {
         override fun onLocationResult(result: LocationResult) {
             super.onLocationResult(result)
 
-            if (isPlogging.value == true) {
-                for (location in result.locations) {
-                    if (preLocation == null) {
-                        preLocation = location
-                    } else {
-                        val result = FloatArray(1)
-                        Location.distanceBetween(
-                            preLocation!!.latitude,
-                            preLocation!!.longitude,
-                            location.latitude,
-                            location.longitude,
-                            result
-                        )
-                        distanceInMeters.postValue((distanceInMeters.value ?: 0.0) + result[0])
-                    }
+            for (location in result.locations) {
+                if (preLocation == null) {
+                    preLocation = location
+                } else {
+                    val distance = FloatArray(1)
+                    Location.distanceBetween(
+                        preLocation!!.latitude,
+                        preLocation!!.longitude,
+                        location.latitude,
+                        location.longitude,
+                        distance
+                    )
+                    preLocation = location
+                    Log.d(TAG, "distance diff: ${distance[0]}")
+                    distanceInMeters.postValue((distanceInMeters.value ?: 0.0) + distance[0])
                 }
             }
+
         }
     }
 
@@ -171,7 +171,7 @@ class PloggingService : LifecycleService() {
             .setAutoCancel(false)
             .setOngoing(true)
             .setSmallIcon(R.drawable.ic_logo)
-            .setContentText("플로깅 진행중...")
+            .setContentText("플로깅이 진행중입니다.")
 
         startForeground(NOTIFICATION_ID, notificationBuilder.build())
     }
@@ -189,7 +189,6 @@ class PloggingService : LifecycleService() {
         stopForeground(true)
         stopSelf()
     }
-
 
     /** 플러깅 notification 채널 생성 */
     @RequiresApi(Build.VERSION_CODES.O)
