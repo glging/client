@@ -69,7 +69,9 @@ class PloggingFragment : Fragment() {
         viewModel.ploggingStatus.observe(viewLifecycleOwner) { status ->
             when (status) {
                 PloggingStatus.START_OR_RESUME -> {
-                    sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
+                    if (PloggingService.isPlogging.value != true) {
+                        sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
+                    }
                     binding.btnPause.isVisible = true
                     binding.layoutStopAndResume.isVisible = false
                 }

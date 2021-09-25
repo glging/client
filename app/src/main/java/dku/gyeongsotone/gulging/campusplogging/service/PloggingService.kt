@@ -3,6 +3,7 @@ package dku.gyeongsotone.gulging.campusplogging.service
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Intent
 import android.location.Location
 import android.os.Build
@@ -16,7 +17,9 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import dku.gyeongsotone.gulging.campusplogging.R
+import dku.gyeongsotone.gulging.campusplogging.ui.plogging.PloggingActivity
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_PAUSE_SERVICE
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_SHOW_PLOGGING_FRAGMENT
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_START_OR_RESUME_SERVICE
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_STOP_SERVICE
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.FASTEST_LOCATION_INTERVAL
@@ -45,6 +48,7 @@ class PloggingService : LifecycleService() {
 
     override fun onCreate() {
         super.onCreate()
+        Log.d(TAG, "onCreate")
 
         postInitialValues()
         fusedLocationProviderClient =
@@ -90,12 +94,17 @@ class PloggingService : LifecycleService() {
     private var timeStarted = 0L
 
     private fun startTimer() {
+        Log.d(TAG, "startTimer")
         isPlogging.postValue(true)
         timeStarted = System.currentTimeMillis()
         isTimerEnabled = true
 
         CoroutineScope(Dispatchers.Main).launch {
             while (isPlogging.value == true) {
+                Log.d(
+                    TAG,
+                    "total time (sec): ${TimeUnit.MILLISECONDS.toSeconds(timeInMillis.value ?: 0)}"
+                )
                 Log.d(TAG, "lab time (sec): ${TimeUnit.MILLISECONDS.toSeconds(lapTime)}")
                 lapTime = System.currentTimeMillis() - timeStarted
                 timeInMillis.postValue(timeRun + lapTime)
@@ -171,8 +180,18 @@ class PloggingService : LifecycleService() {
             .setOngoing(true)
             .setSmallIcon(R.drawable.ic_logo)
             .setContentText("플로깅이 진행중입니다.")
+            .setContentIntent(getPloogingActivityPendingIntent())
 
         startForeground(NOTIFICATION_ID, notificationBuilder.build())
+    }
+
+    private fun getPloogingActivityPendingIntent(): PendingIntent {
+        val intent = Intent(this, PloggingActivity::class.java)
+        intent.action = ACTION_SHOW_PLOGGING_FRAGMENT
+
+        return PendingIntent.getActivity(
+            this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT
+        )
     }
 
     /** service 일시 중지 */

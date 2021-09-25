@@ -5,6 +5,11 @@
     android:id="@+id/nav_graph_plogging"
     app:startDestination="@id/waitingFragment">
 
+    <action
+        android:id="@+id/action_global_to_plogging_fragment"
+        app:destination="@id/ploggingFragment"
+        app:launchSingleTop="true" />
+
     <fragment
         android:id="@+id/waitingFragment"
         android:name="dku.gyeongsotone.gulging.campusplogging.ui.plogging.WaitingFragment"
