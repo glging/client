@@ -8,17 +8,6 @@ import java.util.*
 
 class Converters {
 
-    /** Date <-> Long */
-    @TypeConverter
-    fun toDate(value: Long): Date {
-        return Date(value)
-    }
-
-    @TypeConverter
-    fun fromDate(date: Date): Long {
-        return date.time
-    }
-
     /** Bitmap <-> ByteArray */
     @TypeConverter
     fun toBitmap(bytes: ByteArray): Bitmap {

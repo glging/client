@@ -79,6 +79,7 @@ class PloggingFragment : Fragment() {
                     binding.layoutStopAndResume.isVisible = true
                 }
                 PloggingStatus.STOP -> {
+                    viewModel.endDate.set(System.currentTimeMillis())
                     sendCommandToService(ACTION_STOP_SERVICE)
                     findNavController().navigate(
                         PloggingFragmentDirections.actionPloggingFragmentToTrashInputFragment()

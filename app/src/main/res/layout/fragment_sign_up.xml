@@ -68,7 +68,7 @@
             android:textSize="11dp"
             app:layout_constraintStart_toStartOf="@+id/et_id"
             app:layout_constraintTop_toBottomOf="@+id/et_id"
-            app:setUserIdDescription="@{viewModel.userIdStatus}"
+            app:userIdDescription="@{viewModel.userIdStatus}"
             tools:text="사용 가능한 아이디입니다." />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -87,7 +87,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/et_id"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/et_id"
-            app:setUserIdDupBtn="@{viewModel.userIdStatus}"
+            app:userIdDupBtn="@{viewModel.userIdStatus}"
             tools:background="@drawable/background_btn_default_before" />
 
         <!-- 비밀번호 -->
@@ -117,7 +117,7 @@
             app:layout_constraintEnd_toEndOf="@+id/btn_check_id_duplication"
             app:layout_constraintStart_toStartOf="@+id/tv_password1"
             app:layout_constraintTop_toBottomOf="@+id/tv_password1"
-            app:setPasswordVisible="@{viewModel.showPassword1}" />
+            app:passwordVisible="@{viewModel.showPassword1}" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_show_password1"
@@ -142,7 +142,7 @@
             android:textSize="11dp"
             app:layout_constraintStart_toStartOf="@+id/et_password1"
             app:layout_constraintTop_toBottomOf="@+id/et_password1"
-            app:setPassword1Description="@{viewModel.password1Status}"
+            app:password1Description="@{viewModel.password1Status}"
             tools:text="사용 가능한 아이디입니다." />
 
         <!-- 비밀번호 확인 -->
@@ -170,7 +170,7 @@
             app:layout_constraintEnd_toEndOf="@+id/btn_check_id_duplication"
             app:layout_constraintStart_toStartOf="@+id/tv_password2"
             app:layout_constraintTop_toBottomOf="@+id/tv_password2"
-            app:setPasswordVisible="@{viewModel.showPassword2}" />
+            app:passwordVisible="@{viewModel.showPassword2}" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_show_password2"
@@ -195,7 +195,7 @@
             android:textSize="11dp"
             app:layout_constraintStart_toStartOf="@+id/et_password2"
             app:layout_constraintTop_toBottomOf="@+id/et_password2"
-            app:setPassword2Description="@{viewModel.password2Status}"
+            app:password2Description="@{viewModel.password2Status}"
             tools:text="사용 가능한 아이디입니다." />
 
         <!-- 다음으로 -->

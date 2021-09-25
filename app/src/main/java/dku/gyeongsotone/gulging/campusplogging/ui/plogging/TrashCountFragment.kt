@@ -35,6 +35,8 @@ import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentTrashCountBin
 import dku.gyeongsotone.gulging.campusplogging.ui.custom.TrashCountView
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.FILE_PROVIDER
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant.TRASH_COUNT_MAX
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant.TRASH_COUNT_MIN
 import dku.gyeongsotone.gulging.campusplogging.utils.dpToPx
 import java.io.File
 
@@ -107,7 +109,7 @@ class TrashCountFragment : Fragment() {
         binding.btnNext.setOnClickListener { onNextBtnClick() }
     }
 
-    /** 사진 촬영 버튼 클릭 시 사진 촬영 후 plogging finish 프래그먼트로 이동 */
+    /** 사진 촬영 후 plogging finish 프래그먼트로 이동 */
     private fun onNextBtnClick() {
         imageFile = File.createTempFile("picture_", ".png")
         imageUri = FileProvider.getUriForFile(
@@ -143,14 +145,14 @@ class TrashCountFragment : Fragment() {
             newView.binding.tvTrashKind.text = trashKind
             newView.binding.ivMinus.setOnClickListener {
                 val count = countsInViewModel?.get()
-                if (count != null) {
-                    if (count > 0) countsInViewModel.set(count - 1)
+                if (count != null && count > TRASH_COUNT_MIN) {
+                    countsInViewModel.set(count - 1)
                 }
             }
             newView.binding.ivPlus.setOnClickListener {
                 val count = countsInViewModel?.get()
-                if (count != null) {
-                    if (count < 99) countsInViewModel.set(count + 1)
+                if (count != null && count < TRASH_COUNT_MAX) {
+                    countsInViewModel.set(count + 1)
                 }
             }
 

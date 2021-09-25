@@ -25,7 +25,6 @@ import dku.gyeongsotone.gulging.campusplogging.utils.Constant.NOTIFICATION_CHANN
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.NOTIFICATION_CHANNEL_NAME
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.NOTIFICATION_ID
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.TIMER_UPDATE_INTERVAL
-import dku.gyeongsotone.gulging.campusplogging.utils.PermissionsUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

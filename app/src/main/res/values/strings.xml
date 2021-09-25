@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">캠퍼스 플로깅</string>
     <string name="decimal_first">%1$.1f</string>
+    <string name="count">%1$d개</string>
+
+    <string name="plogging_distance">%1$.1f학교, %2$.1fkm</string>
+    <string name="plogging_time">%1$dh %2$dm</string>
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>

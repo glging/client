@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import dku.gyeongsotone.gulging.campusplogging.CampusPloggingApplication
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.Plogging
 import dku.gyeongsotone.gulging.campusplogging.databinding.ActivityPloggingBinding

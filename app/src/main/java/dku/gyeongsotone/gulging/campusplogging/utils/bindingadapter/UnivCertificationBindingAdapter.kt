@@ -12,7 +12,7 @@ import dku.gyeongsotone.gulging.campusplogging.ui.univcertification.Verification
  */
 
 /** 학교 메일로 인증 - 코드 전송 버튼 */
-@BindingAdapter("setSendVerificationCodeBtn")
+@BindingAdapter("sendVerificationCodeBtn")
 fun TextView.setSendVerificationCodeBtn(status: StudentIdStatus) {
     isClickable = when (status) {
         StudentIdStatus.EMPTY -> {
@@ -44,7 +44,7 @@ fun TextView.setSendVerificationCodeBtn(status: StudentIdStatus) {
 }
 
 /** 학교 메일로 인증 - 인증하기 버튼 */
-@BindingAdapter("setVerifyCodeBtn")
+@BindingAdapter("verifyCodeBtn")
 fun TextView.setVerifyCodeBtn(status: VerificationCodeStatus) {
     isClickable = when(status) {
         VerificationCodeStatus.BEFORE_SEND -> {

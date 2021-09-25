@@ -9,7 +9,7 @@ import dku.gyeongsotone.gulging.campusplogging.data.local.dao.PloggingDao
 import dku.gyeongsotone.gulging.campusplogging.data.local.database.Converters
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.Plogging
 
-@Database(entities = [Plogging::class], version = 2, exportSchema = false)
+@Database(entities = [Plogging::class], version = 3, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class CampusPloggingDatabase : RoomDatabase() {
     abstract fun ploggingDao(): PloggingDao

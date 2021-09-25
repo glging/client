@@ -29,7 +29,7 @@ fun TextView.setSignInBtn(userId: String? = null, password: String? = null) {
 }
 
 /** 로그인, 회원가입 - 비밀번호 show */
-@BindingAdapter("setPasswordVisible")
+@BindingAdapter("passwordVisible")
 fun EditText.setPasswordVisible(show: Boolean) {
     val curCursorPosition = selectionEnd
     inputType =
@@ -39,7 +39,7 @@ fun EditText.setPasswordVisible(show: Boolean) {
 }
 
 /** 회원가입 - 아이디 체크 */
-@BindingAdapter("setUserIdDescription")
+@BindingAdapter("userIdDescription")
 fun TextView.setUserIdDescription(status: UserIdStatus) {
     text = when (status) {
         UserIdStatus.EMPTY -> ""
@@ -59,7 +59,7 @@ fun TextView.setUserIdDescription(status: UserIdStatus) {
 }
 
 /** 회원가입 - 아이디 체크 */
-@BindingAdapter("setUserIdDupBtn")
+@BindingAdapter("userIdDupBtn")
 fun TextView.setUserIdDupBtn(status: UserIdStatus) {
     isClickable = when (status) {
         UserIdStatus.EMPTY, UserIdStatus.IMPOSSIBLE, UserIdStatus.POSSIBLE -> {
@@ -74,7 +74,7 @@ fun TextView.setUserIdDupBtn(status: UserIdStatus) {
 }
 
 /** 회원가입 - 비밀번호1 체크 */
-@BindingAdapter("setPassword1Description")
+@BindingAdapter("password1Description")
 fun TextView.setPassword1Description(status: Password1CheckStatus) {
     text = when (status) {
         Password1CheckStatus.EMPTY, Password1CheckStatus.POSSIBLE -> ""
@@ -83,7 +83,7 @@ fun TextView.setPassword1Description(status: Password1CheckStatus) {
 }
 
 /** 회원가입 - 비밀번호2 체크 */
-@BindingAdapter("setPassword2Description")
+@BindingAdapter("password2Description")
 fun TextView.setPassword2Description(status: Password2CheckStatus) {
     text = when (status) {
         Password2CheckStatus.EMPTY, Password2CheckStatus.SAME -> ""

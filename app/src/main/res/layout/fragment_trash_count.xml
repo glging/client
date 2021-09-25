@@ -27,6 +27,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="모은 쓰레기를 입력하세요" />
 
+        <!-- 쓰레기 개수 입력 칸 -->
         <GridLayout
             android:id="@+id/grid_layout"
             android:layout_width="0dp"
@@ -43,22 +44,22 @@
             app:layout_constraintTop_toBottomOf="@id/tv_title"
             tools:layout_height="500dp" />
 
+        <!-- 다음 단계로... -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_next"
             style="@style/text_plogging"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="32dp"
             android:background="@drawable/background_btn_default_after"
             android:fontFamily="@font/notosans_regular"
             android:gravity="center"
-            android:paddingVertical="6dp"
-            android:text="오늘의 플로깅 인증 사진 찍기기"
+            android:paddingVertical="8dp"
+            android:text="오늘의 플로깅 인증 사진 찍기"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

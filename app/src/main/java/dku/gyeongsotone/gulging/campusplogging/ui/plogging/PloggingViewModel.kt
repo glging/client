@@ -1,9 +1,7 @@
 package dku.gyeongsotone.gulging.campusplogging.ui.plogging
 
 import android.graphics.Bitmap
-import androidx.databinding.ObservableDouble
-import androidx.databinding.ObservableField
-import androidx.databinding.ObservableInt
+import androidx.databinding.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,11 +15,15 @@ class PloggingViewModel : ViewModel() {
     val time = ObservableInt(0)
     val level = ObservableInt(0)
     val progress = ObservableInt(0)
+    val badge = ObservableInt(0)
 
     // 플로깅 상태
     private val _ploggingStatus = MutableLiveData<PloggingStatus>(PloggingStatus.START_OR_RESUME)
     val ploggingStatus: LiveData<PloggingStatus> = _ploggingStatus
 
+    // 날짜 (시간 포함)
+    val startDate = ObservableLong(System.currentTimeMillis())
+    val endDate = ObservableLong()
 
     // 쓰레기 개수
     val plastics = ObservableInt(0)
@@ -55,8 +57,6 @@ class PloggingViewModel : ViewModel() {
     fun onClickStopBtn() {
         _ploggingStatus.value = PloggingStatus.STOP
     }
-
-
 }
 
 enum class PloggingStatus {

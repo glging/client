@@ -25,7 +25,7 @@ class UnivCertificationActivity : AppCompatActivity() {
     }
 
     fun keyboardHide() {
-        val manager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        val manager = getSystemService(InputMethodManager::class.java)
         manager.hideSoftInputFromWindow(
             currentFocus?.windowToken,
             InputMethodManager.HIDE_NOT_ALWAYS

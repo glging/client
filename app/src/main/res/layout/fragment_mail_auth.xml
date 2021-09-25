@@ -100,7 +100,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/et_student_number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/et_student_number"
-            app:setSendVerificationCodeBtn="@{viewModel.studentIdStatus}"
+            app:sendVerificationCodeBtn="@{viewModel.studentIdStatus}"
             tools:background="@drawable/background_btn_default_before" />
 
         <!-- 인증번호 -->
@@ -144,7 +144,7 @@
             app:layout_constraintEnd_toEndOf="@+id/btn_send_verification_code"
             app:layout_constraintStart_toStartOf="@+id/btn_send_verification_code"
             app:layout_constraintTop_toTopOf="@+id/et_verification_code"
-            app:setVerifyCodeBtn="@{viewModel.verificationCodeStatus}"
+            app:verifyCodeBtn="@{viewModel.verificationCodeStatus}"
             tools:background="@drawable/background_btn_default_before" />
 
         <!-- 완료 -->

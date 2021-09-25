@@ -10,7 +10,8 @@ import java.util.*
 data class Plogging(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val date: Date,
+    val startDate: Long,
+    val endDate: Long,
     val distance: Double,    // km
     val time: Int,           // minute
     val badge: Int = 0,      // count

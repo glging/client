@@ -1,7 +1,12 @@
 package dku.gyeongsotone.gulging.campusplogging.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -11,11 +16,11 @@ import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.databinding.ActivityMainBinding
 import dku.gyeongsotone.gulging.campusplogging.ui.main.plogging.MainPloggingFragment
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.MAIN_TAB_NAMES
-import dku.gyeongsotone.gulging.campusplogging.utils.PermissionsUtil
-import pub.devrel.easypermissions.AppSettingsDialog
-import pub.devrel.easypermissions.EasyPermissions
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant.REQUEST_CODE_LOCATION_PERMISSION
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant.REQUIRE_PERMISSIONS
+import kotlin.system.exitProcess
 
-class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
+class MainActivity : AppCompatActivity() {
     companion object {
         private val TAG = this::class.java.name
     }
@@ -27,7 +32,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         super.onCreate(savedInstanceState)
 
         init()
-        requestPermissions()
+        checkPermission()
     }
 
     /** binding, view pager, tab layout 설정 */
@@ -51,35 +56,49 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         }.attach()
     }
 
-
-    /** 권한 요청 */
-    private fun requestPermissions() {
-        if (PermissionsUtil.checkPermissions(this)) return
-        PermissionsUtil.requestPermissions(this)
-    }
-
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            AppSettingsDialog.Builder(this).build().show()
-        } else {
-            requestPermissions()
+    private fun checkPermission() {
+        val deniedPermissions = mutableListOf<String>()
+        for (permission in REQUIRE_PERMISSIONS) {
+            if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+                deniedPermissions.add(permission)
+            }
+        }
+        if (deniedPermissions.isNotEmpty()) {
+            requestPermissions(REQUIRE_PERMISSIONS, REQUEST_CODE_LOCATION_PERMISSION)
         }
     }
 
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {}
+    private fun startPermissionsRequestActivity() {
+        val intent = Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.fromParts("package", packageName, null)
+        )
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
-        grantResults: IntArray
+        results: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, true)
+        super.onRequestPermissionsResult(requestCode, permissions, results)
+        if (requestCode != REQUEST_CODE_LOCATION_PERMISSION) return
+        if (results[0] != PackageManager.PERMISSION_GRANTED) {
+            AlertDialog.Builder(this)
+                .setMessage("캠퍼스 플로깅앱을 이용하려면 모든 권한을 허용해야 합니다.\n\n백그라운드 위치 권한을 위해 항상 허용으로 설정해주세요.")
+                .setNegativeButton("앱 종료") { _, _ -> exitProcess(0) }
+                .setPositiveButton("권한 허용하기") { _, _ ->
+                    startPermissionsRequestActivity()
+                }
+                .setCancelable(false)
+                .create()
+                .show()
+        }
     }
 
-    /**
-     * view pager2 adapter
-     */
+
+    /** view pager2 adapter */
     inner class MainViewPagerAdapter(fragmentActivity: FragmentActivity) :
         FragmentStateAdapter(fragmentActivity) {
         override fun getItemCount(): Int = MAIN_TAB_NAMES.size
