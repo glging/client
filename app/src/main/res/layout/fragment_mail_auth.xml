@@ -46,7 +46,7 @@
         <!-- 학번 -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_student_number"
-            style="@style/text_14"
+            style="@style/text_14_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
@@ -70,6 +70,7 @@
             android:onTextChanged="@{(s, start, before, count) -> viewModel.onStudentIdTextChanged(s, start, before, count)}"
             android:singleLine="true"
             android:textColorHint="@color/deep_gray"
+            android:textStyle="normal"
             app:layout_constraintStart_toStartOf="@+id/tv_student_number"
             app:layout_constraintTop_toBottomOf="@+id/tv_student_number" />
 
@@ -79,6 +80,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/notosans_regular"
             android:text="\@dankook.ac.kr"
+            android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="@+id/et_student_number"
             app:layout_constraintStart_toEndOf="@+id/et_student_number"
             app:layout_constraintTop_toTopOf="@+id/et_student_number" />
@@ -106,7 +108,7 @@
         <!-- 인증번호 -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_verification_code"
-            style="@style/text_14"
+            style="@style/text_14_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
@@ -125,6 +127,7 @@
             android:fontFamily="@font/notosans_regular"
             android:singleLine="true"
             android:textColorHint="@color/deep_gray"
+            android:textStyle="normal"
             app:layout_constraintEnd_toStartOf="@+id/btn_verify_code"
             app:layout_constraintStart_toStartOf="@+id/tv_verification_code"
             app:layout_constraintTop_toBottomOf="@+id/tv_verification_code" />

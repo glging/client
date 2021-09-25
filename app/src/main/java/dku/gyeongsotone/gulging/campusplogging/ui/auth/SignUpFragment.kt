@@ -63,9 +63,7 @@ class SignUpFragment : Fragment() {
     }
 
     /** 클릭 리스너 설정 */
-    private fun setClickListener() {
-    }
-
+    private fun setClickListener() {    }
 
     /** observer 설정 */
     private fun setObserver() {

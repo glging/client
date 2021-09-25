@@ -75,6 +75,8 @@
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/spoqa_regular"
                 android:hint="학번 입력"
+                android:inputType="numberDecimal"
+                android:maxLength="8"
                 android:textColor="@color/black"
                 android:textColorHint="@color/deep_gray"
                 android:textSize="12dp"
@@ -124,6 +126,7 @@
                 android:layout_marginTop="24dp"
                 android:text="안내 사항"
                 android:textColor="@color/main_yellow"
+                android:textSize="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn_select_file" />
 
@@ -133,8 +136,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="50dp"
-                android:layout_marginTop="10dp"
-                android:text="어쩌구저저구"
+                android:layout_marginTop="4dp"
+                android:text="Ayo, ayo Seventeen, yep Uh-huh, you know what 요즘 말야 내가 말야 생각이 많아 요즘 말야 너에게 말야 할 말이 많아 (요즘 말야) 내가 좀 이상해 말수가 적어져 친구들이 다 걱정해, yeah (요즘 말야) 네 앞에만 서면 심장이 뛰어서 행동이 서툴러서 미안해 아직도 조절이 안 돼 나 갖고 놀지 좀 말래 왜 자꾸 front하는건데 모르겠다 모르겠다 어떻게든 되겠지 그니까 내 말은 너를 다 알고 싶어 너를 노래해 yoo-hoo 너를 노래해 yoo-hoo 입술이 말라도 할 말은 해야겠어 baby 아껴 널 아껴 널 현기증 날 정도로 어쩌다가 눈이 부시는가 이기적인 외모 겸손한 성품을 봐 여기 감히 어디라고 농이 아냐 너에 매력에 대한 사실을 고한다 oh 날 보고 웃는 게 좋아선지 아니면 그냥 우스워 보이는 건지 oh Yeah 지금 자릴 찾고 있다면 Yeah 내 옆자리가 좋아 보여 Yeah 너에게 관심 많어 신발 사이즈까지도 oh-oh"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_info" />
@@ -151,6 +154,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_info_detail" />
+
             <!-- 버튼 -->
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btn_start"

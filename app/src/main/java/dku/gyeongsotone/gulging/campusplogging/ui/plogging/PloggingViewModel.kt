@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant
+import java.io.ByteArrayOutputStream
+import java.io.OutputStream
 import kotlin.math.floor
 import kotlin.math.roundToInt
 

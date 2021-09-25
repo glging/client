@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,16 +17,25 @@ import java.util.*
  *
  * */
 
+private val TAG = "CommonBindingAdapter"
+
 @BindingAdapter("android:visibility")
 fun View.setVisibility(visibility: Boolean) {
-    Log.d("PloggingFinishFragment", "is visible: ${visibility}")
     isVisible = visibility
 }
 
 @BindingAdapter("android:src")
 fun ImageView.setSrc(bitmap: Bitmap?) {
-    if (bitmap != null)
-        setImageBitmap(bitmap)
+    if (bitmap != null) {
+        Glide.with(this).load(bitmap).into(this)
+    }
+}
+
+@BindingAdapter("android:src")
+fun ImageView.setSrc(byteArray: ByteArray?) {
+    if (byteArray != null) {
+        Glide.with(this).load(byteArray).into(this)
+    }
 }
 
 @BindingAdapter("date")

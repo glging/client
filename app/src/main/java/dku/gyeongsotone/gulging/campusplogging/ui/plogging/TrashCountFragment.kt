@@ -1,43 +1,33 @@
 package dku.gyeongsotone.gulging.campusplogging.ui.plogging
 
-import android.app.ActionBar
-import android.content.ContentResolver
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
-import android.util.DisplayMetrics
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridLayout
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.net.toUri
-import androidx.core.view.setMargins
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import dku.gyeongsotone.gulging.campusplogging.BR
 import dku.gyeongsotone.gulging.campusplogging.R
-import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentPloggingFinishBinding
 import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentTrashCountBinding
 import dku.gyeongsotone.gulging.campusplogging.ui.custom.TrashCountView
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant
-import dku.gyeongsotone.gulging.campusplogging.utils.Constant.FILE_PROVIDER
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.TRASH_COUNT_MAX
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.TRASH_COUNT_MIN
-import dku.gyeongsotone.gulging.campusplogging.utils.dpToPx
 import java.io.File
 
 
@@ -55,10 +45,7 @@ class TrashCountFragment : Fragment() {
     private val takePicture =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
             if (success) {
-                viewModel.picture = MediaStore.Images.Media.getBitmap(
-                    requireContext().contentResolver,
-                    imageUri
-                )
+                viewModel.picture = getBitmapFromUri()
                 navigateToPloggingFinishFragment()
             } else {
                 showToast("사진을 불러오지 못했습니다. 다시 시도해주세요.")
@@ -168,6 +155,27 @@ class TrashCountFragment : Fragment() {
                 rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
             }
         }
+    }
+
+
+    private fun getBitmapFromUri(): Bitmap {
+        val exif = ExifInterface(imageFile.path)
+        val orientation = exif.getAttributeInt(
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_UNDEFINED
+        )
+        val bitmap =
+            BitmapFactory.decodeFile(imageFile.path)
+
+        val matrix = Matrix()
+        when (orientation) {
+            ExifInterface.ORIENTATION_NORMAL -> matrix.setRotate(0f)
+            ExifInterface.ORIENTATION_ROTATE_90 -> matrix.setRotate(90f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> matrix.setRotate(180f)
+            ExifInterface.ORIENTATION_ROTATE_270 -> matrix.setRotate(270f)
+        }
+
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
 
     private fun showToast(message: String) {

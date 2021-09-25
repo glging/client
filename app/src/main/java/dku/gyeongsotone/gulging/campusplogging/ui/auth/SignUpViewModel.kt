@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 class SignUpViewModel : ViewModel() {
     companion object {
         private val TAG = this::class.java.name
-        val regex = Regex("^[a-z0-9+]{8,16}")
+        val regex = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,16}\$")
     }
 
     // 사용자가 입력한 아이디/비밀번호 정보

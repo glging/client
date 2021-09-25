@@ -32,7 +32,7 @@
         <!-- 아이디 -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_id"
-            style="@style/text_14"
+            style="@style/text_14_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="56dp"
@@ -43,11 +43,10 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_id"
-            style="@style/text_14"
+            style="@style/text_14_reg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
-            android:fontFamily="@font/notosans_regular"
             android:hint="8~16자, 영소문자 및 숫자 혼용만 가능"
             android:nextFocusDown="@id/et_password1"
             android:onTextChanged="@{(s, start, before, count) -> viewModel.onUserIdTextChanged(s, start, before, count)}"
@@ -93,7 +92,7 @@
         <!-- 비밀번호 -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_password1"
-            style="@style/text_14"
+            style="@style/text_14_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="34dp"
@@ -104,10 +103,9 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_password1"
-            style="@style/text_14"
+            style="@style/text_14_reg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/notosans_regular"
             android:hint="8~16자, 영소문자 및 숫자 혼용만 가능"
             android:nextFocusDown="@id/et_password2"
             android:onTextChanged="@{(s, start, before, count) -> viewModel.onPassword1TextChanged(s, start, before, count)}"
@@ -121,8 +119,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_show_password1"
-            android:layout_width="20dp"
-            android:layout_height="16dp"
+            android:layout_width="24dp"
+            android:layout_height="20dp"
             android:layout_margin="10dp"
             android:onClick="@{() -> viewModel.onClickShowPassword1Btn()}"
             android:src="@drawable/ic_show_password"
@@ -148,7 +146,7 @@
         <!-- 비밀번호 확인 -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_password2"
-            style="@style/text_14"
+            style="@style/text_14_bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="34dp"
@@ -159,10 +157,9 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_password2"
-            style="@style/text_14"
+            style="@style/text_14_reg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/notosans_regular"
             android:onTextChanged="@{(s, start, before, count) -> viewModel.onPassword2TextChanged(s, start, before, count)}"
             android:singleLine="true"
             android:text="@={viewModel.password2}"
@@ -174,8 +171,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_show_password2"
-            android:layout_width="20dp"
-            android:layout_height="16dp"
+            android:layout_width="24dp"
+            android:layout_height="20dp"
             android:layout_margin="10dp"
             android:onClick="@{() -> viewModel.onClickShowPassword2Btn()}"
             android:src="@drawable/ic_show_password"

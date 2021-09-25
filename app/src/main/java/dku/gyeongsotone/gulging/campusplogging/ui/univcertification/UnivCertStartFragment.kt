@@ -98,8 +98,11 @@ class UnivCertStartFragment : Fragment() {
     }
 
 
-    /** 미구현 토스트 띄우기 */
+    /** 학생증으로 인증하기 창으로 이동 */
     private fun onClickUsingStudentCardBtn() {
+//        findNavController().navigate(
+//            UnivCertStartFragmentDirections.actionUnivCertStartFragmentToStudentCardAuthFragment()
+//        )
         showToast("준비중입니다. 학교 메일로 인증해주세요.")
     }
 

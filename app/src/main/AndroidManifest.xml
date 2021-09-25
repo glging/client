@@ -20,18 +20,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CampusPlogging">
+
         <activity
             android:name=".ui.plogging.PloggingActivity"
             android:launchMode="singleTask" />
-        <activity
-            android:name=".ui.auth.AuthActivity"
-            android:launchMode="singleTask" />
 
         <activity
-            android:name=".ui.univcertification.UnivCertificationActivity"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.auth.AuthActivity"
             android:launchMode="singleTask">
 
             <intent-filter>
@@ -40,6 +35,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.univcertification.UnivCertificationActivity"
+            android:launchMode="singleTask" />
+
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:launchMode="singleTask" />
 
         <service
             android:name=".service.PloggingService"
@@ -50,6 +53,7 @@
             android:authorities="fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
+
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />

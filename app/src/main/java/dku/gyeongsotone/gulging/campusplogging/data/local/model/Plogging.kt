@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 @Entity(tableName = "plogging")
