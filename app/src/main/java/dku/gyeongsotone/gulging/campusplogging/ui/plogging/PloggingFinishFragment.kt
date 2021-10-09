@@ -17,6 +17,7 @@ import dku.gyeongsotone.gulging.campusplogging.CampusPloggingApplication
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.data.local.dao.PloggingDao
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.Plogging
+import dku.gyeongsotone.gulging.campusplogging.data.repository.PloggingRepository
 import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentPloggingFinishBinding
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_LEVEL
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_TOTAL_DISTANCE
@@ -38,20 +39,17 @@ class PloggingFinishFragment : Fragment() {
 
     private lateinit var binding: FragmentPloggingFinishBinding
     private val viewModel: PloggingViewModel by activityViewModels()
-    private lateinit var ploggingDao: PloggingDao
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        ploggingDao =
-            (requireActivity().application as CampusPloggingApplication).database.ploggingDao()
+        viewModel.setBadges()
+        viewModel.saveOnDatabase()
         init(inflater, container)
         setClickListener()
-        setBadge()
-        setTrashCount()
-        saveOnDatabase()
+        showTrashCount()
         (requireActivity() as PloggingActivity).setBackPressable(false)
 
         return binding.root
@@ -111,18 +109,9 @@ class PloggingFinishFragment : Fragment() {
         requireActivity().finish()
     }
 
-    private fun setBadge() {
-        val preTotalDistance = getSpDouble(SP_TOTAL_DISTANCE)
-        val curTotalDistance = preTotalDistance + viewModel.distance.get()
-
-        val preLevel = getSpInt(SP_LEVEL)
-        val curLevel = floor(curTotalDistance / UNIV_DISTANCE).toInt()
-
-        viewModel.badge.set(curLevel - preLevel)
-    }
 
     /** 쓰레기 합계 계산 후 set text */
-    private fun setTrashCount() {
+    private fun showTrashCount() {
         var total = 0
         total += viewModel.plastics.get()
         total += viewModel.vinyls.get()
@@ -131,27 +120,5 @@ class PloggingFinishFragment : Fragment() {
         total += viewModel.papers.get()
         total += viewModel.generals.get()
         binding.tvTrashCount.text = resources.getString(R.string.count, total)
-    }
-
-    /** 플로깅 기록을 DB에 저장 */
-    private fun saveOnDatabase() {
-        val plogging = Plogging(
-            startDate = viewModel.startDate.get(),
-            endDate = viewModel.endDate.get(),
-            distance = viewModel.distance.get(),
-            time = viewModel.time.get(),
-            badge = viewModel.badge.get(),
-            picture = viewModel.picture!!,
-            plastic = viewModel.plastics.get(),
-            vinyl = viewModel.vinyls.get(),
-            glass = viewModel.glasses.get(),
-            can = viewModel.cans.get(),
-            paper = viewModel.papers.get(),
-            general = viewModel.generals.get()
-        )
-
-        CoroutineScope(Dispatchers.IO).launch {
-            ploggingDao.insert(plogging)
-        }
     }
 }

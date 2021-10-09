@@ -1,17 +1,28 @@
 package dku.gyeongsotone.gulging.campusplogging.ui.plogging
 
 import android.graphics.Bitmap
-import androidx.databinding.*
+import android.util.Log
+import androidx.databinding.ObservableDouble
+import androidx.databinding.ObservableInt
+import androidx.databinding.ObservableLong
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dku.gyeongsotone.gulging.campusplogging.data.local.model.Plogging
+import dku.gyeongsotone.gulging.campusplogging.data.repository.PloggingRepository
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant
-import java.io.ByteArrayOutputStream
-import java.io.OutputStream
+import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil
+import kotlinx.coroutines.launch
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
 class PloggingViewModel : ViewModel() {
+    companion object {
+        private val TAG = this::class.java.name
+    }
+    private val repository = PloggingRepository
+
     // 모든 데이터는 현재 플로깅 기준 (누적X, 모두 0부터 시작)
     val distance = ObservableDouble(0.0)
     val time = ObservableInt(0)
@@ -44,6 +55,8 @@ class PloggingViewModel : ViewModel() {
         data % Constant.UNIV_DISTANCE // 현재 레벨에서의 진행된 거리
         level.set(floor(data / Constant.UNIV_DISTANCE).toInt())
         progress.set((data / Constant.UNIV_DISTANCE * 100).roundToInt() % 100)
+
+        Log.d(TAG, "distance: ${distance.get()}")
     }
 
 
@@ -58,6 +71,39 @@ class PloggingViewModel : ViewModel() {
 
     fun onClickStopBtn() {
         _ploggingStatus.value = PloggingStatus.STOP
+    }
+
+    fun setBadges() {
+        val preTotalDistance = PreferenceUtil.getSpDouble(Constant.SP_TOTAL_DISTANCE)
+        val curTotalDistance = preTotalDistance + distance.get()
+
+        val preLevel = PreferenceUtil.getSpInt(Constant.SP_LEVEL)
+        val curLevel = floor(curTotalDistance / Constant.UNIV_DISTANCE).toInt()
+
+        badge.set(curLevel - preLevel)
+    }
+
+
+    /** 플로깅 기록을 DB에 저장 */
+    fun saveOnDatabase() {
+        val plogging = Plogging(
+            startDate = startDate.get(),
+            endDate = endDate.get(),
+            distance = distance.get(),
+            time = time.get(),
+            badge = badge.get(),
+            picture = picture!!,
+            plastic = plastics.get(),
+            vinyl = vinyls.get(),
+            glass = glasses.get(),
+            can = cans.get(),
+            paper = papers.get(),
+            general = generals.get()
+        )
+
+        viewModelScope.launch {
+            repository.insert(plogging)
+        }
     }
 }
 

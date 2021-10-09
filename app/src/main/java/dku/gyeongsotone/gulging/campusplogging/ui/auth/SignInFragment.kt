@@ -104,9 +104,6 @@ class SignInFragment : Fragment() {
         setToastMsgObserver()
     }
 
-    /** 로그인 성공 시 유저를 application에 넣기 */
-
-
     /** 로그인 성공 시 유저를 application에 넣고 메인화면으로 이동 */
     private fun setLoginResultObserver() {
         viewModel.signInResult.observe(viewLifecycleOwner) { result ->

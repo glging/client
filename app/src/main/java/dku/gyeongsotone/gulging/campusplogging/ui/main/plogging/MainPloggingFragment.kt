@@ -20,11 +20,7 @@ import dku.gyeongsotone.gulging.campusplogging.ui.plogging.PloggingActivity
 class MainPloggingFragment : Fragment() {
 
     private lateinit var binding: FragmentMainPloggingBinding
-    private val viewModel: MainPloggingViewModel by viewModels {
-        MainPloggingViewModelFactory(
-            (requireActivity().application as CampusPloggingApplication).database.ploggingDao()
-        )
-    }
+    private val viewModel: MainPloggingViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

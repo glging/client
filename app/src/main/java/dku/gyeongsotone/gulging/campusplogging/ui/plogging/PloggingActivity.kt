@@ -20,7 +20,6 @@ class PloggingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         binding = DataBindingUtil.inflate(
             layoutInflater,
             R.layout.activity_plogging,
