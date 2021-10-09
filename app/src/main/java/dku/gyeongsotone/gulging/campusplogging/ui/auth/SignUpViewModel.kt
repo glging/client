@@ -5,12 +5,18 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dku.gyeongsotone.gulging.campusplogging.data.local.model.User
+import dku.gyeongsotone.gulging.campusplogging.data.repository.AuthRepository
+import kotlinx.coroutines.launch
 
 class SignUpViewModel : ViewModel() {
     companion object {
         private val TAG = this::class.java.name
         val regex = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,16}\$")
     }
+
+    private val repository = AuthRepository
 
     // 사용자가 입력한 아이디/비밀번호 정보
     val userId = ObservableField<String>()
@@ -25,10 +31,16 @@ class SignUpViewModel : ViewModel() {
     // 비밀번호 보이게/안보이게 여부
     val showPassword1 = ObservableBoolean(false)
     val showPassword2 = ObservableBoolean(false)
-    
+
     // 회원가입 성공/실패 여부
     private val _signUpResult = MutableLiveData<SignUpStatus>()
     val signUpResult: LiveData<SignUpStatus> = _signUpResult
+
+    var user: User? = null
+
+    // 토스트 메시지
+    private val _toastMsg = MutableLiveData<String>()
+    val toastMsg: LiveData<String> = _toastMsg
 
 
     /** 비밀번호 입력창 옆 눈 아이콘 클릭 시 비밀번호 보이게/안보이게 여부 반전 */
@@ -48,6 +60,7 @@ class SignUpViewModel : ViewModel() {
             else -> userIdStatus.set(UserIdStatus.IMPOSSIBLE)
         }
     }
+
     fun onPassword1TextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         when {
             count == 0 -> password1Status.set(Password1CheckStatus.EMPTY)
@@ -56,6 +69,7 @@ class SignUpViewModel : ViewModel() {
         }
         if (s.toString() == password2.get()) password2Status.set(Password2CheckStatus.SAME)
     }
+
     fun onPassword2TextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         when {
             count == 0 -> password2Status.set(Password2CheckStatus.EMPTY)
@@ -66,16 +80,31 @@ class SignUpViewModel : ViewModel() {
 
     /** 아이디 중복 체크 */
     fun onClickUserIdDupCheckBtn() {
-        // 일단 중복 안됐다고 가정..
-        if (userIdStatus.get() == UserIdStatus.BEFORE_CHECK) {
-            userIdStatus.set(UserIdStatus.POSSIBLE)
+        viewModelScope.launch {
+            val result: Pair<String?, Boolean?> = repository.idDupCheck(userId.get()!!)
+            if (result.first != null) { // error
+                _toastMsg.value = result.first!!
+                return@launch
+            }
+            if (userIdStatus.get() == UserIdStatus.BEFORE_CHECK) {
+                userIdStatus.set(UserIdStatus.POSSIBLE)
+            }
         }
     }
 
     /** 회원가입 서버에 요청 */
     fun onClickSignUpBtn() {
-        // 일단 성공했다고 가정
-        _signUpResult.value = SignUpStatus.SUCCESS
+        viewModelScope.launch {
+            val result: Pair<String?, User?> = repository.signUp(userId.get()!!, password1.get()!!)
+
+            if (result.first != null) { // error
+                _toastMsg.value = result.first!!
+                return@launch
+            }
+
+            user = result.second!!
+            _signUpResult.value = SignUpStatus.SUCCESS
+        }
     }
 
 }

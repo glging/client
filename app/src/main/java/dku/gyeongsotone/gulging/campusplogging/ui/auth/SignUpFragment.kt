@@ -7,20 +7,23 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import dku.gyeongsotone.gulging.campusplogging.CampusPloggingApplication
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentSignUpBinding
+import dku.gyeongsotone.gulging.campusplogging.utils.getApplication
 
 class SignUpFragment : Fragment() {
     companion object {
         private val TAG = this::class.java.name
     }
 
+    private lateinit var application: CampusPloggingApplication
     private lateinit var binding: FragmentSignUpBinding
     private val viewModel: SignUpViewModel by viewModels()
 
@@ -46,6 +49,7 @@ class SignUpFragment : Fragment() {
         )
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        application = getApplication(requireActivity())
 
         setSpannableText()
     }
@@ -63,20 +67,31 @@ class SignUpFragment : Fragment() {
     }
 
     /** 클릭 리스너 설정 */
-    private fun setClickListener() {    }
+    private fun setClickListener() {}
 
     /** observer 설정 */
     private fun setObserver() {
         setSignUpResultObserver()
+        setToastMsgObserver()
     }
 
-    /** 회원가입 성공 시, 회원가입 완료 페이지로 이동 */
+    /** 회원가입 성공 시, 유저를 application에 넣고 회원가입 완료 페이지로 이동 */
     private fun setSignUpResultObserver() {
         viewModel.signUpResult.observe(viewLifecycleOwner) { result ->
             if (result == SignUpStatus.SUCCESS) {
+
+                application.user = viewModel.user
                 findNavController().navigate(
                     SignUpFragmentDirections.actionSignUpFragmentToSignUpCompleteFragment()
                 )
+            }
+        }
+    }
+
+    private fun setToastMsgObserver() {
+        viewModel.toastMsg.observe(viewLifecycleOwner) { msg ->
+            if (msg.isNotEmpty()) {
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
             }
         }
     }

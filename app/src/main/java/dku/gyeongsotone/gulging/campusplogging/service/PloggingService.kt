@@ -28,11 +28,11 @@ import dku.gyeongsotone.gulging.campusplogging.utils.Constant.NOTIFICATION_CHANN
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.NOTIFICATION_CHANNEL_NAME
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.NOTIFICATION_ID
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.TIMER_UPDATE_INTERVAL
+import dku.gyeongsotone.gulging.campusplogging.utils.msToSecond
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
 
 
 class PloggingService : LifecycleService() {
@@ -101,11 +101,9 @@ class PloggingService : LifecycleService() {
 
         CoroutineScope(Dispatchers.Main).launch {
             while (isPlogging.value == true) {
-                Log.d(
-                    TAG,
-                    "total time (sec): ${TimeUnit.MILLISECONDS.toSeconds(timeInMillis.value ?: 0)}"
-                )
-                Log.d(TAG, "lab time (sec): ${TimeUnit.MILLISECONDS.toSeconds(lapTime)}")
+                Log.d(TAG, "total: ${timeInMillis.value?.msToSecond() ?: 0} (sec)")
+                Log.d(TAG, "lab: ${lapTime.msToSecond()} (sec)")
+
                 lapTime = System.currentTimeMillis() - timeStarted
                 timeInMillis.postValue(timeRun + lapTime)
                 delay(TIMER_UPDATE_INTERVAL)
@@ -140,24 +138,23 @@ class PloggingService : LifecycleService() {
         override fun onLocationResult(result: LocationResult) {
             super.onLocationResult(result)
 
-            for (location in result.locations) {
-                if (preLocation == null) {
-                    preLocation = location
-                } else {
-                    val distance = FloatArray(1)
-                    Location.distanceBetween(
-                        preLocation!!.latitude,
-                        preLocation!!.longitude,
-                        location.latitude,
-                        location.longitude,
-                        distance
-                    )
-                    preLocation = location
-                    Log.d(TAG, "distance diff: ${distance[0]}")
-                    distanceInMeters.postValue((distanceInMeters.value ?: 0.0) + distance[0])
-                }
+            val location = result.lastLocation
+            Log.d(TAG, "location.accuracy: ${location.accuracy}")
+            if (preLocation == null) {
+                preLocation = location
+            } else {
+                val distance = FloatArray(1)
+                Location.distanceBetween(
+                    preLocation!!.latitude,
+                    preLocation!!.longitude,
+                    location.latitude,
+                    location.longitude,
+                    distance
+                )
+                preLocation = location
+                Log.d(TAG, "distance diff: ${distance[0]}")
+                distanceInMeters.postValue((distanceInMeters.value ?: 0.0) + distance[0])
             }
-
         }
     }
 

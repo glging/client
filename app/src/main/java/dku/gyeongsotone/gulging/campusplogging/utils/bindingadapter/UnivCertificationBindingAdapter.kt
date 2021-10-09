@@ -46,8 +46,13 @@ fun TextView.setSendVerificationCodeBtn(status: StudentIdStatus) {
 /** 학교 메일로 인증 - 인증하기 버튼 */
 @BindingAdapter("verifyCodeBtn")
 fun TextView.setVerifyCodeBtn(status: VerificationCodeStatus) {
-    isClickable = when(status) {
+    isClickable = when (status) {
         VerificationCodeStatus.BEFORE_SEND -> {
+            text = "인증 하기"
+            setBackgroundResource(R.drawable.background_btn_default_before)
+            false
+        }
+        VerificationCodeStatus.WAIT_EMPTY -> {
             text = "인증 하기"
             setBackgroundResource(R.drawable.background_btn_default_before)
             false

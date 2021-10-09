@@ -4,11 +4,16 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dku.gyeongsotone.gulging.campusplogging.data.repository.UnivCertificationRepository
+import kotlinx.coroutines.launch
 
 class MailAuthViewModel : ViewModel() {
     companion object {
         private val TAG = this::class.java.name
     }
+
+    private val repository = UnivCertificationRepository
 
     // 사용자가 입력한 학번/인증번호
     val studentId = ObservableField<String>()
@@ -23,22 +28,40 @@ class MailAuthViewModel : ViewModel() {
     private val _keyboardHide = MutableLiveData<Boolean>()
     val keyboardHide: LiveData<Boolean> = _keyboardHide
 
+    // 토스트 메시지
+    private val _toastMsg = MutableLiveData<String>()
+    val toastMsg: LiveData<String> = _toastMsg
+
 
     /** 인증번호 전송 */
     fun onClickSendVerificationCodeBtn() {
-        // 보냈다고 가정
-        studentIdStatus.set(StudentIdStatus.WAIT)
-        verificationCodeStatus.set(VerificationCodeStatus.WAIT)
+        viewModelScope.launch {
+            val result: String? = repository.sendMailAuth(studentId.get()!!)
+            if (result != null) {
+                _toastMsg.value = result!!
+                return@launch
+            }
+
+            studentIdStatus.set(StudentIdStatus.WAIT)
+            verificationCodeStatus.set(VerificationCodeStatus.WAIT_EMPTY)
+        }
     }
 
     /** 인증하기 */
     fun onClickVerifyCodeBtn() {
         _keyboardHide.value = true
 
-        // 인증 성공했다고 가정
-        if (verificationCodeStatus.get() == VerificationCodeStatus.WAIT) {
-            studentIdStatus.set(StudentIdStatus.SUCCESS)
-            verificationCodeStatus.set(VerificationCodeStatus.SUCCESS)
+        viewModelScope.launch {
+            val result: String? = repository.verifyMailAuth(verificationCode.get()!!)
+            if (result != null) {
+                _toastMsg.value = result!!
+                return@launch
+            }
+
+            if (verificationCodeStatus.get() == VerificationCodeStatus.WAIT) {
+                studentIdStatus.set(StudentIdStatus.SUCCESS)
+                verificationCodeStatus.set(VerificationCodeStatus.SUCCESS)
+            }
         }
     }
 
@@ -58,6 +81,16 @@ class MailAuthViewModel : ViewModel() {
         }
     }
 
+    fun onVerificationCodeTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        when {
+            verificationCodeStatus.get() == VerificationCodeStatus.WAIT_EMPTY && s.length == 6 ->
+                verificationCodeStatus.set(VerificationCodeStatus.WAIT)
+
+            verificationCodeStatus.get() == VerificationCodeStatus.WAIT && s.length != 6 ->
+                verificationCodeStatus.set(VerificationCodeStatus.WAIT_EMPTY)
+        }
+    }
+
 }
 
 enum class StudentIdStatus {
@@ -65,5 +98,5 @@ enum class StudentIdStatus {
 }
 
 enum class VerificationCodeStatus {
-    BEFORE_SEND, WAIT, SUCCESS
+    BEFORE_SEND, WAIT_EMPTY, WAIT, SUCCESS
 }

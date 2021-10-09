@@ -9,13 +9,12 @@ enum class UnivCertStatus {
 }
 
 /**
- * user info
+ * user class
  *
  */
 data class User(
     val userId: String,
-    val password: String,
-    val nickname: String,
-    val studentId: String,
-    val UnivCertStatus: UnivCertStatus,
+    val nickname: String? = null,
+    val studentId: String? = null,
+    val univCertStatus: UnivCertStatus
 )

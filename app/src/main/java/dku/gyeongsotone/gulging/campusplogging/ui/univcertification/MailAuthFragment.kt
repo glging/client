@@ -7,6 +7,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -78,12 +79,22 @@ class MailAuthFragment : Fragment() {
     /** observer 설정 */
     private fun setObserver() {
         setKeyboardHideObserver()
+        setToastMsgObserver()
     }
 
     private fun setKeyboardHideObserver() {
         viewModel.keyboardHide.observe(viewLifecycleOwner) { hide ->
             if (hide) {
                 (requireActivity() as UnivCertificationActivity).keyboardHide()
+            }
+        }
+    }
+
+
+    private fun setToastMsgObserver() {
+        viewModel.toastMsg.observe(viewLifecycleOwner) { msg ->
+            if (msg.isNotEmpty()) {
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -10,6 +10,7 @@ object Constant {
     const val SP_LEVEL = "SP_LEVEL"
     const val SP_REMAIN_DISTANCE = "SP_REMAIN_DISTANCE"
     const val SP_PROGRESS = "SP_PROGRESS"
+    const val SP_ACCESS_TOKEN = "SP_ACCESS_TOKEN"
 
     /** main activity 관련 상수 */
     val MAIN_TAB_NAMES = listOf("플로깅")
@@ -46,6 +47,8 @@ object Constant {
     const val LOCATION_UPDATE_INTERVAL = 5000L
     const val FASTEST_LOCATION_INTERVAL = 2000L
     const val TIMER_UPDATE_INTERVAL = 500L
+
+    const val MIN_DISTANCE_ACCURACY = 90F
 
     /** notification 관련 상수 */
     const val NOTIFICATION_CHANNEL_ID = "plogging_channel"

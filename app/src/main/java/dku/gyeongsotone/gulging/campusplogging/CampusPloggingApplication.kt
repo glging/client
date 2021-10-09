@@ -7,11 +7,10 @@ import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.initSharedPr
 
 class CampusPloggingApplication : Application() {
     val database: CampusPloggingDatabase by lazy { CampusPloggingDatabase.getDatabase(this) }
-    val user: User? = null
+    var user: User? = null
 
     override fun onCreate() {
         super.onCreate()
-
         initSharedPreference(this)
     }
 }
