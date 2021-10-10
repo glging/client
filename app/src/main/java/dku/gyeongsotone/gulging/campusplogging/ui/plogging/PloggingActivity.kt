@@ -2,11 +2,9 @@ package dku.gyeongsotone.gulging.campusplogging.ui.plogging
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.databinding.ActivityPloggingBinding
@@ -43,8 +41,8 @@ class PloggingActivity : AppCompatActivity() {
             .setMessage("플로깅을 취소하시겠습니까?")
             .setPositiveButton("예") { dialog, _ ->
                 stopPloggingService(this)
-                finish()
                 dialog.dismiss()
+                finish()
             }
             .setNegativeButton("아니요", null)
             .create()
@@ -62,7 +60,8 @@ class PloggingActivity : AppCompatActivity() {
 
     private fun processIntent(intent: Intent?) {
         if (intent?.action == ACTION_SHOW_PLOGGING_FRAGMENT) {
-            val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            val navHostFragment =
+                supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
             val navController = navHostFragment.navController
             navController.navigate(R.id.action_global_to_plogging_fragment)
         }

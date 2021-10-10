@@ -21,6 +21,7 @@ class WaitingFragment : Fragment() {
 
     private lateinit var binding: FragmentWaitingBinding
     private lateinit var timer: CountDownTimer
+    private val viewModel: PloggingViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +61,7 @@ class WaitingFragment : Fragment() {
             }
 
             override fun onFinish() {
+                viewModel.startPlogging()
                 navigateToPloggingFragment()
             }
         }

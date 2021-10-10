@@ -21,6 +21,7 @@ class PloggingViewModel : ViewModel() {
     companion object {
         private val TAG = this::class.java.name
     }
+
     private val repository = PloggingRepository
 
     // 모든 데이터는 현재 플로깅 기준 (누적X, 모두 0부터 시작)
@@ -31,7 +32,7 @@ class PloggingViewModel : ViewModel() {
     val badge = ObservableInt(0)
 
     // 플로깅 상태
-    private val _ploggingStatus = MutableLiveData<PloggingStatus>(PloggingStatus.START_OR_RESUME)
+    private val _ploggingStatus = MutableLiveData<PloggingStatus>()
     val ploggingStatus: LiveData<PloggingStatus> = _ploggingStatus
 
     // 날짜 (시간 포함)
@@ -57,6 +58,14 @@ class PloggingViewModel : ViewModel() {
         progress.set((data / Constant.UNIV_DISTANCE * 100).roundToInt() % 100)
 
         Log.d(TAG, "distance: ${distance.get()}")
+    }
+
+    fun startPlogging() {
+        _ploggingStatus.value = PloggingStatus.START_OR_RESUME
+    }
+
+    fun pausePlogging() {
+        _ploggingStatus.value = PloggingStatus.PAUSE
     }
 
 

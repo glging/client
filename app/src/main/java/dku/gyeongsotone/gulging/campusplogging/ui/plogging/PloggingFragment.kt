@@ -1,6 +1,5 @@
 package dku.gyeongsotone.gulging.campusplogging.ui.plogging
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,9 +13,6 @@ import androidx.navigation.fragment.findNavController
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentPloggingBinding
 import dku.gyeongsotone.gulging.campusplogging.service.PloggingService
-import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_PAUSE_SERVICE
-import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_START_OR_RESUME_SERVICE
-import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_STOP_SERVICE
 import dku.gyeongsotone.gulging.campusplogging.utils.PloggingServiceUtil.pausePloggingService
 import dku.gyeongsotone.gulging.campusplogging.utils.PloggingServiceUtil.startPloggingService
 import dku.gyeongsotone.gulging.campusplogging.utils.PloggingServiceUtil.stopPloggingService
@@ -45,6 +41,15 @@ class PloggingFragment : Fragment() {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (!PloggingService.isRunning) return
+        when (PloggingService.isPlogging.value) {
+            true -> viewModel.startPlogging()
+            false -> viewModel.pausePlogging()
+        }
+    }
+
     /** binding 설정 */
     private fun init(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(
@@ -70,6 +75,7 @@ class PloggingFragment : Fragment() {
     /** 플로깅 상태에 따라 처리 */
     private fun setPloggingStatusObserver() {
         viewModel.ploggingStatus.observe(viewLifecycleOwner) { status ->
+            Log.d(TAG, "plogging status changed: $status")
             when (status) {
                 PloggingStatus.START_OR_RESUME -> {
                     if (PloggingService.isPlogging.value != true) {
@@ -79,7 +85,9 @@ class PloggingFragment : Fragment() {
                     binding.layoutStopAndResume.isVisible = false
                 }
                 PloggingStatus.PAUSE -> {
-                    pausePloggingService(requireContext())
+                    if (PloggingService.isPlogging.value != false) {
+                        pausePloggingService(requireContext())
+                    }
                     binding.btnPause.isVisible = false
                     binding.layoutStopAndResume.isVisible = true
                 }

@@ -138,6 +138,7 @@ class PloggingService : LifecycleService() {
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(result: LocationResult) {
             super.onLocationResult(result)
+            Log.d(TAG, "preLocation: $preLocation")
 
             val location = result.lastLocation
             Log.d(TAG, "location.accuracy: ${location.accuracy}")
@@ -203,6 +204,7 @@ class PloggingService : LifecycleService() {
     private fun killService() {
         isRunning = false
         isFirstRun = true
+        postInitialValues()
         pauseService()
         stopForeground(true)
         stopSelf()
