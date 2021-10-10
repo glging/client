@@ -17,6 +17,9 @@ import dku.gyeongsotone.gulging.campusplogging.service.PloggingService
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_PAUSE_SERVICE
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_START_OR_RESUME_SERVICE
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_STOP_SERVICE
+import dku.gyeongsotone.gulging.campusplogging.utils.PloggingServiceUtil.pausePloggingService
+import dku.gyeongsotone.gulging.campusplogging.utils.PloggingServiceUtil.startPloggingService
+import dku.gyeongsotone.gulging.campusplogging.utils.PloggingServiceUtil.stopPloggingService
 import dku.gyeongsotone.gulging.campusplogging.utils.mToKm
 import dku.gyeongsotone.gulging.campusplogging.utils.msToMinute
 import java.util.concurrent.TimeUnit
@@ -37,7 +40,7 @@ class PloggingFragment : Fragment() {
         init(inflater, container)
         setOnClickListener()
         setObserver()
-        (requireActivity() as PloggingActivity).setBackPressable(false)
+        (requireActivity() as PloggingActivity).setBackPressable(true)
 
         return binding.root
     }
@@ -70,19 +73,19 @@ class PloggingFragment : Fragment() {
             when (status) {
                 PloggingStatus.START_OR_RESUME -> {
                     if (PloggingService.isPlogging.value != true) {
-                        sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
+                        startPloggingService(requireContext())
                     }
                     binding.btnPause.isVisible = true
                     binding.layoutStopAndResume.isVisible = false
                 }
                 PloggingStatus.PAUSE -> {
-                    sendCommandToService(ACTION_PAUSE_SERVICE)
+                    pausePloggingService(requireContext())
                     binding.btnPause.isVisible = false
                     binding.layoutStopAndResume.isVisible = true
                 }
                 PloggingStatus.STOP -> {
                     viewModel.endDate.set(System.currentTimeMillis())
-                    sendCommandToService(ACTION_STOP_SERVICE)
+                    stopPloggingService(requireContext())
                     findNavController().navigate(
                         PloggingFragmentDirections.actionPloggingFragmentToTrashInputFragment()
                     )
@@ -102,12 +105,5 @@ class PloggingFragment : Fragment() {
             Log.d(TAG, "current seconds: ${TimeUnit.MILLISECONDS.toSeconds(ms)}")
             viewModel.time.set(ms.msToMinute().toInt())
         }
-    }
-
-    /** 서비스 상태 변경 */
-    private fun sendCommandToService(action: String) {
-        val intent = Intent(requireContext(), PloggingService::class.java)
-        intent.action = action
-        requireContext().startService(intent)
     }
 }

@@ -60,7 +60,7 @@ class TrashCountFragment : Fragment() {
         init(inflater, container)
         setOnClickListener()
         addTrashCountViews()
-        (requireActivity() as PloggingActivity).setBackPressable(false)
+        (requireActivity() as PloggingActivity).setBackPressable(true)
 
         return binding.root
     }

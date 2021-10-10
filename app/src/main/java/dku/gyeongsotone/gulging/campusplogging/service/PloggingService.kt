@@ -38,6 +38,7 @@ import kotlinx.coroutines.launch
 class PloggingService : LifecycleService() {
     companion object {
         private val TAG = this::class.java.name
+        var isRunning: Boolean = false  // 서비스가 실행중인지...
         val isPlogging = MutableLiveData<Boolean>()
         val timeInMillis = MutableLiveData<Long>()
         val distanceInMeters = MutableLiveData<Double>()
@@ -161,6 +162,7 @@ class PloggingService : LifecycleService() {
     /** foreground service 시작 */
     private fun startForegroundService() {
         startTimer()
+        isRunning = true
         isPlogging.postValue(true)
 
         val notificationManager = ContextCompat.getSystemService(
@@ -199,6 +201,7 @@ class PloggingService : LifecycleService() {
 
     /** service 중단 */
     private fun killService() {
+        isRunning = false
         isFirstRun = true
         pauseService()
         stopForeground(true)

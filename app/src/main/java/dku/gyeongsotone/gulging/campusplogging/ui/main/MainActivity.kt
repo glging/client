@@ -1,12 +1,18 @@
 package dku.gyeongsotone.gulging.campusplogging.ui.main
 
+import android.app.Activity
+import android.app.ActivityManager
+import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityManagerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -14,7 +20,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.databinding.ActivityMainBinding
+import dku.gyeongsotone.gulging.campusplogging.service.PloggingService
 import dku.gyeongsotone.gulging.campusplogging.ui.main.plogging.MainPloggingFragment
+import dku.gyeongsotone.gulging.campusplogging.ui.plogging.PloggingActivity
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_SHOW_PLOGGING_FRAGMENT
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.MAIN_TAB_NAMES
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.REQUEST_CODE_LOCATION_PERMISSION
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.REQUIRE_PERMISSIONS
@@ -33,6 +43,20 @@ class MainActivity : AppCompatActivity() {
 
         init()
         checkPermission()
+        Log.d(TAG, "onCreate")
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        Log.d(TAG, "onStart")
+
+        checkPloggingServiceStatus()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume")
     }
 
     /** binding, view pager, tab layout 설정 */
@@ -94,6 +118,16 @@ class MainActivity : AppCompatActivity() {
                 .setCancelable(false)
                 .create()
                 .show()
+        }
+    }
+
+
+    /** 플로깅이 진행중이면 플로깅 화면으로 이동 */
+    private fun checkPloggingServiceStatus() {
+        if (PloggingService.isRunning) {
+            val intent = Intent(this, PloggingActivity::class.java)
+            intent.action = ACTION_SHOW_PLOGGING_FRAGMENT
+            startActivity(intent)
         }
     }
 
