@@ -13,9 +13,10 @@ import androidx.navigation.fragment.findNavController
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentPloggingBinding
 import dku.gyeongsotone.gulging.campusplogging.service.PloggingService
-import dku.gyeongsotone.gulging.campusplogging.utils.PloggingServiceUtil.pausePloggingService
-import dku.gyeongsotone.gulging.campusplogging.utils.PloggingServiceUtil.startPloggingService
-import dku.gyeongsotone.gulging.campusplogging.utils.PloggingServiceUtil.stopPloggingService
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_PAUSE_SERVICE
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_START_OR_RESUME_SERVICE
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_STOP_SERVICE
+import dku.gyeongsotone.gulging.campusplogging.utils.PloggingServiceUtil.sendCommandToService
 import dku.gyeongsotone.gulging.campusplogging.utils.mToKm
 import dku.gyeongsotone.gulging.campusplogging.utils.msToMinute
 import java.util.concurrent.TimeUnit
@@ -79,21 +80,21 @@ class PloggingFragment : Fragment() {
             when (status) {
                 PloggingStatus.START_OR_RESUME -> {
                     if (PloggingService.isPlogging.value != true) {
-                        startPloggingService(requireContext())
+                        sendCommandToService(ACTION_START_OR_RESUME_SERVICE, requireContext())
                     }
                     binding.btnPause.isVisible = true
                     binding.layoutStopAndResume.isVisible = false
                 }
                 PloggingStatus.PAUSE -> {
                     if (PloggingService.isPlogging.value != false) {
-                        pausePloggingService(requireContext())
+                        sendCommandToService(ACTION_PAUSE_SERVICE, requireContext())
                     }
                     binding.btnPause.isVisible = false
                     binding.layoutStopAndResume.isVisible = true
                 }
                 PloggingStatus.STOP -> {
                     viewModel.endDate.set(System.currentTimeMillis())
-                    stopPloggingService(requireContext())
+                    sendCommandToService(ACTION_STOP_SERVICE, requireContext())
                     findNavController().navigate(
                         PloggingFragmentDirections.actionPloggingFragmentToTrashInputFragment()
                     )

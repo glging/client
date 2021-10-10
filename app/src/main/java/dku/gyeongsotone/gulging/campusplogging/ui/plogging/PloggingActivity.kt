@@ -9,7 +9,8 @@ import androidx.navigation.fragment.NavHostFragment
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.databinding.ActivityPloggingBinding
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_SHOW_PLOGGING_FRAGMENT
-import dku.gyeongsotone.gulging.campusplogging.utils.PloggingServiceUtil.stopPloggingService
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_STOP_SERVICE
+import dku.gyeongsotone.gulging.campusplogging.utils.PloggingServiceUtil.sendCommandToService
 
 class PloggingActivity : AppCompatActivity() {
     companion object {
@@ -40,7 +41,7 @@ class PloggingActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setMessage("플로깅을 취소하시겠습니까?")
             .setPositiveButton("예") { dialog, _ ->
-                stopPloggingService(this)
+                sendCommandToService(ACTION_STOP_SERVICE, this)
                 dialog.dismiss()
                 finish()
             }
