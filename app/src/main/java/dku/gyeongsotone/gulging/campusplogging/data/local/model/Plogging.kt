@@ -1,11 +1,8 @@
 package dku.gyeongsotone.gulging.campusplogging.data.local.model
 
 import android.graphics.Bitmap
-import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
-import java.io.Serializable
 import java.util.*
 
 @Entity(tableName = "plogging")
@@ -25,6 +22,19 @@ data class Plogging(
     val paper: Int = 0,
     val general: Int = 0,
 ) {
-    fun getTotalTrash(): Int =
-        plastic + vinyl + glass + can + paper + general
+    fun getTotalTrash(): Int {
+        return plastic + vinyl + glass + can + paper + general
+    }
+
+    fun getTrashKind(): Int {
+        var result = 0
+        if (plastic > 0) result += 1
+        if (vinyl > 0) result += 1
+        if (glass > 0) result += 1
+        if (can > 0) result += 1
+        if (paper > 0) result += 1
+        if (general > 0) result += 1
+
+        return result
+    }
 }

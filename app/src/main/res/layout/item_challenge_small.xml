@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="dku.gyeongsotone.gulging.campusplogging.data.local.model.Challenge" />
+
+        <variable
+            name="viewModel"
+            type="dku.gyeongsotone.gulging.campusplogging.ui.main.challenge.MainChallengeViewModel" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_margin="8dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:challengeStatus="@{item.status}"
+        tools:background="@drawable/background_item_challenge_before">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_name"
+            style="@style/text_18_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{item.name}"
+            app:challengeStatus="@{item.status}"
+            tools:text="1학년 2학기" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_time"
+            style="@style/text_14_reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:includeFontPadding="false"
+            android:text="@{item.time + `분 이상 러닝`}"
+            android:visibility="@{item.time > 0}"
+            app:challengeAchieved="@{item.isTimeAchieved}"
+            app:challengeStatus="@{item.status}"
+            tools:text="10분 이상 러닝" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_level"
+            style="@style/text_14_reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:includeFontPadding="false"
+            android:text="@{item.level + `학교 달성`}"
+            android:visibility="@{item.level > 0}"
+            app:challengeAchieved="@{item.isLevelAchieved}"
+            app:challengeStatus="@{item.status}"
+            tools:text="5학교 달성" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_trash_kind"
+            style="@style/text_14_reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:includeFontPadding="false"
+            android:text="@{`쓰레기 ` + item.trashKind + `종류 이상 줍기`}"
+            android:visibility="@{item.trashKind > 0}"
+            app:challengeAchieved="@{item.isTrashKindAchieved}"
+            app:challengeStatus="@{item.status}"
+            tools:text="쓰레기 3종류 이상 줍기" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_total_trash"
+            style="@style/text_14_reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:includeFontPadding="false"
+            android:text="@{`누적 쓰레기 ` + item.totalTrash + `개 이상`}"
+            android:visibility="@{item.totalTrash > 0}"
+            app:challengeAchieved="@{item.isTotalTrashAchieved}"
+            app:challengeStatus="@{item.status}"
+            tools:text="누적 쓰레기 5개 이상" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -45,6 +45,10 @@ object PloggingRepository {
         return@withContext dao.getTotalTrash() ?: 0
     }
 
+    suspend fun getTrashKind(): Int = withContext(Dispatchers.IO) {
+        return@withContext dao.getTrashKind() ?: 0
+    }
+
     suspend fun getMonthlyDistance(from: Date, to: Date): Double = withContext(Dispatchers.IO) {
         return@withContext dao.getMonthlyDistance(from, to) ?: 0.0
     }

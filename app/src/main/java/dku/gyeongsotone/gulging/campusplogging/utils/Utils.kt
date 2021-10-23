@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.widget.Toast
+import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
 import dku.gyeongsotone.gulging.campusplogging.APP
 import java.text.SimpleDateFormat
@@ -29,3 +30,4 @@ fun getCurrentDate(): Date = Date(System.currentTimeMillis())
 fun showToast(context: Context, msg: String) {
     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
 }
+

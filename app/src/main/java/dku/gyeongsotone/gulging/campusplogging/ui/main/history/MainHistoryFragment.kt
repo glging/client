@@ -14,7 +14,7 @@ import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentMainHistoryBi
 class MainHistoryFragment : Fragment() {
 
     private lateinit var binding: FragmentMainHistoryBinding
-    private val viewModel: MainHistoryViewModel by viewModels() {
+    private val viewModel: MainHistoryViewModel by viewModels {
         MainHistoryViewModelFactory(getApplication().user!!)
     }
 
@@ -23,7 +23,6 @@ class MainHistoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         init(inflater, container)
 
         return binding.root

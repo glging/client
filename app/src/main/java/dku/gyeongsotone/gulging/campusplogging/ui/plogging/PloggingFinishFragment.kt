@@ -69,8 +69,8 @@ class PloggingFinishFragment : Fragment() {
 
     /** 클릭 리스너 설정 */
     private fun setClickListener() {
-        binding.layoutPloggingSummary.btnShare.setOnClickListener { onShareBtnClick() }
-        binding.layoutPloggingSummary.btnExit.setOnClickListener { onExitBtnClick() }
+        binding.layoutPloggingDetail.btnShare.setOnClickListener { onShareBtnClick() }
+        binding.layoutPloggingDetail.btnExit.setOnClickListener { onExitBtnClick() }
     }
 
     private fun onShareBtnClick() {
@@ -95,11 +95,11 @@ class PloggingFinishFragment : Fragment() {
     private fun getBitmapFromView(binding: FragmentPloggingFinishBinding): Bitmap {
         val bitmap: Bitmap?
 
-        binding.layoutPloggingSummary.btnShare.isVisible = false
-        binding.layoutPloggingSummary.btnExit.isVisible = false
-        bitmap = binding.layoutPloggingSummary.layout.drawToBitmap()
-        binding.layoutPloggingSummary.btnShare.isVisible = true
-        binding.layoutPloggingSummary.btnExit.isVisible = true
+        binding.layoutPloggingDetail.btnShare.isVisible = false
+        binding.layoutPloggingDetail.btnExit.isVisible = false
+        bitmap = binding.layoutPloggingDetail.layout.drawToBitmap()
+        binding.layoutPloggingDetail.btnShare.isVisible = true
+        binding.layoutPloggingDetail.btnExit.isVisible = true
 
         return bitmap
     }
@@ -119,6 +119,6 @@ class PloggingFinishFragment : Fragment() {
         total += viewModel.cans.get()
         total += viewModel.papers.get()
         total += viewModel.generals.get()
-        binding.layoutPloggingSummary.tvTrashCount.text = resources.getString(R.string.count, total)
+        binding.layoutPloggingDetail.tvTrashCount.text = resources.getString(R.string.count, total)
     }
 }

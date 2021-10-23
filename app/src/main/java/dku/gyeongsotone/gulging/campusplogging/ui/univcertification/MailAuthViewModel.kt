@@ -42,6 +42,7 @@ class MailAuthViewModel : ViewModel() {
                 return@launch
             }
 
+            _toastMsg.value = "인증번호가 전송되었습니다."
             studentIdStatus.set(StudentIdStatus.WAIT)
             verificationCodeStatus.set(VerificationCodeStatus.WAIT_EMPTY)
         }
@@ -59,6 +60,7 @@ class MailAuthViewModel : ViewModel() {
             }
 
             if (verificationCodeStatus.get() == VerificationCodeStatus.WAIT) {
+                _toastMsg.value = "인증이 완료되었습니다."
                 studentIdStatus.set(StudentIdStatus.SUCCESS)
                 verificationCodeStatus.set(VerificationCodeStatus.SUCCESS)
             }
@@ -66,7 +68,7 @@ class MailAuthViewModel : ViewModel() {
     }
 
     /** text 입력 후에 조건에 따라 입력 상태 변경 */
-    fun onStudentIdTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+    fun onStudentIdTextChanged(s: CharSequence) {
         when {
             verificationCodeStatus.get() == VerificationCodeStatus.BEFORE_SEND && s.length == 8 ->
                 studentIdStatus.set(StudentIdStatus.BEFORE_SEND)
@@ -81,7 +83,7 @@ class MailAuthViewModel : ViewModel() {
         }
     }
 
-    fun onVerificationCodeTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+    fun onVerificationCodeTextChanged(s: CharSequence) {
         when {
             verificationCodeStatus.get() == VerificationCodeStatus.WAIT_EMPTY && s.length == 6 ->
                 verificationCodeStatus.set(VerificationCodeStatus.WAIT)

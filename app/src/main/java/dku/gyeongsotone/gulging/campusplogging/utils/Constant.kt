@@ -1,6 +1,9 @@
 package dku.gyeongsotone.gulging.campusplogging.utils
 
 import android.Manifest
+import dku.gyeongsotone.gulging.campusplogging.data.local.model.Challenge
+import dku.gyeongsotone.gulging.campusplogging.data.local.model.ChallengeStatus
+import dku.gyeongsotone.gulging.campusplogging.data.local.model.ChallengeType
 
 object Constant {
     const val FILE_PROVIDER = "dku.gyeongsotone.gulging.campusplogging.fileprovider"
@@ -12,13 +15,16 @@ object Constant {
     const val SP_TOTAL_DISTANCE = "SP_TOTAL_DISTANCE"
     const val SP_TOTAL_BADGE = "SP_TOTAL_BADGE"
     const val SP_TOTAL_TRASH = "SP_TOTAL_TRASH"
+    const val SP_TOTAL_TIME = "SP_TOTAL_TIME"
+    const val SP_TRASH_KIND = "SP_TOTAL_TIME"
     const val SP_LEVEL = "SP_LEVEL"
     const val SP_REMAIN_DISTANCE = "SP_REMAIN_DISTANCE"
     const val SP_PROGRESS = "SP_PROGRESS"
     const val SP_ACCESS_TOKEN = "SP_ACCESS_TOKEN"
 
+
     /** main activity 관련 상수 */
-    val MAIN_TAB_NAMES = listOf("플로깅", "기록")
+    val MAIN_TAB_NAMES = listOf("플로깅", "챌린지", "기록")
 
     /** 학교 관련 상수 */
     const val UNIV_NAME = "단국대학교"
@@ -53,9 +59,101 @@ object Constant {
     const val FASTEST_LOCATION_INTERVAL = 10_000L
     const val TIMER_UPDATE_INTERVAL = 500L
 
+
     /** notification 관련 상수 */
     const val NOTIFICATION_CHANNEL_ID = "plogging_channel"
     const val NOTIFICATION_CHANNEL_NAME = "플로깅"
     const val NOTIFICATION_ID = 1
 
+
+    /** 챌린지 관련 상수 */
+    val CHALLENGE_FRESHMAN = arrayListOf(
+        Challenge(
+            type = ChallengeType.BY_GRADE,
+            status = ChallengeStatus.BEFORE,
+            name = "1학년 1학기",
+            time = 10,
+            level = 0,
+            trashKind = 1,
+            totalTrash = 0
+        ), Challenge(
+            type = ChallengeType.BY_GRADE,
+            status = ChallengeStatus.BEFORE,
+            name = "1학년 2학기",
+            time = 0,
+            level = 1,
+            trashKind = 2,
+            totalTrash = 0
+        )
+    )
+
+    val CHALLENGE_SOPHOMORE_JUNIOR = arrayListOf(
+        Challenge(
+            type = ChallengeType.BY_GRADE,
+            status = ChallengeStatus.BEFORE,
+            name = "2학년 1학기",
+            time = 0,
+            level = 3,
+            trashKind = 3,
+            totalTrash = 0
+        ),
+        Challenge(
+            type = ChallengeType.BY_GRADE,
+            status = ChallengeStatus.BEFORE,
+            name = "2학년 2학기",
+            time = 0,
+            level = 5,
+            trashKind = 4,
+            totalTrash = 0
+        ),
+        Challenge(
+            type = ChallengeType.BY_GRADE,
+            status = ChallengeStatus.BEFORE,
+            name = "3학년 1학기",
+            time = 0,
+            level = 7,
+            trashKind = 5,
+            totalTrash = 0
+        ),
+        Challenge(
+            type = ChallengeType.BY_GRADE,
+            status = ChallengeStatus.BEFORE,
+            name = "3학년 2학기",
+            time = 0,
+            level = 9,
+            trashKind = 0,
+            totalTrash = 6
+        )
+    )
+
+    val CHALLENGE_SENIOR = arrayListOf(
+        Challenge(
+            type = ChallengeType.BY_GRADE,
+            status = ChallengeStatus.BEFORE,
+            name = "4학년 1학기",
+            time = 30,
+            level = 12,
+            trashKind = 6,
+            totalTrash = 0
+        ),
+        Challenge(
+            type = ChallengeType.BY_GRADE,
+            status = ChallengeStatus.BEFORE,
+            name = "4학년 2학기",
+            time = 40,
+            level = 15,
+            trashKind = 0,
+            totalTrash = 6
+        )
+    )
+
+    val CHALLENGE_GRADUATION = Challenge(
+        type = ChallengeType.BY_GRADE,
+        status = ChallengeStatus.BEFORE,
+        name = "졸업시험",
+        time = 100,
+        level = 30,
+        trashKind = 6,
+        totalTrash = 0
+    )
 }

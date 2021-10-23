@@ -31,7 +31,7 @@ class MainPloggingViewModel() : ViewModel() {
     /** DB에서 총 거리 가져와서 진행도 관련 데이터 처리 */
     fun setPloggingProgress() {
         viewModelScope.launch {
-            val totalDistance: Double = repository.getTotalDistance() ?: 0.0
+            val totalDistance: Double = repository.getTotalDistance()
             val curDistance: Double = totalDistance % UNIV_DISTANCE // 현재 레벨에서의 진행된 거리
             val curLevel: Int = floor(totalDistance / UNIV_DISTANCE).toInt()
             val curProgress: Int = (curDistance / UNIV_DISTANCE * 100).roundToInt() % 100

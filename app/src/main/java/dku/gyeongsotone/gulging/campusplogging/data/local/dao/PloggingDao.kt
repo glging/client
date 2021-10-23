@@ -30,6 +30,9 @@ interface PloggingDao {
     @Query("SELECT sum(plastic + vinyl + can + paper + glass + general) FROM plogging")
     suspend fun getTotalTrash(): Int?
 
+    @Query("SELECT (sum(plastic) > 0) + (sum(vinyl) > 0) + (sum(can) > 0) + (sum(paper) > 0) + (sum(glass) > 0) + (sum(general) > 0) FROM plogging")
+    suspend fun getTrashKind(): Int?
+
     @Query("SELECT avg(distance) FROM plogging WHERE startDate BETWEEN :from AND :to")
     suspend fun getMonthlyDistance(from: Date, to: Date): Double?
 

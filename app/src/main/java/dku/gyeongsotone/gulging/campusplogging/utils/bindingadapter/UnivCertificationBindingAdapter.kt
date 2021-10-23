@@ -48,17 +48,17 @@ fun TextView.setSendVerificationCodeBtn(status: StudentIdStatus) {
 fun TextView.setVerifyCodeBtn(status: VerificationCodeStatus) {
     isClickable = when (status) {
         VerificationCodeStatus.BEFORE_SEND -> {
-            text = "인증 하기"
+            text = "인증하기"
             setBackgroundResource(R.drawable.background_btn_default_before)
             false
         }
         VerificationCodeStatus.WAIT_EMPTY -> {
-            text = "인증 하기"
+            text = "인증하기"
             setBackgroundResource(R.drawable.background_btn_default_before)
             false
         }
         VerificationCodeStatus.WAIT -> {
-            text = "인증 하기"
+            text = "인증하기"
             setBackgroundResource(R.drawable.background_btn_default_after)
             true
         }

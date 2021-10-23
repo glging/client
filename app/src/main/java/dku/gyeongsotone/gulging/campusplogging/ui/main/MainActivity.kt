@@ -13,10 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-import dku.gyeongsotone.gulging.campusplogging.APP
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.databinding.ActivityMainBinding
 import dku.gyeongsotone.gulging.campusplogging.service.PloggingService
+import dku.gyeongsotone.gulging.campusplogging.ui.main.challenge.MainChallengeFragment
 import dku.gyeongsotone.gulging.campusplogging.ui.main.history.MainHistoryFragment
 import dku.gyeongsotone.gulging.campusplogging.ui.main.plogging.MainPloggingFragment
 import dku.gyeongsotone.gulging.campusplogging.ui.plogging.PloggingActivity
@@ -135,7 +135,9 @@ class MainActivity : AppCompatActivity() {
 
         override fun createFragment(position: Int): Fragment = when (position) {
             0 -> MainPloggingFragment.getInstance()
-            1 -> MainHistoryFragment.getInstance()
+            1 -> MainChallengeFragment.getInstance()
+            2 -> MainHistoryFragment.getInstance()
+
             else -> MainPloggingFragment.getInstance()
         }
     }

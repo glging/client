@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="dku.gyeongsotone.gulging.campusplogging.ui.main.challenge.MainChallengeViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="32dp">
+
+            <include
+                android:id="@+id/layout_freshman_challenge"
+                layout="@layout/layout_challenge_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:challenges="@{viewModel.freshmanChallenges}"
+                app:hide="@{viewModel.freshmanChallengeHide}"
+                app:title="@{`플로깅을 시작하는 새내기들에게`}"
+                tools:layout_height="180dp" />
+
+            <include
+                android:id="@+id/layout_sophomore_junior_challenge"
+                layout="@layout/layout_challenge_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:challenges="@{viewModel.sophomoreJuniorChallenges}"
+                app:hide="@{viewModel.sophomoreJuniorChallengeHide}"
+                app:title="@{`적응 완료! 이제 쌓아나가볼까?`}"
+                tools:layout_height="180dp" />
+
+            <include
+                android:id="@+id/layout_senior_challenge"
+                layout="@layout/layout_challenge_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:challenges="@{viewModel.seniorChallenges}"
+                app:hide="@{viewModel.seniorChallengeHide}"
+                app:title="@{`졸업을 준비하며`}"
+                tools:layout_height="180dp" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

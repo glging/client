@@ -38,12 +38,11 @@
             android:columnOrderPreserved="false"
             android:orientation="horizontal"
             android:rowCount="3"
-
-            tools:background="#333333"
             app:layout_constraintBottom_toTopOf="@+id/btn_next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:background="#33333333"
             tools:layout_height="500dp" />
 
         <!-- 다음 단계로... -->

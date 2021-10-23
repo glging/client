@@ -11,13 +11,12 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.data.repository.PloggingRepository
-import dku.gyeongsotone.gulging.campusplogging.databinding.ActivityPloggingSummaryBinding
+import dku.gyeongsotone.gulging.campusplogging.databinding.ActivityPloggingDetailBinding
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.EXTRA_PLOGGING_ID
 import dku.gyeongsotone.gulging.campusplogging.utils.showToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 
@@ -26,7 +25,7 @@ class PloggingDetailActivity : AppCompatActivity() {
         private val TAG = this::class.java.name
     }
 
-    private lateinit var binding: ActivityPloggingSummaryBinding
+    private lateinit var binding: ActivityPloggingDetailBinding
     private val repository = PloggingRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +39,7 @@ class PloggingDetailActivity : AppCompatActivity() {
     private fun init() {
         binding = DataBindingUtil.inflate(
             layoutInflater,
-            R.layout.activity_plogging_summary,
+            R.layout.activity_plogging_detail,
             null,
             false
         )
@@ -52,32 +51,30 @@ class PloggingDetailActivity : AppCompatActivity() {
     private fun processIntent() {
         val ploggingId = intent.extras!!.getInt(EXTRA_PLOGGING_ID)
 
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             val plogging = repository.getPlogging(ploggingId)
             Log.d(TAG, "received plogging: $plogging")
 
-            withContext(Dispatchers.Main) {
-                if (plogging == null) {
-                    showToast(this@PloggingDetailActivity, "유효하지 않은 플로깅 데이터입니다.")
-                    finish()
-                    return@withContext
-                }
-
-                binding.plogging = plogging
+            if (plogging == null) {
+                showToast(this@PloggingDetailActivity, "유효하지 않은 플로깅 데이터입니다.")
+                finish()
+                return@launch
             }
+
+            binding.plogging = plogging
         }
     }
 
 
     /** 클릭 리스너 설정 */
     private fun setClickListener() {
-        binding.layoutPloggingSummary.btnShare.setOnClickListener { onShareBtnClick() }
-        binding.layoutPloggingSummary.btnExit.setOnClickListener { onExitBtnClick() }
+        binding.layoutPloggingDetail.btnShare.setOnClickListener { onShareBtnClick() }
+        binding.layoutPloggingDetail.btnExit.setOnClickListener { onExitBtnClick() }
     }
 
     private fun onShareBtnClick() {
         val bitmap = getBitmapFromView(binding)
-        val file = File.createTempFile("picture_", ".png")
+        val file = File.createTempFile("picture_", ".jpeg")
         val outputStream = FileOutputStream(file)
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
 
@@ -94,14 +91,14 @@ class PloggingDetailActivity : AppCompatActivity() {
         startActivity(shareIntent)
     }
 
-    private fun getBitmapFromView(binding: ActivityPloggingSummaryBinding): Bitmap {
+    private fun getBitmapFromView(binding: ActivityPloggingDetailBinding): Bitmap {
         val bitmap: Bitmap?
 
-        binding.layoutPloggingSummary.btnShare.isVisible = false
-        binding.layoutPloggingSummary.btnExit.isVisible = false
-        bitmap = binding.layoutPloggingSummary.layout.drawToBitmap()
-        binding.layoutPloggingSummary.btnShare.isVisible = true
-        binding.layoutPloggingSummary.btnExit.isVisible = true
+        binding.layoutPloggingDetail.btnShare.isVisible = false
+        binding.layoutPloggingDetail.btnExit.isVisible = false
+        bitmap = binding.layoutPloggingDetail.layout.drawToBitmap()
+        binding.layoutPloggingDetail.btnShare.isVisible = true
+        binding.layoutPloggingDetail.btnExit.isVisible = true
 
         return bitmap
     }
