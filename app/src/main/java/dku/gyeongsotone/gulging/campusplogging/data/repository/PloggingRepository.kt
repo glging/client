@@ -1,8 +1,9 @@
 package dku.gyeongsotone.gulging.campusplogging.data.repository
 
-import androidx.room.Query
 import dku.gyeongsotone.gulging.campusplogging.data.local.dao.PloggingDao
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.Plogging
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.*
 
 object PloggingRepository {
@@ -12,54 +13,57 @@ object PloggingRepository {
         dao = ploggingDao
     }
 
-    suspend fun insert(item: Plogging) {
+    suspend fun insert(item: Plogging) = withContext(Dispatchers.IO) {
         dao.insert(item)
     }
 
-    suspend fun update(item: Plogging) {
+    suspend fun update(item: Plogging) = withContext(Dispatchers.IO) {
         dao.update(item)
     }
 
-    suspend fun delete(item: Plogging) {
+    suspend fun delete(item: Plogging) = withContext(Dispatchers.IO) {
         dao.delete(item)
     }
 
-    suspend fun getPlogging(id: Int): Plogging? {
-        return dao.getPlogging(id)
+    suspend fun getPlogging(id: Int): Plogging? = withContext(Dispatchers.IO) {
+        return@withContext dao.getPlogging(id)
     }
 
-    suspend fun getTotalDistance(): Double {
-        return dao.getTotalDistance() ?: 0.0
+    suspend fun getTotalDistance(): Double = withContext(Dispatchers.IO) {
+        return@withContext dao.getTotalDistance() ?: 0.0
     }
 
-    suspend fun getTotalTime(): Int {
-        return dao.getTotalTime() ?: 0
+    suspend fun getTotalTime(): Int = withContext(Dispatchers.IO) {
+        return@withContext dao.getTotalTime() ?: 0
     }
 
-    suspend fun getTotalBadge(): Int {
-        return dao.getTotalBadge() ?: 0
+    suspend fun getTotalBadge(): Int = withContext(Dispatchers.IO) {
+        return@withContext dao.getTotalBadge() ?: 0
     }
 
-    suspend fun getTotalTrash(): Int {
-        return dao.getTotalTrash() ?: 0
+    suspend fun getTotalTrash(): Int = withContext(Dispatchers.IO) {
+        return@withContext dao.getTotalTrash() ?: 0
     }
 
-    suspend fun getMonthlyDistance(from: Date, to: Date): Double {
-        return dao.getMonthlyDistance(from, to) ?: 0.0
+    suspend fun getMonthlyDistance(from: Date, to: Date): Double = withContext(Dispatchers.IO) {
+        return@withContext dao.getMonthlyDistance(from, to) ?: 0.0
     }
 
-    suspend fun getMonthlyTime(from: Date, to: Date): Double {
-        return dao.getMonthlyTime(from, to) ?: 0.0
+    suspend fun getMonthlyTime(from: Date, to: Date): Double = withContext(Dispatchers.IO) {
+        return@withContext dao.getMonthlyTime(from, to) ?: 0.0
     }
 
-    suspend fun getMonthlyTrash(from: Date, to: Date): Double {
-        return dao.getMonthlyTrash(from, to) ?: 0.0
+    suspend fun getMonthlyTrash(from: Date, to: Date): Double = withContext(Dispatchers.IO) {
+        return@withContext dao.getMonthlyTrash(from, to) ?: 0.0
     }
 
-    suspend fun getMonthlyPlogging(from: Date, to: Date): ArrayList<Plogging> {
+    suspend fun getMonthlyPlogging(
+        from: Date,
+        to: Date
+    ): ArrayList<Plogging> = withContext(Dispatchers.IO) {
         val arrayList = arrayListOf<Plogging>()
         arrayList.addAll(dao.getMonthlyPlogging(from, to) ?: arrayOf())
 
-        return arrayList
+        return@withContext arrayList
     }
 }

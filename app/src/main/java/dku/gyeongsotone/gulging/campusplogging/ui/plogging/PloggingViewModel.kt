@@ -56,7 +56,7 @@ class PloggingViewModel : ViewModel() {
     // 플로깅 -> 플로깅이 끝난 뒤 생성 (in PloggingFinishFragment)
     val plogging = ObservableField<Plogging>()
 
-    /** distance 갱신하고 그에 따라서 leve, progress도 갱신 */
+    /** distance 갱신하고 그에 따라서 level, progress도 갱신 */
     fun updateDistance(data: Double) {
         distance.set(data)
         data % Constant.UNIV_DISTANCE // 현재 레벨에서의 진행된 거리
@@ -115,7 +115,6 @@ class PloggingViewModel : ViewModel() {
             paper = papers.get(),
             general = generals.get()
         )
-
         this.plogging.set(plogging)
 
         viewModelScope.launch {

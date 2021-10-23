@@ -53,8 +53,6 @@ object Constant {
     const val FASTEST_LOCATION_INTERVAL = 10_000L
     const val TIMER_UPDATE_INTERVAL = 500L
 
-    const val MIN_DISTANCE_ACCURACY = 90F
-
     /** notification 관련 상수 */
     const val NOTIFICATION_CHANNEL_ID = "plogging_channel"
     const val NOTIFICATION_CHANNEL_NAME = "플로깅"

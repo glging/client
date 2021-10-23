@@ -21,7 +21,7 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 
-class PloggingSummaryActivity : AppCompatActivity() {
+class PloggingDetailActivity : AppCompatActivity() {
     companion object {
         private val TAG = this::class.java.name
     }
@@ -58,7 +58,7 @@ class PloggingSummaryActivity : AppCompatActivity() {
 
             withContext(Dispatchers.Main) {
                 if (plogging == null) {
-                    showToast(this@PloggingSummaryActivity, "유효하지 않은 플로깅 데이터입니다.")
+                    showToast(this@PloggingDetailActivity, "유효하지 않은 플로깅 데이터입니다.")
                     finish()
                     return@withContext
                 }

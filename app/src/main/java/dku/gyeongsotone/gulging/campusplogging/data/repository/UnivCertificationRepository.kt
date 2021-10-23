@@ -6,6 +6,8 @@ import dku.gyeongsotone.gulging.campusplogging.data.network.request.SendMailAuth
 import dku.gyeongsotone.gulging.campusplogging.data.network.request.VerifyMailAuthRequest
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_ACCESS_TOKEN
 import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpString
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 object UnivCertificationRepository {
     private val TAG = this::class.java.name
@@ -13,16 +15,17 @@ object UnivCertificationRepository {
 
 
     /**
+     *
      * @return String: error message (null if success)
      */
-    suspend fun sendMailAuth(studentId: String): String? {
+    suspend fun sendMailAuth(studentId: String): String? = withContext(Dispatchers.IO) {
         val accessToken = getSpString(SP_ACCESS_TOKEN)!!
         val request = SendMailAuthRequest(accessToken, studentId)
         val response = camploApi.sendMailAuth(request)
         Log.d(TAG, "sendMailAuth response: \n${response}")
         Log.d(TAG, "sendMailAuth body: \n${response.body()}")
 
-        return when (response.body()?.success) {
+        return@withContext when (response.body()?.success) {
             true -> null
             false -> response.body()!!.description
             null -> response.message()
@@ -30,16 +33,17 @@ object UnivCertificationRepository {
     }
 
     /**
+     *
      * @return String: error message (null if success)
      */
-    suspend fun verifyMailAuth(verificationCode: String): String? {
+    suspend fun verifyMailAuth(verificationCode: String): String? = withContext(Dispatchers.IO) {
         val accessToken = getSpString(SP_ACCESS_TOKEN)!!
         val request = VerifyMailAuthRequest(accessToken, verificationCode)
         val response = camploApi.verifyMailAuth(request)
         Log.d(TAG, "verifyMailAuth response: \n${response}")
         Log.d(TAG, "verifyMailAuth body: \n${response.body()}")
 
-        return when (response.body()?.success) {
+        return@withContext when (response.body()?.success) {
             true -> null
             false -> response.body()!!.description
             null -> response.message()

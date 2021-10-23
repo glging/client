@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.Plogging
 import dku.gyeongsotone.gulging.campusplogging.databinding.ItemPloggingHistoryBinding
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.EXTRA_PLOGGING_ID
-import java.io.File
 
 class PloggingHistoryAdapter : RecyclerView.Adapter<PloggingHistoryAdapter.ViewHolder>() {
     private val items = mutableListOf<Plogging>()
@@ -19,7 +18,7 @@ class PloggingHistoryAdapter : RecyclerView.Adapter<PloggingHistoryAdapter.ViewH
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.root.setOnClickListener {
             val context = holder.binding.root.context
-            val intent = Intent(context, PloggingSummaryActivity::class.java)
+            val intent = Intent(context, PloggingDetailActivity::class.java)
             intent.putExtra(EXTRA_PLOGGING_ID, items[position].id)
             context.startActivity(intent)
         }

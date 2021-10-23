@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CampusPlogging"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.main.history.PloggingSummaryActivity"></activity>
+        <activity android:name=".ui.main.history.PloggingDetailActivity"></activity>
         <activity
             android:name=".ui.plogging.PloggingActivity"
             android:launchMode="singleTask" />
