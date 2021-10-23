@@ -185,9 +185,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btn_pre_month"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:onClick="@{() -> viewModel.setPreMonth()}"
+                        android:padding="8dp"
                         android:src="@drawable/ic_arrow_left" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -202,9 +203,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btn_next_month"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:onClick="@{() -> viewModel.setNextMonth()}"
+                        android:padding="8dp"
                         android:src="@drawable/ic_arrow_right" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

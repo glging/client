@@ -16,6 +16,10 @@ class ChallengeSmallAdapter : RecyclerView.Adapter<ChallengeSmallAdapter.ViewHol
         return ViewHolder.from(parent)
     }
 
+    override fun getItemId(position: Int): Long {
+        return items[position].id.toLong()
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(items[position])
     }

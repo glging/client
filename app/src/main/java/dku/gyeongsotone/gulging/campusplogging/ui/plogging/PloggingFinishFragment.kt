@@ -77,7 +77,7 @@ class PloggingFinishFragment : Fragment() {
         val bitmap = getBitmapFromView(binding)
         val file = File.createTempFile("picture_", ".png")
         val outputStream = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
 
         val uri =
             FileProvider.getUriForFile(requireContext(), "fileprovider", file)

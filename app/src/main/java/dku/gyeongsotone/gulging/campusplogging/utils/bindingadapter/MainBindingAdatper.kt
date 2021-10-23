@@ -29,7 +29,9 @@ private val TAG = "MainBindingAdapter"
 @BindingAdapter("ploggingHistory")
 fun RecyclerView.setPloggingHistory(items: ArrayList<Plogging>) {
     if (adapter == null) {
-        adapter = PloggingHistoryAdapter()
+        adapter = PloggingHistoryAdapter().apply {
+            setHasStableIds(true)
+        }
     }
 
     (adapter as PloggingHistoryAdapter).replaceAll(items)
@@ -40,7 +42,9 @@ fun RecyclerView.setPloggingHistory(items: ArrayList<Plogging>) {
 fun RecyclerView.setChallenge(items: List<Challenge>) {
     if (items[0].type == ChallengeType.BY_GRADE) {
         if (adapter == null) {
-            adapter = ChallengeSmallAdapter()
+            adapter = ChallengeSmallAdapter().apply {
+                setHasStableIds(true)
+            }
         }
 
         (adapter as ChallengeSmallAdapter).replaceAll(items)
@@ -63,6 +67,7 @@ fun TextView.setTextStyle(status: ChallengeStatus, challengeAchieved: Boolean?) 
 
     var bulletColor: Int = ContextCompat.getColor(context, R.color.black)
     if (status == ChallengeStatus.DONE) {
+        paintFlags = 0
         bulletColor = ContextCompat.getColor(context, R.color.white)
         setTextColor(bulletColor)
     } else if (status == ChallengeStatus.NOW && challengeAchieved == true) {

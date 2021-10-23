@@ -1,6 +1,7 @@
 package dku.gyeongsotone.gulging.campusplogging.data.local.model
 
 data class Challenge(
+    val id: Int,
     val type: ChallengeType,
     var status: ChallengeStatus,
     val name: String,

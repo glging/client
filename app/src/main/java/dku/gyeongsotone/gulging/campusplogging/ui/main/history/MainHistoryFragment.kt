@@ -28,6 +28,12 @@ class MainHistoryFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.updateData()
+    }
+
     /** binding 설정 */
     private fun init(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(

@@ -80,6 +80,6 @@ class MainChallengeViewModel : ViewModel() {
 }
 
 fun ObservableArrayList<Challenge>.notifyDatasetChanged() {
-    this.add(Challenge(ChallengeType.BY_GRADE, ChallengeStatus.BEFORE, ""))
+    this.add(Challenge(-1, ChallengeType.BY_GRADE, ChallengeStatus.BEFORE, ""))
     this.removeLast()
 }

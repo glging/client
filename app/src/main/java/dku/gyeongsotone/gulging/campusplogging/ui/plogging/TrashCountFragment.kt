@@ -164,9 +164,22 @@ class TrashCountFragment : Fragment() {
             ExifInterface.TAG_ORIENTATION,
             ExifInterface.ORIENTATION_UNDEFINED
         )
-        val bitmap =
+        var bitmap =
             BitmapFactory.decodeFile(imageFile.path)
 
+        // 이미지 압축
+        val sizeMB = bitmap.byteCount.toDouble() / (1024 * 1024)
+        if (sizeMB > 10) {
+            val ratio = 10 / sizeMB
+            bitmap = Bitmap.createScaledBitmap(
+                bitmap,
+                (bitmap.width * ratio).toInt(),
+                (bitmap.height * ratio).toInt(),
+                true
+            )
+        }
+
+        // 정방향으로 회전
         val matrix = Matrix()
         when (orientation) {
             ExifInterface.ORIENTATION_NORMAL -> matrix.setRotate(0f)

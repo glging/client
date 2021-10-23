@@ -15,6 +15,10 @@ class PloggingHistoryAdapter : RecyclerView.Adapter<PloggingHistoryAdapter.ViewH
         return ViewHolder.from(parent)
     }
 
+    override fun getItemId(position: Int): Long {
+        return items[position].id.toLong()
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.root.setOnClickListener {
             val context = holder.binding.root.context

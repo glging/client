@@ -69,6 +69,7 @@ object Constant {
     /** 챌린지 관련 상수 */
     val CHALLENGE_FRESHMAN = arrayListOf(
         Challenge(
+            id = 0,
             type = ChallengeType.BY_GRADE,
             status = ChallengeStatus.BEFORE,
             name = "1학년 1학기",
@@ -77,6 +78,7 @@ object Constant {
             trashKind = 1,
             totalTrash = 0
         ), Challenge(
+            id = 1,
             type = ChallengeType.BY_GRADE,
             status = ChallengeStatus.BEFORE,
             name = "1학년 2학기",
@@ -89,6 +91,7 @@ object Constant {
 
     val CHALLENGE_SOPHOMORE_JUNIOR = arrayListOf(
         Challenge(
+            id = 2,
             type = ChallengeType.BY_GRADE,
             status = ChallengeStatus.BEFORE,
             name = "2학년 1학기",
@@ -98,6 +101,7 @@ object Constant {
             totalTrash = 0
         ),
         Challenge(
+            id = 3,
             type = ChallengeType.BY_GRADE,
             status = ChallengeStatus.BEFORE,
             name = "2학년 2학기",
@@ -107,6 +111,7 @@ object Constant {
             totalTrash = 0
         ),
         Challenge(
+            id = 4,
             type = ChallengeType.BY_GRADE,
             status = ChallengeStatus.BEFORE,
             name = "3학년 1학기",
@@ -116,6 +121,7 @@ object Constant {
             totalTrash = 0
         ),
         Challenge(
+            id = 5,
             type = ChallengeType.BY_GRADE,
             status = ChallengeStatus.BEFORE,
             name = "3학년 2학기",
@@ -128,6 +134,7 @@ object Constant {
 
     val CHALLENGE_SENIOR = arrayListOf(
         Challenge(
+            id = 6,
             type = ChallengeType.BY_GRADE,
             status = ChallengeStatus.BEFORE,
             name = "4학년 1학기",
@@ -137,6 +144,7 @@ object Constant {
             totalTrash = 0
         ),
         Challenge(
+            id = 7,
             type = ChallengeType.BY_GRADE,
             status = ChallengeStatus.BEFORE,
             name = "4학년 2학기",
@@ -148,6 +156,7 @@ object Constant {
     )
 
     val CHALLENGE_GRADUATION = Challenge(
+        id = 8,
         type = ChallengeType.BY_GRADE,
         status = ChallengeStatus.BEFORE,
         name = "졸업시험",
