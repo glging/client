@@ -3,6 +3,7 @@ package dku.gyeongsotone.gulging.campusplogging.ui.plogging
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.databinding.ObservableDouble
+import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import androidx.databinding.ObservableLong
 import androidx.lifecycle.LiveData
@@ -13,7 +14,9 @@ import dku.gyeongsotone.gulging.campusplogging.data.local.model.Plogging
 import dku.gyeongsotone.gulging.campusplogging.data.repository.PloggingRepository
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant
 import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil
+import dku.gyeongsotone.gulging.campusplogging.utils.getCurrentDate
 import kotlinx.coroutines.launch
+import java.util.*
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
@@ -36,8 +39,8 @@ class PloggingViewModel : ViewModel() {
     val ploggingStatus: LiveData<PloggingStatus> = _ploggingStatus
 
     // 날짜 (시간 포함)
-    val startDate = ObservableLong(System.currentTimeMillis())
-    val endDate = ObservableLong()
+    val startDate = ObservableField<Date>(getCurrentDate())
+    val endDate = ObservableField<Date>()
 
     // 쓰레기 개수
     val plastics = ObservableInt(0)
@@ -49,6 +52,9 @@ class PloggingViewModel : ViewModel() {
 
     // 사진
     var picture: Bitmap? = null
+
+    // 플로깅 -> 플로깅이 끝난 뒤 생성 (in PloggingFinishFragment)
+    val plogging = ObservableField<Plogging>()
 
     /** distance 갱신하고 그에 따라서 leve, progress도 갱신 */
     fun updateDistance(data: Double) {
@@ -96,8 +102,8 @@ class PloggingViewModel : ViewModel() {
     /** 플로깅 기록을 DB에 저장 */
     fun saveOnDatabase() {
         val plogging = Plogging(
-            startDate = startDate.get(),
-            endDate = endDate.get(),
+            startDate = startDate.get()!!,
+            endDate = endDate.get()!!,
             distance = distance.get(),
             time = time.get(),
             badge = badge.get(),
@@ -109,6 +115,8 @@ class PloggingViewModel : ViewModel() {
             paper = papers.get(),
             general = generals.get()
         )
+
+        this.plogging.set(plogging)
 
         viewModelScope.launch {
             repository.insert(plogging)

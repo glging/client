@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="dku.gyeongsotone.gulging.campusplogging.data.local.model.Plogging" />
+
+        <import type="dku.gyeongsotone.gulging.campusplogging.utils.Constant" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="6dp">
+
+        <!-- 사진 -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_picture"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:src="@{item.picture}"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@color/deep_gray" />
+
+        <!-- 뱃지 -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_badge"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_badge"
+            android:visibility="@{item.badge > 0}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 학교 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_level"
+            style="@style/text_13_bold_white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginVertical="4dp"
+            android:text="@{@string/decimal_first(item.distance / Constant.UNIV_DISTANCE) + `학교`}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="1.3학교" />
+
+        <!-- 학교 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_trash_count"
+            style="@style/text_13_bold_white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginVertical="4dp"
+            android:text="@{item.getTotalTrash() + `개`}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="9개" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

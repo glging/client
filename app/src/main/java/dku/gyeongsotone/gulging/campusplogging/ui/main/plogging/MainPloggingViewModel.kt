@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
-//class MainPloggingViewModel(private val ploggingDao: PloggingDao) : ViewModel() {
 class MainPloggingViewModel() : ViewModel() {
     private val repository = PloggingRepository
     val level = ObservableInt(getSpInt(SP_LEVEL))  // n학교

@@ -17,8 +17,10 @@ import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_PAUSE_SERVI
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_START_OR_RESUME_SERVICE
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_STOP_SERVICE
 import dku.gyeongsotone.gulging.campusplogging.utils.PloggingServiceUtil.sendCommandToService
+import dku.gyeongsotone.gulging.campusplogging.utils.getCurrentDate
 import dku.gyeongsotone.gulging.campusplogging.utils.mToKm
 import dku.gyeongsotone.gulging.campusplogging.utils.msToMinute
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class PloggingFragment : Fragment() {
@@ -93,7 +95,7 @@ class PloggingFragment : Fragment() {
                     binding.layoutStopAndResume.isVisible = true
                 }
                 PloggingStatus.STOP -> {
-                    viewModel.endDate.set(System.currentTimeMillis())
+                    viewModel.endDate.set(getCurrentDate())
                     sendCommandToService(ACTION_STOP_SERVICE, requireContext())
                     findNavController().navigate(
                         PloggingFragmentDirections.actionPloggingFragmentToTrashInputFragment()

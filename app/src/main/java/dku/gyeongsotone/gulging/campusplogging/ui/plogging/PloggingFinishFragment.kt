@@ -13,7 +13,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import dku.gyeongsotone.gulging.campusplogging.CampusPloggingApplication
+import dku.gyeongsotone.gulging.campusplogging.APP
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.data.local.dao.PloggingDao
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.Plogging
@@ -69,8 +69,8 @@ class PloggingFinishFragment : Fragment() {
 
     /** 클릭 리스너 설정 */
     private fun setClickListener() {
-        binding.btnShare.setOnClickListener { onShareBtnClick() }
-        binding.btnExit.setOnClickListener { onExitBtnClick() }
+        binding.layoutPloggingSummary.btnShare.setOnClickListener { onShareBtnClick() }
+        binding.layoutPloggingSummary.btnExit.setOnClickListener { onExitBtnClick() }
     }
 
     private fun onShareBtnClick() {
@@ -95,11 +95,11 @@ class PloggingFinishFragment : Fragment() {
     private fun getBitmapFromView(binding: FragmentPloggingFinishBinding): Bitmap {
         val bitmap: Bitmap?
 
-        binding.btnShare.isVisible = false
-        binding.btnExit.isVisible = false
-        bitmap = binding.layout.drawToBitmap()
-        binding.btnShare.isVisible = true
-        binding.btnExit.isVisible = true
+        binding.layoutPloggingSummary.btnShare.isVisible = false
+        binding.layoutPloggingSummary.btnExit.isVisible = false
+        bitmap = binding.layoutPloggingSummary.layout.drawToBitmap()
+        binding.layoutPloggingSummary.btnShare.isVisible = true
+        binding.layoutPloggingSummary.btnExit.isVisible = true
 
         return bitmap
     }
@@ -119,6 +119,6 @@ class PloggingFinishFragment : Fragment() {
         total += viewModel.cans.get()
         total += viewModel.papers.get()
         total += viewModel.generals.get()
-        binding.tvTrashCount.text = resources.getString(R.string.count, total)
+        binding.layoutPloggingSummary.tvTrashCount.text = resources.getString(R.string.count, total)
     }
 }

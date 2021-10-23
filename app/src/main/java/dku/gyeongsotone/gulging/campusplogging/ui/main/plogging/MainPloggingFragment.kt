@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import dku.gyeongsotone.gulging.campusplogging.CampusPloggingApplication
+import dku.gyeongsotone.gulging.campusplogging.APP
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentMainPloggingBinding
 import dku.gyeongsotone.gulging.campusplogging.ui.plogging.PloggingActivity

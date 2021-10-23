@@ -38,6 +38,8 @@
             android:columnOrderPreserved="false"
             android:orientation="horizontal"
             android:rowCount="3"
+
+            tools:background="#333333"
             app:layout_constraintBottom_toTopOf="@+id/btn_next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

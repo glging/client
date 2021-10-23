@@ -16,7 +16,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import dku.gyeongsotone.gulging.campusplogging.CampusPloggingApplication
+import dku.gyeongsotone.gulging.campusplogging.APP
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.UnivCertStatus
 import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentSignInBinding
@@ -33,7 +33,7 @@ class SignInFragment : Fragment() {
         private val TAG = this::class.java.name
     }
 
-    private lateinit var application: CampusPloggingApplication
+    private lateinit var application: APP
     private lateinit var binding: FragmentSignInBinding
     private val viewModel: SignInViewModel by viewModels()
 

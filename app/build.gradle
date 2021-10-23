@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -86,4 +87,7 @@ dependencies {
 
     // gson
     implementation 'com.google.code.gson:gson:2.8.8'
+
+    // material design
+    implementation "com.google.android.material:material:1.4.0"
 }

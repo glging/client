@@ -5,15 +5,20 @@ import android.Manifest
 object Constant {
     const val FILE_PROVIDER = "dku.gyeongsotone.gulging.campusplogging.fileprovider"
 
+    /** intent 관련 상수 */
+    const val EXTRA_PLOGGING_ID = "EXTRA_PLOGGING_ID"
+
     /** shared preference 관련 상수*/
     const val SP_TOTAL_DISTANCE = "SP_TOTAL_DISTANCE"
+    const val SP_TOTAL_BADGE = "SP_TOTAL_BADGE"
+    const val SP_TOTAL_TRASH = "SP_TOTAL_TRASH"
     const val SP_LEVEL = "SP_LEVEL"
     const val SP_REMAIN_DISTANCE = "SP_REMAIN_DISTANCE"
     const val SP_PROGRESS = "SP_PROGRESS"
     const val SP_ACCESS_TOKEN = "SP_ACCESS_TOKEN"
 
     /** main activity 관련 상수 */
-    val MAIN_TAB_NAMES = listOf("플로깅")
+    val MAIN_TAB_NAMES = listOf("플로깅", "기록")
 
     /** 학교 관련 상수 */
     const val UNIV_NAME = "단국대학교"
@@ -44,8 +49,8 @@ object Constant {
 
     const val ACTION_SHOW_PLOGGING_FRAGMENT = "ACTION_SHOW_PLOGGING_FRAGMENT"
 
-    const val LOCATION_UPDATE_INTERVAL = 5000L
-    const val FASTEST_LOCATION_INTERVAL = 2000L
+    const val LOCATION_UPDATE_INTERVAL = 10_000L
+    const val FASTEST_LOCATION_INTERVAL = 10_000L
     const val TIMER_UPDATE_INTERVAL = 500L
 
     const val MIN_DISTANCE_ACCURACY = 90F

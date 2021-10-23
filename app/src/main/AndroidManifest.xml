@@ -15,7 +15,7 @@
         android:required="true" />
 
     <application
-        android:name=".CampusPloggingApplication"
+        android:name=".APP"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -23,26 +23,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CampusPlogging"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".ui.main.history.PloggingSummaryActivity"></activity>
         <activity
             android:name=".ui.plogging.PloggingActivity"
             android:launchMode="singleTask" />
-
         <activity
             android:name=".ui.auth.AuthActivity"
             android:launchMode="singleTask">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.univcertification.UnivCertificationActivity"
             android:launchMode="singleTask" />
-
         <activity
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTask" />
@@ -56,7 +52,6 @@
             android:authorities="fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
@@ -65,7 +60,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
     </application>
 
 </manifest>

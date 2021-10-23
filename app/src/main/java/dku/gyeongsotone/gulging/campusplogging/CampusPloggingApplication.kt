@@ -6,7 +6,7 @@ import dku.gyeongsotone.gulging.campusplogging.data.local.model.User
 import dku.gyeongsotone.gulging.campusplogging.data.repository.PloggingRepository.initPloggingRepository
 import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.initSharedPreference
 
-class CampusPloggingApplication : Application() {
+class APP : Application() {
     val database: CampusPloggingDatabase by lazy { CampusPloggingDatabase.getDatabase(this) }
     var user: User? = null
 
