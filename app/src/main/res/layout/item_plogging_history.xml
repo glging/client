@@ -30,7 +30,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@color/deep_gray" />
 
-        <!-- 뱃지 -->
+        <!-- 배지 -->
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_badge"
             android:layout_width="30dp"

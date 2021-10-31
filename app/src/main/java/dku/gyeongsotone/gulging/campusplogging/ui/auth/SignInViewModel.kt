@@ -42,9 +42,9 @@ class SignInViewModel : ViewModel() {
         showPassword.set(!showPassword.get())
     }
 
-    fun getUserInfo(accessToken: String) {
+    fun getUserInfo(token: String) {
         viewModelScope.launch {
-            val result: Pair<String?, User?> = repository.getUserInfo(accessToken)
+            val result: Pair<String?, User?> = repository.getUserInfo(token)
 
             if (result.first != null) { // error
                 _toastMsg.value = result.first!!

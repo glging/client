@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
-class MainPloggingViewModel() : ViewModel() {
+class MainPloggingViewModel : ViewModel() {
     private val repository = PloggingRepository
     val level = ObservableInt(getSpInt(SP_LEVEL))  // n학교
     val remainDistance = ObservableDouble(getSpDouble(SP_REMAIN_DISTANCE)) // km

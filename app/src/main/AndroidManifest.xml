@@ -23,24 +23,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CampusPlogging"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.main.history.PloggingDetailActivity"></activity>
-        <activity
-            android:name=".ui.plogging.PloggingActivity"
-            android:launchMode="singleTask" />
+
         <activity
             android:name=".ui.auth.AuthActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.univcertification.UnivCertificationActivity"
             android:launchMode="singleTask" />
+
         <activity
             android:name=".ui.main.MainActivity"
+            android:launchMode="singleTask" />
+
+        <activity android:name=".ui.main.history.PloggingDetailActivity"
+            android:launchMode="singleTask" />
+
+        <activity
+            android:name=".ui.plogging.PloggingActivity"
             android:launchMode="singleTask" />
 
         <service

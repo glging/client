@@ -19,8 +19,8 @@ object UnivCertificationRepository {
      * @return String: error message (null if success)
      */
     suspend fun sendMailAuth(studentId: String): String? = withContext(Dispatchers.IO) {
-        val accessToken = getSpString(SP_ACCESS_TOKEN)!!
-        val request = SendMailAuthRequest(accessToken, studentId)
+        val token = getSpString(SP_ACCESS_TOKEN)!!
+        val request = SendMailAuthRequest(token, studentId)
         val response = camploApi.sendMailAuth(request)
         Log.d(TAG, "sendMailAuth response: \n${response}")
         Log.d(TAG, "sendMailAuth body: \n${response.body()}")
@@ -37,8 +37,8 @@ object UnivCertificationRepository {
      * @return String: error message (null if success)
      */
     suspend fun verifyMailAuth(verificationCode: String): String? = withContext(Dispatchers.IO) {
-        val accessToken = getSpString(SP_ACCESS_TOKEN)!!
-        val request = VerifyMailAuthRequest(accessToken, verificationCode)
+        val token = getSpString(SP_ACCESS_TOKEN)!!
+        val request = VerifyMailAuthRequest(token, verificationCode)
         val response = camploApi.verifyMailAuth(request)
         Log.d(TAG, "verifyMailAuth response: \n${response}")
         Log.d(TAG, "verifyMailAuth body: \n${response.body()}")

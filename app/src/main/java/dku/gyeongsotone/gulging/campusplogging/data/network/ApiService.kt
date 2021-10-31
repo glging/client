@@ -43,7 +43,7 @@ interface CamploApiService {
     suspend fun verifyMailAuth(@Body verifyMailAuthRequest: VerifyMailAuthRequest): Response<VerifyMailAuthResponse>
 
     @GET("/login")
-    suspend fun getUserInfo(@Query("access_token") accessToken: String): Response<GetUserInfoResponse>
+    suspend fun getUserInfo(@Query("access_token") token: String): Response<GetUserInfoResponse>
 }
 
 object RestApi {

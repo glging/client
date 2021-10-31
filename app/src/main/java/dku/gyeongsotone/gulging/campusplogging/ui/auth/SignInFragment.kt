@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -22,9 +23,7 @@ import dku.gyeongsotone.gulging.campusplogging.data.local.model.UnivCertStatus
 import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentSignInBinding
 import dku.gyeongsotone.gulging.campusplogging.ui.main.MainActivity
 import dku.gyeongsotone.gulging.campusplogging.ui.univcertification.UnivCertificationActivity
-import dku.gyeongsotone.gulging.campusplogging.utils.Constant
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_ACCESS_TOKEN
-import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil
 import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpString
 import dku.gyeongsotone.gulging.campusplogging.utils.getApplication
 
@@ -80,10 +79,11 @@ class SignInFragment : Fragment() {
 
     /** 액세스 토큰 존재하면 바로 메인화면으로 이동 */
     private fun checkAccessToken() {
-        val accessToken = getSpString(SP_ACCESS_TOKEN)
 
-        if (accessToken.isNullOrEmpty()) return
-        viewModel.getUserInfo(accessToken)
+        when (val token = getSpString(SP_ACCESS_TOKEN)) {
+            null, "" -> binding.layoutSplash.isGone = true
+            else -> viewModel.getUserInfo(token)
+        }
     }
 
     /** 클릭 리스너 설정 */
@@ -108,9 +108,8 @@ class SignInFragment : Fragment() {
     private fun setLoginResultObserver() {
         viewModel.signInResult.observe(viewLifecycleOwner) { result ->
             Log.d(TAG, "login result: $result")
-
-            application.user = viewModel.user
             if (result == SignInStatus.SUCCESS) {
+                application.user = viewModel.user
                 navigateToNextStep()
             }
         }

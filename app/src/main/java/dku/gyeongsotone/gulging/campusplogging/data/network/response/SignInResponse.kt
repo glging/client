@@ -10,7 +10,7 @@ data class SignInResponse(
     val description: String? = null,
 
     @Json(name = "access_token")
-    val accessToken: String? = null,
+    val token: String? = null,
 
     @Json(name = "success")
     val success: Boolean = false

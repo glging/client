@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 
 data class SendMailAuthRequest(
     @Json(name = "access_token")
-    val accessToken: String,
+    val token: String,
 
     @Json(name = "student_id")
     val studentId: String

@@ -1,13 +1,11 @@
 package dku.gyeongsotone.gulging.campusplogging.ui.auth
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.databinding.ActivityAuthBinding
-import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_ACCESS_TOKEN
-import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpString
 
 class AuthActivity : AppCompatActivity() {
     companion object {

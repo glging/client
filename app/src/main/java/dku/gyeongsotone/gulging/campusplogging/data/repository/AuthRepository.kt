@@ -28,7 +28,7 @@ object AuthRepository {
         return@withContext when (response.body()?.success) {
             true -> {
                 val body = response.body()!!
-                setSpString(SP_ACCESS_TOKEN, body.accessToken!!)
+                setSpString(SP_ACCESS_TOKEN, body.token!!)
                 Pair(null, body.user!!.toUser())
             }
             false -> Pair(response.body()!!.description, null)
@@ -49,7 +49,7 @@ object AuthRepository {
         return@withContext when (response.body()?.success) {
             true -> {
                 val body = response.body()!!
-                setSpString(SP_ACCESS_TOKEN, body.accessToken!!)
+                setSpString(SP_ACCESS_TOKEN, body.token!!)
                 Pair(null, body.user!!.toUser())
             }
             false -> Pair(response.body()!!.description, null)
@@ -73,8 +73,8 @@ object AuthRepository {
         }
     }
 
-    suspend fun getUserInfo(accessToken: String): Pair<String?, User?> = withContext(Dispatchers.IO) {
-        val response = camploApi.getUserInfo(accessToken)
+    suspend fun getUserInfo(token: String): Pair<String?, User?> = withContext(Dispatchers.IO) {
+        val response = camploApi.getUserInfo(token)
         Log.d(TAG, "getUserInfo response: \n${response}")
         Log.d(TAG, "getUserInfo body: \n${response.body()}")
 
