@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.Challenge
-import dku.gyeongsotone.gulging.campusplogging.databinding.ItemChallengeSmallBinding
+import dku.gyeongsotone.gulging.campusplogging.databinding.ItemChallengeBinding
 
 class ChallengeSmallAdapter : RecyclerView.Adapter<ChallengeSmallAdapter.ViewHolder>() {
     private val items = mutableListOf<Challenge>()
@@ -49,7 +49,7 @@ class ChallengeSmallAdapter : RecyclerView.Adapter<ChallengeSmallAdapter.ViewHol
         this.items.addAll(items)
     }
 
-    class ViewHolder private constructor(val binding: ItemChallengeSmallBinding) :
+    class ViewHolder private constructor(val binding: ItemChallengeBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Challenge) {
@@ -60,7 +60,7 @@ class ChallengeSmallAdapter : RecyclerView.Adapter<ChallengeSmallAdapter.ViewHol
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ItemChallengeSmallBinding.inflate(layoutInflater, parent, false)
+                val binding = ItemChallengeBinding.inflate(layoutInflater, parent, false)
 
                 return ViewHolder(binding)
             }

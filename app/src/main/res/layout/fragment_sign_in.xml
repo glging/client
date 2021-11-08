@@ -120,20 +120,15 @@
             tools:text="혹시 처음 오셨나요? 회원가입하러 가기" />
 
         <!-- 스플래시 화면 -->
-        <FrameLayout
+        <include
             android:id="@+id/layout_splash"
+            layout="@layout/layout_splash"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <include
-                layout="@layout/layout_splash"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </FrameLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -64,10 +64,8 @@ object PloggingRepository {
     suspend fun getMonthlyPlogging(
         from: Date,
         to: Date
-    ): ArrayList<Plogging> = withContext(Dispatchers.IO) {
-        val arrayList = arrayListOf<Plogging>()
-        arrayList.addAll(dao.getMonthlyPlogging(from, to) ?: arrayOf())
+    ): List<Plogging> = withContext(Dispatchers.IO) {
 
-        return@withContext arrayList
+        return@withContext dao.getMonthlyPlogging(from, to) ?: listOf()
     }
 }

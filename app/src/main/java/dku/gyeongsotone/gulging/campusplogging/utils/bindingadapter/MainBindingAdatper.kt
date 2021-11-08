@@ -27,18 +27,20 @@ import dku.gyeongsotone.gulging.campusplogging.ui.main.history.PloggingHistoryAd
 private val TAG = "MainBindingAdapter"
 
 @BindingAdapter("ploggingHistory")
-fun RecyclerView.setPloggingHistory(items: ArrayList<Plogging>) {
+fun RecyclerView.setPloggingHistory(items: List<Plogging>?) {
     if (adapter == null) {
         adapter = PloggingHistoryAdapter().apply {
             setHasStableIds(true)
         }
     }
 
-    (adapter as PloggingHistoryAdapter).replaceAll(items)
-    adapter!!.notifyDataSetChanged()
+    if (items != null) {
+        (adapter as PloggingHistoryAdapter).replaceAll(items)
+        adapter!!.notifyDataSetChanged()
+    }
 }
 
-@BindingAdapter("challenge")
+@BindingAdapter("challenges")
 fun RecyclerView.setChallenge(items: List<Challenge>) {
     if (items[0].type == ChallengeType.BY_GRADE) {
         if (adapter == null) {

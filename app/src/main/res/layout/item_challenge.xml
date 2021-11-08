@@ -14,6 +14,7 @@
             type="dku.gyeongsotone.gulging.campusplogging.ui.main.challenge.MainChallengeViewModel" />
     </data>
 
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="130dp"
@@ -21,7 +22,8 @@
         android:orientation="vertical"
         android:padding="16dp"
         app:challengeStatus="@{item.status}"
-        tools:background="@drawable/background_item_challenge_before">
+        tools:background="@drawable/background_item_challenge_before"
+        tools:visibility="visible">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_name"
@@ -33,32 +35,32 @@
             tools:text="1학년 2학기" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_time"
+            android:id="@+id/tv_level"
             style="@style/text_14_reg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:includeFontPadding="false"
-            android:text="@{item.time + `분 이상 러닝`}"
-            android:visibility="@{item.time > 0}"
-            app:challengeAchieved="@{item.isTimeAchieved}"
+            android:text="@{item.getLevelContent()}"
+            android:visibility="@{item.level > 0}"
+            app:challengeAchieved="@{item.isLevelAchieved(viewModel.level)}"
             app:challengeStatus="@{item.status}"
-            tools:text="10분 이상 러닝" />
+            tools:text="5학교 달성" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_level"
+            android:id="@+id/tv_time"
             style="@style/text_14_reg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="2dp"
             android:includeFontPadding="false"
-            android:text="@{item.level + `학교 달성`}"
-            android:visibility="@{item.level > 0}"
-            app:challengeAchieved="@{item.isLevelAchieved}"
+            android:text="@{item.getTimeContent()}"
+            android:visibility="@{item.time > 0}"
+            app:challengeAchieved="@{item.isTimeAchieved(viewModel.time)}"
             app:challengeStatus="@{item.status}"
-            tools:text="5학교 달성" />
+            tools:text="10분 이상 러닝" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_trash_kind"
@@ -68,9 +70,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="2dp"
             android:includeFontPadding="false"
-            android:text="@{`쓰레기 ` + item.trashKind + `종류 이상 줍기`}"
+            android:text="@{item.getTrashKindContent()}"
             android:visibility="@{item.trashKind > 0}"
-            app:challengeAchieved="@{item.isTrashKindAchieved}"
+            app:challengeAchieved="@{item.isTrashKindAchieved(viewModel.trashKind)}"
             app:challengeStatus="@{item.status}"
             tools:text="쓰레기 3종류 이상 줍기" />
 
@@ -82,9 +84,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="2dp"
             android:includeFontPadding="false"
-            android:text="@{`누적 쓰레기 ` + item.totalTrash + `개 이상`}"
+            android:text="@{item.getTotalTrashContent()}"
             android:visibility="@{item.totalTrash > 0}"
-            app:challengeAchieved="@{item.isTotalTrashAchieved}"
+            app:challengeAchieved="@{item.isTotalTrashAchieved(viewModel.totalTrash)}"
             app:challengeStatus="@{item.status}"
             tools:text="누적 쓰레기 5개 이상" />
 

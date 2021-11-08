@@ -1,5 +1,6 @@
 package dku.gyeongsotone.gulging.campusplogging.ui.main.challenge
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,8 +22,8 @@ class MainChallengeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         init(inflater, container)
-        setClickListener()
 
         return binding.root
     }
@@ -33,8 +34,11 @@ class MainChallengeFragment : Fragment() {
         viewModel.updateChallengeStatuses()
     }
 
-    /** binding 설정 */
+    /**
+     * 화면 초기화
+     */
     private fun init(inflater: LayoutInflater, container: ViewGroup?) {
+        // 바인딩 설정
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_main_challenge,
@@ -43,28 +47,26 @@ class MainChallengeFragment : Fragment() {
         )
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        // 클릭 리스너 설정
+        setClickListener()
     }
 
+    /**
+     * 클릭 리스너 등록
+     */
     private fun setClickListener() {
-        binding.layoutFreshmanChallenge.ivBtnSetHide.setOnClickListener { onFreshmanHideBtnClick() }
-        binding.layoutSophomoreJuniorChallenge.ivBtnSetHide.setOnClickListener { onSophomoreJuniorHideBtnClick() }
-        binding.layoutSeniorChallenge.ivBtnSetHide.setOnClickListener { onSeniorHideBtnClick() }
+        binding.btnMore.setOnClickListener { showEventListActivity() }
     }
 
-    private fun onFreshmanHideBtnClick() {
-        val curValue = viewModel.freshmanChallengeHide.get()
-        viewModel.freshmanChallengeHide.set(!curValue)
+    /**
+     * 특강 목록을 보여주는 액티비티 띄우기
+     */
+    private fun showEventListActivity() {
+        val intent = Intent(requireContext(), EventListActivity::class.java)
+        startActivity(intent)
     }
 
-    private fun onSophomoreJuniorHideBtnClick() {
-        val curValue = viewModel.sophomoreJuniorChallengeHide.get()
-        viewModel.sophomoreJuniorChallengeHide.set(!curValue)
-    }
-
-    private fun onSeniorHideBtnClick() {
-        val curValue = viewModel.seniorChallengeHide.get()
-        viewModel.seniorChallengeHide.set(!curValue)
-    }
 
     companion object {
         private val TAG = this::class.java.name

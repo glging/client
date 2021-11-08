@@ -23,8 +23,22 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="text_30_bold">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:fontFamily">@font/notosans_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="text_24_bold">
         <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">24dp</item>
+        <item name="android:fontFamily">@font/notosans_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_24_bold_yellow">
+        <item name="android:textColor">@color/main_yellow</item>
         <item name="android:textSize">24dp</item>
         <item name="android:fontFamily">@font/notosans_bold</item>
         <item name="android:textStyle">bold</item>

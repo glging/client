@@ -2,6 +2,7 @@ package dku.gyeongsotone.gulging.campusplogging.ui.main.history
 
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableDouble
+import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,7 +31,7 @@ class MainHistoryViewModel(val user: User) : ViewModel() {
     val monthlyDistance = ObservableInt()
     val monthlyTime = ObservableInt()
     val monthlyTrash = ObservableInt()
-    val monthlyPlogging = ObservableArrayList<Plogging>()
+    val monthlyPlogging = ObservableField<List<Plogging>>()
 
     private val calendar = Calendar.getInstance()
     val year = ObservableInt(calendar.get(Calendar.YEAR))
@@ -49,18 +50,17 @@ class MainHistoryViewModel(val user: User) : ViewModel() {
     }
 
     private suspend fun setTotalData() {
-        val totalDistance: Double = repository.getTotalDistance()
-        val totalTrash: Int = repository.getTotalTrash()
-        val totalBadge: Int = repository.getTotalBadge()
+        val lTotalDistance: Double = repository.getTotalDistance()
+        val lTotalTrash: Int = repository.getTotalTrash()
+        val lTotalBadge: Int = repository.getTotalBadge()
 
-        setSpDouble(SP_TOTAL_DISTANCE, totalDistance)
-        setSpInt(SP_TOTAL_TRASH, totalTrash)
-        setSpInt(SP_TOTAL_BADGE, totalBadge)
+        setSpDouble(SP_TOTAL_DISTANCE, lTotalDistance)
+        setSpInt(SP_TOTAL_TRASH, lTotalTrash)
+        setSpInt(SP_TOTAL_BADGE, lTotalBadge)
 
-        this@MainHistoryViewModel.totalDistance.set(totalDistance)
-        this@MainHistoryViewModel.totalTrash.set(totalTrash)
-        this@MainHistoryViewModel.totalBadge.set(totalBadge)
-
+        totalDistance.set(lTotalDistance)
+        totalTrash.set(lTotalTrash)
+        totalBadge.set(lTotalBadge)
     }
 
     private suspend fun setMonthlyData() {
@@ -70,16 +70,15 @@ class MainHistoryViewModel(val user: User) : ViewModel() {
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DATE))
         val to = calendar.time
 
-        val monthlyDistance = floor(repository.getMonthlyDistance(from, to)).toInt()
-        val monthlyTime = floor(repository.getMonthlyTime(from, to)).toInt()
-        val monthlyTrash = floor(repository.getMonthlyTrash(from, to)).toInt()
-        val monthlyPlogging = repository.getMonthlyPlogging(from, to)
+        val lMonthlyDistance = floor(repository.getMonthlyDistance(from, to)).toInt()
+        val lMonthlyTime = floor(repository.getMonthlyTime(from, to)).toInt()
+        val lMonthlyTrash = floor(repository.getMonthlyTrash(from, to)).toInt()
+        val lMonthlyPlogging = repository.getMonthlyPlogging(from, to)
 
-        this@MainHistoryViewModel.monthlyPlogging.clear()
-        this@MainHistoryViewModel.monthlyPlogging.addAll(monthlyPlogging)
-        this@MainHistoryViewModel.monthlyDistance.set(monthlyDistance)
-        this@MainHistoryViewModel.monthlyTime.set(monthlyTime)
-        this@MainHistoryViewModel.monthlyTrash.set(monthlyTrash)
+        monthlyPlogging.set(lMonthlyPlogging)
+        monthlyDistance.set(lMonthlyDistance)
+        monthlyTime.set(lMonthlyTime)
+        monthlyTrash.set(lMonthlyTrash)
     }
 
     fun setPreMonth() {

@@ -29,23 +29,24 @@
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.univcertification.UnivCertificationActivity"
             android:launchMode="singleTask" />
-
         <activity
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTask" />
-
-        <activity android:name=".ui.main.history.PloggingDetailActivity"
+        <activity
+            android:name=".ui.main.history.PloggingDetailActivity"
             android:launchMode="singleTask" />
-
         <activity
             android:name=".ui.plogging.PloggingActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.main.challenge.EventListActivity"
             android:launchMode="singleTask" />
 
         <service

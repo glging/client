@@ -24,7 +24,6 @@ class AuthActivity : AppCompatActivity() {
             false
         )
 
-        InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
         setContentView(binding.root)
     }
 }

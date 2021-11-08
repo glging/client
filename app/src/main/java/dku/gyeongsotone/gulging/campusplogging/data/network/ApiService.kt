@@ -2,11 +2,6 @@ package dku.gyeongsotone.gulging.campusplogging.data.network
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import dku.gyeongsotone.gulging.campusplogging.data.network.request.SendMailAuthRequest
-import dku.gyeongsotone.gulging.campusplogging.data.network.request.SignInRequest
-import dku.gyeongsotone.gulging.campusplogging.data.network.request.SignUpRequest
-import dku.gyeongsotone.gulging.campusplogging.data.network.request.VerifyMailAuthRequest
-import dku.gyeongsotone.gulging.campusplogging.data.network.response.*
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -43,7 +38,7 @@ interface CamploApiService {
     suspend fun verifyMailAuth(@Body verifyMailAuthRequest: VerifyMailAuthRequest): Response<VerifyMailAuthResponse>
 
     @GET("/login")
-    suspend fun getUserInfo(@Query("access_token") token: String): Response<GetUserInfoResponse>
+    suspend fun tokenLogin(@Query("access_token") token: String): Response<TokenLoginResponse>
 }
 
 object RestApi {

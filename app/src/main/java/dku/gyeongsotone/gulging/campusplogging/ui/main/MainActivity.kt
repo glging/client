@@ -19,6 +19,7 @@ import dku.gyeongsotone.gulging.campusplogging.service.PloggingService
 import dku.gyeongsotone.gulging.campusplogging.ui.main.challenge.MainChallengeFragment
 import dku.gyeongsotone.gulging.campusplogging.ui.main.history.MainHistoryFragment
 import dku.gyeongsotone.gulging.campusplogging.ui.main.plogging.MainPloggingFragment
+import dku.gyeongsotone.gulging.campusplogging.ui.main.ranking.MainRankingFragment
 import dku.gyeongsotone.gulging.campusplogging.ui.plogging.PloggingActivity
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.ACTION_SHOW_PLOGGING_FRAGMENT
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.MAIN_TAB_NAMES
@@ -137,6 +138,7 @@ class MainActivity : AppCompatActivity() {
             0 -> MainPloggingFragment.getInstance()
             1 -> MainChallengeFragment.getInstance()
             2 -> MainHistoryFragment.getInstance()
+            3 -> MainRankingFragment.getInstance()
 
             else -> MainPloggingFragment.getInstance()
         }

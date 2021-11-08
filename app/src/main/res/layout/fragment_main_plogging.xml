@@ -15,6 +15,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- 챌린지 이름 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_challenge_name"
+            style="@style/text_30_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="36dp"
+            android:text="@{viewModel.challengeName}"
+            app:layout_constraintBottom_toTopOf="@+id/iv_univ"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="2학년 2학기" />
+
+        <!-- 학교 이미지 -->
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_univ"
             android:layout_width="150dp"
@@ -24,73 +38,91 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.4" />
+            app:layout_constraintVertical_bias="0.35" />
+
+        <!-- 챌린지 내용 -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_challenge_content"
+            style="@style/text_16_reg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:text="@{viewModel.challengeContent}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_univ"
+            tools:text="5학교 달성\n쓰레기 4종류 이상 줍기" />
 
         <!-- 진행도 -->
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_remain_distance_title"
-            style="@style/text_15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="36dp"
-            android:paddingHorizontal="2dp"
-            android:text="남은 거리"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_univ" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_remain_distance"
-            style="@style/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="40dp"
-            android:paddingHorizontal="2dp"
-            android:text="@{@string/decimal_first(viewModel.remainDistance) + `km`}"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_remain_distance_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_remain_distance_title"
-            tools:text="0.8km" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
-            android:layout_height="12dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/btn_start_plogging"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginHorizontal="40dp"
-            android:progress="@{viewModel.progress}"
-            android:progressDrawable="@drawable/progressbar_main_plogging"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_remain_distance_title"
-            tools:progress="80" />
+            app:layout_constraintVertical_bias="0.6"
+            app:layout_constraintTop_toBottomOf="@+id/tv_challenge_content">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_current_level"
-            style="@style/text_13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="4dp"
-            android:paddingHorizontal="2dp"
-            android:text="@{viewModel.level + ` 학교`}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressBar"
-            tools:text="4학교" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_remain_distance_title"
+                style="@style/text_15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="2dp"
+                android:text="남은 거리"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_next_level"
-            style="@style/text_13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="40dp"
-            android:paddingHorizontal="2dp"
-            android:text="@{(viewModel.level + 1) + ` 학교`}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressBar"
-            tools:text="5학교" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_remain_distance"
+                style="@style/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="2dp"
+                android:text="@{@string/decimal_first(viewModel.remainDistance) + `km`}"
+                android:textSize="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_remain_distance_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_remain_distance_title"
+                tools:text="0.8km" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="12dp"
+                android:progress="@{viewModel.progress}"
+                android:progressDrawable="@drawable/progressbar_main_plogging"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_remain_distance_title"
+                tools:progress="80" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_current_level"
+                style="@style/text_13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="2dp"
+                android:text="@{viewModel.level + ` 학교`}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressBar"
+                tools:text="4학교" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_next_level"
+                style="@style/text_13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:paddingHorizontal="2dp"
+                android:text="@{(viewModel.level + 1) + ` 학교`}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressBar"
+                tools:text="5학교" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- 플러깅 시작 버튼 -->
         <androidx.appcompat.widget.AppCompatTextView
@@ -99,7 +131,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
-            android:layout_marginBottom="72dp"
+            android:layout_marginBottom="56dp"
             android:background="@drawable/background_btn_round_yellow"
             android:gravity="center"
             android:paddingVertical="8dp"

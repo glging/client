@@ -20,13 +20,39 @@
             android:orientation="vertical"
             android:paddingVertical="32dp">
 
+            <!-- 특강 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btn_more"
+                    android:layout_width="50dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_more"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <include
+                    android:id="@+id/layout_event"
+                    layout="@layout/layout_event"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:message="@{`현재 진행중인 특강이 없습니다.`}"
+                    app:title="@{`특강`}"
+                    tools:layout_height="180dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- 학년별 챌린지 -->
             <include
                 android:id="@+id/layout_freshman_challenge"
                 layout="@layout/layout_challenge_small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
                 app:challenges="@{viewModel.freshmanChallenges}"
-                app:hide="@{viewModel.freshmanChallengeHide}"
                 app:title="@{`플로깅을 시작하는 새내기들에게`}"
                 tools:layout_height="180dp" />
 
@@ -37,7 +63,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 app:challenges="@{viewModel.sophomoreJuniorChallenges}"
-                app:hide="@{viewModel.sophomoreJuniorChallengeHide}"
                 app:title="@{`적응 완료! 이제 쌓아나가볼까?`}"
                 tools:layout_height="180dp" />
 
@@ -48,8 +73,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 app:challenges="@{viewModel.seniorChallenges}"
-                app:hide="@{viewModel.seniorChallengeHide}"
                 app:title="@{`졸업을 준비하며`}"
+                tools:layout_height="180dp" />
+
+            <include
+                android:id="@+id/layout_graduation_challenge"
+                layout="@layout/layout_challenge_big"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:challenge="@{viewModel.graduationChallenge}"
+                app:title="@{`한 걸음만 더!`}"
                 tools:layout_height="180dp" />
 
 

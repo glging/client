@@ -5,15 +5,17 @@
 
     <data>
 
-        <import type="java.util.List" />
-
         <variable
             name="title"
             type="String" />
 
         <variable
-            name="challenges"
-            type="List&lt;dku.gyeongsotone.gulging.campusplogging.data.local.model.Challenge&gt;" />
+            name="challenge"
+            type="dku.gyeongsotone.gulging.campusplogging.data.local.model.Challenge" />
+
+        <variable
+            name="viewModel"
+            type="dku.gyeongsotone.gulging.campusplogging.ui.main.challenge.MainChallengeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,20 +33,17 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="플로깅을 시작하는 새내기들에게" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_challenge"
+        <include
+            android:id="@+id/item_challenge"
+            layout="@layout/item_challenge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginHorizontal="24dp"
             android:layout_marginTop="8dp"
-            android:nestedScrollingEnabled="false"
-            app:challenges="@{challenges}"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:item="@{challenge}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title"
-            app:spanCount="2"
-            tools:listitem="@layout/item_challenge" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

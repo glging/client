@@ -43,6 +43,6 @@ interface PloggingDao {
     suspend fun getMonthlyTrash(from: Date, to: Date): Double?
 
     @Query("SELECT * FROM plogging WHERE startDate BETWEEN :from AND :to")
-    suspend fun getMonthlyPlogging(from: Date, to: Date): Array<Plogging>?
+    suspend fun getMonthlyPlogging(from: Date, to: Date): List<Plogging>?
 
 }

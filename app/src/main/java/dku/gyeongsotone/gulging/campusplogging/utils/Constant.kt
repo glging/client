@@ -12,6 +12,7 @@ object Constant {
     const val EXTRA_PLOGGING_ID = "EXTRA_PLOGGING_ID"
 
     /** shared preference 관련 상수*/
+    const val SP_TOKEN = "SP_TOKEN"
     const val SP_TOTAL_DISTANCE = "SP_TOTAL_DISTANCE"
     const val SP_TOTAL_BADGE = "SP_TOTAL_BADGE"
     const val SP_TOTAL_TRASH = "SP_TOTAL_TRASH"
@@ -20,11 +21,11 @@ object Constant {
     const val SP_LEVEL = "SP_LEVEL"
     const val SP_REMAIN_DISTANCE = "SP_REMAIN_DISTANCE"
     const val SP_PROGRESS = "SP_PROGRESS"
-    const val SP_ACCESS_TOKEN = "SP_ACCESS_TOKEN"
+    const val SP_CHALLENGE_ID = "SP_CHALLENGE_ID"  // 진행중인 플로깅
 
 
     /** main activity 관련 상수 */
-    val MAIN_TAB_NAMES = listOf("플로깅", "챌린지", "기록")
+    val MAIN_TAB_NAMES = listOf("플로깅", "챌린지", "기록", "랭킹")
 
     /** 학교 관련 상수 */
     const val UNIV_NAME = "단국대학교"
@@ -67,7 +68,7 @@ object Constant {
 
 
     /** 챌린지 관련 상수 */
-    val CHALLENGE_FRESHMAN = arrayListOf(
+    val CHALLENGE_LIST = listOf(
         Challenge(
             id = 0,
             type = ChallengeType.BY_GRADE,
@@ -86,11 +87,7 @@ object Constant {
             level = 1,
             trashKind = 2,
             totalTrash = 0
-        )
-    )
-
-    val CHALLENGE_SOPHOMORE_JUNIOR = arrayListOf(
-        Challenge(
+        ), Challenge(
             id = 2,
             type = ChallengeType.BY_GRADE,
             status = ChallengeStatus.BEFORE,
@@ -129,11 +126,7 @@ object Constant {
             level = 9,
             trashKind = 0,
             totalTrash = 6
-        )
-    )
-
-    val CHALLENGE_SENIOR = arrayListOf(
-        Challenge(
+        ), Challenge(
             id = 6,
             type = ChallengeType.BY_GRADE,
             status = ChallengeStatus.BEFORE,
@@ -152,17 +145,16 @@ object Constant {
             level = 15,
             trashKind = 0,
             totalTrash = 6
+        ), Challenge(
+            id = 8,
+            type = ChallengeType.BY_GRADE,
+            status = ChallengeStatus.BEFORE,
+            name = "졸업시험",
+            time = 100,
+            level = 30,
+            trashKind = 6,
+            totalTrash = 0
         )
     )
 
-    val CHALLENGE_GRADUATION = Challenge(
-        id = 8,
-        type = ChallengeType.BY_GRADE,
-        status = ChallengeStatus.BEFORE,
-        name = "졸업시험",
-        time = 100,
-        level = 30,
-        trashKind = 6,
-        totalTrash = 0
-    )
 }

@@ -2,9 +2,9 @@ package dku.gyeongsotone.gulging.campusplogging.data.repository
 
 import android.util.Log
 import dku.gyeongsotone.gulging.campusplogging.data.network.RestApi
-import dku.gyeongsotone.gulging.campusplogging.data.network.request.SendMailAuthRequest
-import dku.gyeongsotone.gulging.campusplogging.data.network.request.VerifyMailAuthRequest
-import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_ACCESS_TOKEN
+import dku.gyeongsotone.gulging.campusplogging.data.network.SendMailAuthRequest
+import dku.gyeongsotone.gulging.campusplogging.data.network.VerifyMailAuthRequest
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_TOKEN
 import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpString
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -19,7 +19,7 @@ object UnivCertificationRepository {
      * @return String: error message (null if success)
      */
     suspend fun sendMailAuth(studentId: String): String? = withContext(Dispatchers.IO) {
-        val token = getSpString(SP_ACCESS_TOKEN)!!
+        val token = getSpString(SP_TOKEN)!!
         val request = SendMailAuthRequest(token, studentId)
         val response = camploApi.sendMailAuth(request)
         Log.d(TAG, "sendMailAuth response: \n${response}")
@@ -37,7 +37,7 @@ object UnivCertificationRepository {
      * @return String: error message (null if success)
      */
     suspend fun verifyMailAuth(verificationCode: String): String? = withContext(Dispatchers.IO) {
-        val token = getSpString(SP_ACCESS_TOKEN)!!
+        val token = getSpString(SP_TOKEN)!!
         val request = VerifyMailAuthRequest(token, verificationCode)
         val response = camploApi.verifyMailAuth(request)
         Log.d(TAG, "verifyMailAuth response: \n${response}")

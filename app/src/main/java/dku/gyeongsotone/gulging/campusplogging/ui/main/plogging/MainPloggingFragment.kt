@@ -35,7 +35,7 @@ class MainPloggingFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.setPloggingProgress()
+        viewModel.updateData()
     }
 
     /** binding 설정 */

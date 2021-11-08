@@ -1,10 +1,10 @@
-package dku.gyeongsotone.gulging.campusplogging.data.network.response
+package dku.gyeongsotone.gulging.campusplogging.data.network
 
 import com.squareup.moshi.Json
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.UnivCertStatus
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.User
 
-data class UserResponse(
+data class UserProperty(
     @Json(name = "user_id")
     val userId: String,
 
@@ -18,5 +18,5 @@ data class UserResponse(
     val univCertStatus: Int
 )
 
-fun UserResponse.toUser() =
+fun UserProperty.toUser() =
     User(userId, nickname, studentId, UnivCertStatus.values()[univCertStatus])

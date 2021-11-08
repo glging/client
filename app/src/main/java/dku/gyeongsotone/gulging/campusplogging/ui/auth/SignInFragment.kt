@@ -23,7 +23,7 @@ import dku.gyeongsotone.gulging.campusplogging.data.local.model.UnivCertStatus
 import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentSignInBinding
 import dku.gyeongsotone.gulging.campusplogging.ui.main.MainActivity
 import dku.gyeongsotone.gulging.campusplogging.ui.univcertification.UnivCertificationActivity
-import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_ACCESS_TOKEN
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_TOKEN
 import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpString
 import dku.gyeongsotone.gulging.campusplogging.utils.getApplication
 
@@ -80,9 +80,9 @@ class SignInFragment : Fragment() {
     /** 액세스 토큰 존재하면 바로 메인화면으로 이동 */
     private fun checkAccessToken() {
 
-        when (val token = getSpString(SP_ACCESS_TOKEN)) {
-            null, "" -> binding.layoutSplash.isGone = true
-            else -> viewModel.getUserInfo(token)
+        when (val token = getSpString(SP_TOKEN)) {
+            null, "" -> binding.layoutSplash.root.isGone = true
+            else -> viewModel.tokenLogin(token)
         }
     }
 
