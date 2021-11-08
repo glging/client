@@ -1,23 +1,57 @@
 package dku.gyeongsotone.gulging.campusplogging.ui.main.ranking
 
-import androidx.databinding.ObservableDouble
+import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dku.gyeongsotone.gulging.campusplogging.data.repository.PloggingRepository
-import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_LEVEL
-import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_PROGRESS
-import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_REMAIN_DISTANCE
-import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_TOTAL_DISTANCE
-import dku.gyeongsotone.gulging.campusplogging.utils.Constant.UNIV_DISTANCE
-import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpDouble
-import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpInt
-import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.setSpDouble
-import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.setSpInt
+import dku.gyeongsotone.gulging.campusplogging.data.local.model.RankingInfo
+import dku.gyeongsotone.gulging.campusplogging.data.local.model.RankingUser
+import dku.gyeongsotone.gulging.campusplogging.data.repository.ApiRepository
+import dku.gyeongsotone.gulging.campusplogging.data.repository.Result
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_TOKEN
+import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpString
 import kotlinx.coroutines.launch
-import kotlin.math.floor
-import kotlin.math.roundToInt
 
 class MainRankingViewModel : ViewModel() {
+    private val repository = ApiRepository
 
+    val allUserCount = ObservableInt()
+    val allBadgeCount = ObservableInt()
+    val ranking = ObservableField<List<RankingUser>>()
+    val myRanking = ObservableField<RankingUser>()
+
+    // 토스트 메시지
+    private val _toastMsg = MutableLiveData<String>()
+    val toastMsg: LiveData<String> = _toastMsg
+
+
+    init {
+        updateData()
+    }
+
+    /**
+     * 데이터 갱신
+     */
+    fun updateData() {
+        updateRankingInfo()
+    }
+
+    private fun updateRankingInfo() = viewModelScope.launch {
+        val token = getSpString(SP_TOKEN)!!
+        val response = repository.getRanking(token)
+
+        // 오류가 발생했을 경우, 에러 메시지 띄운 후 리턴
+        if (response is Result.Error) {
+            _toastMsg.value = response.message
+            return@launch
+        }
+
+        val rankingInfo = (response as Result.Success<RankingInfo>).data
+        allUserCount.set(rankingInfo.allUserCount)
+        allBadgeCount.set(rankingInfo.allBadgeCount)
+        ranking.set(rankingInfo.ranking)
+        myRanking.set(rankingInfo.myRanking)
+    }
 }

@@ -5,7 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dku.gyeongsotone.gulging.campusplogging.data.repository.UnivCertificationRepository
+import dku.gyeongsotone.gulging.campusplogging.data.repository.ApiRepository
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant
+import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil
+import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpString
 import kotlinx.coroutines.launch
 
 class MailAuthViewModel : ViewModel() {
@@ -13,7 +16,7 @@ class MailAuthViewModel : ViewModel() {
         private val TAG = this::class.java.name
     }
 
-    private val repository = UnivCertificationRepository
+    private val repository = ApiRepository
 
     // 사용자가 입력한 학번/인증번호
     val studentId = ObservableField<String>()
@@ -53,7 +56,8 @@ class MailAuthViewModel : ViewModel() {
         _keyboardHide.value = true
 
         viewModelScope.launch {
-            val result: String? = repository.verifyMailAuth(verificationCode.get()!!)
+            val token = getSpString(Constant.SP_TOKEN)!!
+            val result: String? = repository.verifyMailAuth(token, verificationCode.get()!!)
             if (result != null) {
                 _toastMsg.value = result!!
                 return@launch

@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.User
-import dku.gyeongsotone.gulging.campusplogging.data.repository.AuthRepository
+import dku.gyeongsotone.gulging.campusplogging.data.repository.ApiRepository
 import kotlinx.coroutines.launch
 
 class SignInViewModel : ViewModel() {
@@ -15,7 +15,7 @@ class SignInViewModel : ViewModel() {
         private val TAG = this::class.java.name
     }
 
-    private val repository = AuthRepository
+    private val repository = ApiRepository
 
     // 사용자가 입력한 아이디/비밀번호 정보
     val userId = ObservableField<String>()

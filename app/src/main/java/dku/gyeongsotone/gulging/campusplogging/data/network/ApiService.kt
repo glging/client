@@ -39,6 +39,9 @@ interface CamploApiService {
 
     @GET("/login")
     suspend fun tokenLogin(@Query("access_token") token: String): Response<TokenLoginResponse>
+
+    @GET("/ranking")
+    suspend fun getRanking(@Query("access_token") token: String): Response<GetRankingResponse>
 }
 
 object RestApi {

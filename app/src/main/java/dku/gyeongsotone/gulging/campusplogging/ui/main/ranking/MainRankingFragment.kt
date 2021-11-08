@@ -1,17 +1,15 @@
 package dku.gyeongsotone.gulging.campusplogging.ui.main.ranking
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dku.gyeongsotone.gulging.campusplogging.R
-import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentMainPloggingBinding
 import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentMainRankingBinding
-import dku.gyeongsotone.gulging.campusplogging.ui.plogging.PloggingActivity
 
 
 class MainRankingFragment : Fragment() {
@@ -23,15 +21,17 @@ class MainRankingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         init(inflater, container)
-        setOnClickListener()
 
         return binding.root
     }
 
-    /** binding 설정 */
+
+    /**
+     * 화면 초기화
+     */
     private fun init(inflater: LayoutInflater, container: ViewGroup?) {
+        // binding 설정
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_main_ranking,
@@ -40,10 +40,36 @@ class MainRankingFragment : Fragment() {
         )
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+
+        setClickListener()  // 클릭 리스너 설정
+        setObserver()   // Observer 설정
     }
 
-    /** 클릭 리스너 설정 */
-    private fun setOnClickListener() {
+
+    /**
+     * 클릭 리스너 설정
+     */
+    private fun setClickListener() {}
+
+
+    /**
+     * observer 설정
+     */
+    private fun setObserver() {
+        setToastMsgObserver()
+    }
+
+
+    /**
+     * 토스트 메시지 observer 설정
+     */
+    private fun setToastMsgObserver() {
+        viewModel.toastMsg.observe(viewLifecycleOwner) { msg ->
+            if (msg.isNotEmpty()) {
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 

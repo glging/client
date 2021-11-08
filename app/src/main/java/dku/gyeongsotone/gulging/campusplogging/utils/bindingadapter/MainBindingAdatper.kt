@@ -14,10 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.Challenge
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.ChallengeStatus
-import dku.gyeongsotone.gulging.campusplogging.data.local.model.ChallengeType
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.Plogging
-import dku.gyeongsotone.gulging.campusplogging.ui.main.challenge.ChallengeSmallAdapter
+import dku.gyeongsotone.gulging.campusplogging.data.local.model.RankingUser
+import dku.gyeongsotone.gulging.campusplogging.ui.main.challenge.ChallengeAdapter
 import dku.gyeongsotone.gulging.campusplogging.ui.main.history.PloggingHistoryAdapter
+import dku.gyeongsotone.gulging.campusplogging.ui.main.ranking.RankingAdapter
 
 /**
  * MainActivity와 관련된 binding adpater
@@ -42,16 +43,15 @@ fun RecyclerView.setPloggingHistory(items: List<Plogging>?) {
 
 @BindingAdapter("challenges")
 fun RecyclerView.setChallenge(items: List<Challenge>) {
-    if (items[0].type == ChallengeType.BY_GRADE) {
-        if (adapter == null) {
-            adapter = ChallengeSmallAdapter().apply {
-                setHasStableIds(true)
-            }
+    if (adapter == null) {
+        adapter = ChallengeAdapter().apply {
+            setHasStableIds(true)
         }
-
-        (adapter as ChallengeSmallAdapter).replaceAll(items)
-        adapter!!.notifyDataSetChanged()
     }
+
+    (adapter as ChallengeAdapter).replaceAll(items)
+    adapter!!.notifyDataSetChanged()
+
 }
 
 @BindingAdapter("challengeStatus")
@@ -86,4 +86,16 @@ fun TextView.setTextStyle(status: ChallengeStatus, challengeAchieved: Boolean?) 
     }
 }
 
+@BindingAdapter("ranking")
+fun RecyclerView.setRanking(items: List<RankingUser>?) {
+    if (items == null) return
+
+    if (adapter == null) {
+        adapter = RankingAdapter()
+    }
+
+    (adapter as RankingAdapter).replaceAll(items)
+    adapter!!.notifyDataSetChanged()
+
+}
 

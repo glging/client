@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.Challenge
 import dku.gyeongsotone.gulging.campusplogging.databinding.ItemChallengeBinding
 
-class ChallengeSmallAdapter : RecyclerView.Adapter<ChallengeSmallAdapter.ViewHolder>() {
+class ChallengeAdapter : RecyclerView.Adapter<ChallengeAdapter.ViewHolder>() {
     private val items = mutableListOf<Challenge>()
 
     override fun onCreateViewHolder(
