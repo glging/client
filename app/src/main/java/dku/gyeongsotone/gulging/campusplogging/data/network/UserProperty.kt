@@ -29,3 +29,5 @@ fun UserProperty.toUser() = User(
     univCertStatus = UnivCertStatus.values()[univCertStatus],
     profileImage = Picasso.get().load(profileImage).get()
 )
+
+

@@ -42,6 +42,9 @@ interface CamploApiService {
 
     @GET("/ranking")
     suspend fun getRanking(@Query("access_token") token: String): Response<GetRankingResponse>
+
+    @GET("/plogging-history")
+    suspend fun getPloggingHistory(@Query("access_token") token: String): Response<GetPloggingHistory>
 }
 
 object RestApi {

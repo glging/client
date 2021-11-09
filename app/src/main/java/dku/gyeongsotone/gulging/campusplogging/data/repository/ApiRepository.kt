@@ -1,6 +1,7 @@
 package dku.gyeongsotone.gulging.campusplogging.data.repository
 
 import android.util.Log
+import dku.gyeongsotone.gulging.campusplogging.data.local.model.Plogging
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.RankingInfo
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.User
 import dku.gyeongsotone.gulging.campusplogging.data.network.*
@@ -151,6 +152,15 @@ object ApiRepository {
             else -> Result.Error(response.message())
         }
 
+    }
+
+    suspend fun getPloggingHistory(token: String): Result<List<Plogging>> = withContext(Dispatchers.IO) {
+        val response = camploApi.getPloggingHistory(token)
+
+        return@withContext when (response.isSuccessful) {
+            true -> Result.Success(response.body()!!.history.map { it.toPlogging() })
+            false -> Result.Error(response.message())
+        }
     }
 }
 

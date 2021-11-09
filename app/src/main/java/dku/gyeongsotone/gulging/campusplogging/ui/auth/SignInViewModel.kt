@@ -6,8 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dku.gyeongsotone.gulging.campusplogging.data.local.model.Plogging
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.User
 import dku.gyeongsotone.gulging.campusplogging.data.repository.ApiRepository
+import dku.gyeongsotone.gulging.campusplogging.data.repository.PloggingRepository
+import dku.gyeongsotone.gulging.campusplogging.data.repository.Result
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_TOKEN
+import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpString
 import kotlinx.coroutines.launch
 
 class SignInViewModel : ViewModel() {
@@ -67,6 +72,13 @@ class SignInViewModel : ViewModel() {
                 _toastMsg.value = result.first!!
                 return@launch
             }
+
+            val token = getSpString(SP_TOKEN)!!
+            val ploggingHistory =
+                (repository.getPloggingHistory(token) as Result.Success<List<Plogging>>).data
+            val ploggingDao = PloggingRepository.dao
+
+            ploggingHistory.forEach { ploggingDao.insert(it) }
 
             user = result.second!!
             _signInResult.value = SignInStatus.SUCCESS
