@@ -47,13 +47,15 @@ class SignInFragment : Fragment() {
 
         init(inflater, container)
         checkAccessToken()
-        setObserver()
 
         return binding.root
     }
 
-    /** binding, view model, spannable text 설정 */
+    /**
+     * 초기 설정
+     */
     private fun init(inflater: LayoutInflater, container: ViewGroup?) {
+        // binding 설정
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_sign_in,
@@ -65,10 +67,13 @@ class SignInFragment : Fragment() {
         application = getApplication(requireActivity())
 
         setSpannableText()
-        setClickListener()
+        setClickListener()  // 클릭 리스너 설정
+        setObserver()  // observer 설정
     }
 
-    /** spannable text 설정 */
+    /**
+     * spannable text 설정
+     */
     private fun setSpannableText() {
         val signUpBtnSpannable = SpannableStringBuilder("혹시 처음 오셨나요? 회원가입하러 가기")
         signUpBtnSpannable.setSpan(
@@ -81,7 +86,10 @@ class SignInFragment : Fragment() {
         binding.btnSignUp.text = signUpBtnSpannable
     }
 
-    /** 액세스 토큰 존재하면 바로 메인화면으로 이동 */
+
+    /**
+     * 액세스 토큰 존재하면 바로 메인화면으로 이동
+     */
     private fun checkAccessToken() {
 
         when (val token = getSpString(SP_TOKEN)) {
@@ -90,32 +98,46 @@ class SignInFragment : Fragment() {
         }
     }
 
-    /** 클릭 리스너 설정 */
+
+    /**
+     * 클릭 리스너 설정
+     */
     private fun setClickListener() {
         binding.btnSignUp.setOnClickListener { onSignUpBtnClick() }
         binding.btnSignIn.setOnClickListener { onSignInBtnClick() }
     }
 
+
+    /**
+     * 로그인 버튼 클릭 시, 로그인 요청
+     */
     private fun onSignInBtnClick() {
         uiScope.launch {
             LoadingDialog.showWhileDoJob(requireContext(), viewModel.signIn(), "로그인 중입니다")
         }
     }
 
-    /** 회원가입 버튼 클릭 시, 회원가입 프래그먼트로 이동 */
+
+    /**
+     * 회원가입 버튼 클릭 시, 회원가입 프래그먼트로 이동
+     */
     private fun onSignUpBtnClick() {
         findNavController().navigate(
             SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
         )
     }
 
-    /** observer 설정 */
+    /**
+     * observer 설정
+     */
     private fun setObserver() {
         setLoginResultObserver()
         setToastMsgObserver()
     }
 
-    /** 로그인 성공 시 유저를 application에 넣고 메인화면으로 이동 */
+    /**
+     * 로그인 성공 시 유저를 application에 넣고 메인화면으로 이동
+     */
     private fun setLoginResultObserver() {
         viewModel.signInResult.observe(viewLifecycleOwner) { result ->
             Log.d(TAG, "login result: $result")
@@ -126,7 +148,9 @@ class SignInFragment : Fragment() {
         }
     }
 
-    /** 인증 여부에 따라 다음 단계로 이동 */
+    /**
+     * 인증 여부에 따라 다음 단계로 이동
+     */
     private fun navigateToNextStep() {
         // 학교 인증 되어있으면 메인으로 이동
         if (application.user!!.univCertStatus == UnivCertStatus.DONE) {
@@ -141,6 +165,9 @@ class SignInFragment : Fragment() {
         }
     }
 
+    /**
+     * 토스트 메시지 Observer 설정
+     */
     private fun setToastMsgObserver() {
         viewModel.toastMsg.observe(viewLifecycleOwner) { msg ->
             if (msg.isNotEmpty()) {

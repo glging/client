@@ -19,6 +19,9 @@ class PloggingHistoryAdapter : RecyclerView.Adapter<PloggingHistoryAdapter.ViewH
         return items[position].id.toLong()
     }
 
+    /**
+     * 아이템 클릭 시, 플로깅 디테일 화면 띄우는 클릭 리스너 설정
+     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.root.setOnClickListener {
             val context = holder.binding.root.context

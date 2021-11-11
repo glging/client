@@ -6,6 +6,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
 
+/**
+ * SQLite의 plogging 테이블에 접근하는 repository
+ */
 object PloggingRepository {
     private lateinit var dao: PloggingDao
 

@@ -46,7 +46,9 @@ class MainPloggingFragment : Fragment() {
     }
 
 
-    /** binding 설정 */
+    /**
+     * 초기 설정
+     */
     private fun init(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(
             inflater,
@@ -110,7 +112,9 @@ class MainPloggingFragment : Fragment() {
     }
 
 
-    /** 플로깅 액티비티로 이동 */
+    /**
+     * 플로깅 액티비티로 이동
+     */
     private fun onClickStartPloggingBtn() {
         val intent = Intent(requireContext(), PloggingActivity::class.java)
         startActivity(intent)

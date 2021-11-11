@@ -60,9 +60,7 @@ object CamploRepository {
 
     /**
      * 아이디 중복 체크
-     *
-     * @return [String] error message (null if success)
-     * @return [Boolean] true if can use userId (null if fail)
+
      */
     suspend fun idDupCheck(userId: String): Result<Unit> = withContext(Dispatchers.IO) {
         val response = client.idDupCheck(userId)
@@ -93,8 +91,6 @@ object CamploRepository {
 
     /**
      * 재학생 인증 메일 보내기
-     *
-     * @return [String] error message (null if success)
      */
     suspend fun sendMailAuth(studentId: String): Result<Unit> = withContext(Dispatchers.IO) {
         val token = getSpString(SP_TOKEN)!!
@@ -112,8 +108,6 @@ object CamploRepository {
 
     /**
      * 재학생 인증 코드 확인
-     *
-     * @return [String] error message (null if success)
      */
     suspend fun verifyMailAuth(token: String, verificationCode: String): Result<Unit> =
         withContext(Dispatchers.IO) {
@@ -131,8 +125,6 @@ object CamploRepository {
 
     /**
      * 랭킹 가져오기
-     *
-     * @return [Result<Ranking>] 랭킹 정보
      */
     suspend fun getRanking(token: String): Result<RankingInfo> = withContext(Dispatchers.IO) {
         val response = client.getRanking(token)
@@ -145,6 +137,9 @@ object CamploRepository {
 
     }
 
+    /**
+     * 플로깅 기록들 복원하기
+     */
     suspend fun restorePloggingData(token: String): Result<List<Plogging>> =
         withContext(Dispatchers.IO) {
             val response = client.restorePloggingData(token)
@@ -155,6 +150,9 @@ object CamploRepository {
             }
         }
 
+    /**
+     * 플로깅 기록 백업하기
+     */
     suspend fun backUpPlogging(token: String, plogging: Plogging): Result<Unit> =
         withContext(Dispatchers.IO) {
             val response = client.backUpPlogging(
@@ -168,6 +166,9 @@ object CamploRepository {
             }
         }
 
+    /**
+     * 백업된 플로깅 기록 삭제하기
+     */
     suspend fun deletePlogging(token: String, id: Int): Result<Unit> = withContext(Dispatchers.IO) {
         val response = client.deletePlogging(token, id)
 
@@ -178,6 +179,9 @@ object CamploRepository {
     }
 }
 
+/**
+ * 서버 통신 결과 wrapper 클래스
+ */
 sealed class Result<out T> {
     data class Success<T>(val data: T) : Result<T>()
     data class Error(val message: String) : Result<Nothing>()

@@ -45,7 +45,9 @@ class PloggingFinishFragment : Fragment() {
         return binding.root
     }
 
-    /** binding 설정 */
+    /**
+     * 초기 설정
+     */
     private fun init(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(
             inflater,

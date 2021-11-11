@@ -35,7 +35,10 @@ class SignUpCompleteFragment : Fragment() {
         return binding.root
     }
 
-    /** binding, spannable text 설정 */
+
+    /**
+     * 초기 설정
+     */
     private fun init(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(
             inflater,
@@ -48,7 +51,9 @@ class SignUpCompleteFragment : Fragment() {
         setSpannableText()
     }
 
-    /** spannable text 설정 */
+    /**
+     * spannable text 설정
+     */
     private fun setSpannableText() {
         val titleTextViewSpannable = SpannableStringBuilder("회원가입 완료!")
         titleTextViewSpannable.setSpan(
@@ -60,12 +65,16 @@ class SignUpCompleteFragment : Fragment() {
         binding.tvTitle.text = titleTextViewSpannable
     }
 
-    /** 클릭 리스너 설정 */
+    /**
+     *  클릭 리스너 설정
+     */
     private fun setOnClickListener() {
         binding.btnStart.setOnClickListener { onClickStartBtn() }
     }
 
-    /** 시작하기 버튼 클릭 시, 학교 인증 액티비티로 이동하고 현재 액티비티 닫기*/
+    /**
+     * 시작하기 버튼 클릭 시, 학교 인증 액티비티로 이동하고 현재 액티비티 닫기
+     */
     private fun onClickStartBtn() {
         val intent = Intent(context, UnivCertificationActivity::class.java)
         startActivity(intent)

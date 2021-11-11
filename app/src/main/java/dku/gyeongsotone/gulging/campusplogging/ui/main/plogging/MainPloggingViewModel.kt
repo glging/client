@@ -102,7 +102,7 @@ class MainPloggingViewModel : ViewModel() {
     }
 
     /**
-     * 플로깅 데이터 가져오기
+     * 서버에서 플로깅 데이터 가져와서 내장DB에 넣기
      */
     fun restorePloggingData() = viewModelScope.launch {
         val token = PreferenceUtil.getSpString(Constant.SP_TOKEN)!!

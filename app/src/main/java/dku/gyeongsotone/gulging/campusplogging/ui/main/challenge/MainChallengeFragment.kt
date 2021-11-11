@@ -22,17 +22,18 @@ class MainChallengeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         init(inflater, container)
 
         return binding.root
     }
+
 
     override fun onResume() {
         super.onResume()
 
         viewModel.updateChallengeStatuses()
     }
+
 
     /**
      * 화면 초기화

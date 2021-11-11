@@ -32,13 +32,6 @@ class MainRankingFragment : Fragment() {
     }
 
 
-    override fun onResume() {
-        super.onResume()
-
-        viewModel.updateData()
-    }
-
-
     /**
      * 화면 초기화
      */
@@ -52,6 +45,14 @@ class MainRankingFragment : Fragment() {
         )
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        // swipe refresh 설정
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            uiScope.launch {
+                viewModel.updateData().join()
+                binding.swipeRefreshLayout.isRefreshing = false
+            }
+        }
 
         setObserver()   // Observer 설정
     }

@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         Log.d(TAG, "onStart")
-
         checkPloggingServiceStatus()
     }
 
@@ -56,7 +55,9 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onResume")
     }
 
-    /** binding, view pager, tab layout 설정 */
+    /**
+     * 초기 설정
+     */
     private fun init() {
         // view binding
         binding = DataBindingUtil.inflate(
@@ -78,6 +79,9 @@ class MainActivity : AppCompatActivity() {
         }.attach()
     }
 
+    /**
+     * 권한 정보 체크
+     */
     private fun checkPermission() {
         val deniedPermissions = mutableListOf<String>()
         for (permission in REQUIRE_PERMISSIONS) {
@@ -90,6 +94,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * 권한 요청
+     */
     private fun startPermissionsRequestActivity() {
         val intent = Intent(
             Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
@@ -99,6 +106,9 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    /**
+     * 권한 거절되면 다시 요청하기
+     */
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -120,7 +130,9 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    /** 플로깅이 진행중이면 플로깅 화면으로 이동 */
+    /**
+     * 플로깅이 진행중이면 플로깅 화면으로 이동
+     */
     private fun checkPloggingServiceStatus() {
         if (PloggingService.isRunning) {
             val intent = Intent(this, PloggingActivity::class.java)
@@ -130,7 +142,9 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    /** view pager2 adapter */
+    /**
+     * 뷰페이저 어댑터 설정
+     */
     inner class MainViewPagerAdapter(fragmentActivity: FragmentActivity) :
         FragmentStateAdapter(fragmentActivity) {
         override fun getItemCount(): Int = MAIN_TAB_NAMES.size

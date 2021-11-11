@@ -44,7 +44,9 @@ class SignUpViewModel : ViewModel() {
     val toastMsg: LiveData<String> = _toastMsg
 
 
-    /** 비밀번호 입력창 옆 눈 아이콘 클릭 시 비밀번호 보이게/안보이게 여부 반전 */
+    /**
+     * 비밀번호 입력창 옆 눈 아이콘 클릭 시 비밀번호 보이게/안보이게 여부 반전
+     */
     fun onClickShowPassword1Btn() {
         showPassword1.set(!showPassword1.get())
     }
@@ -53,7 +55,9 @@ class SignUpViewModel : ViewModel() {
         showPassword2.set(!showPassword2.get())
     }
 
-    /** text 입력 후에 조건에 따라 입력 상태 변경 */
+    /**
+     * text 입력 후에 조건에 따라 입력 상태 변경
+     */
     fun onUserIdTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         when {
             count == 0 -> userIdStatus.set(UserIdStatus.EMPTY)
@@ -79,7 +83,9 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    /** 아이디 중복 체크 */
+    /**
+     * 아이디 중복 체크
+     */
     fun onClickUserIdDupCheckBtn() {
         viewModelScope.launch {
             val response = repository.idDupCheck(userId.get()!!)
@@ -96,7 +102,9 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    /** 회원가입 서버에 요청 */
+    /**
+     * 회원가입 서버에 요청
+     */
     fun onClickSignUpBtn() {
         viewModelScope.launch {
             val response = repository.signUp(userId.get()!!, password1.get()!!)

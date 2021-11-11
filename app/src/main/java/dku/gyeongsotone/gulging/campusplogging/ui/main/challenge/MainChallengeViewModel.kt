@@ -1,14 +1,11 @@
 package dku.gyeongsotone.gulging.campusplogging.ui.main.challenge
 
 import android.util.Log
-import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.Challenge
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.ChallengeStatus
-import dku.gyeongsotone.gulging.campusplogging.data.local.model.ChallengeType
 import dku.gyeongsotone.gulging.campusplogging.data.repository.PloggingRepository
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.CHALLENGE_LIST
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_CHALLENGE_ID
@@ -42,6 +39,9 @@ class MainChallengeViewModel : ViewModel() {
     private val allChallenge: List<Challenge>
         get() = freshmanChallenges.get()!! + sophomoreJuniorChallenges.get()!! + seniorChallenges.get()!! + graduationChallenge.get()!!
 
+    /**
+     * 학년 별 챌린지 설정
+     */
     init {
         freshmanChallenges.set(CHALLENGE_LIST.subList(0, 2))
         sophomoreJuniorChallenges.set(CHALLENGE_LIST.subList(2, 6))
@@ -51,35 +51,36 @@ class MainChallengeViewModel : ViewModel() {
         updateChallengeStatuses()
     }
 
-    fun updateChallengeStatuses() {
-        viewModelScope.launch {
-            val time = repository.getTotalTime()
-            val level = floor(repository.getTotalDistance() / UNIV_DISTANCE).toInt()
-            val trashKind = repository.getTrashKind()
-            val totalTrash = repository.getTotalTrash()
-            Log.d(TAG, "time: $time, level: $level, trashKind: $trashKind, totalTrash: $totalTrash")
+    /**
+     * 챌린지 달성 여부 업데이트
+     */
+    fun updateChallengeStatuses() = viewModelScope.launch {
+        val time = repository.getTotalTime()
+        val level = floor(repository.getTotalDistance() / UNIV_DISTANCE).toInt()
+        val trashKind = repository.getTrashKind()
+        val totalTrash = repository.getTotalTrash()
+        Log.d(TAG, "time: $time, level: $level, trashKind: $trashKind, totalTrash: $totalTrash")
 
-            for (challenge in allChallenge) {
-                Log.d(TAG, "current challenge: ${challenge.name}")
-                if (challenge.isAchieved(time, level, trashKind, totalTrash)) {
-                    challenge.status = ChallengeStatus.DONE
-                }
-                else {
-                    challenge.status = ChallengeStatus.NOW
-                    setSpInt(SP_CHALLENGE_ID, challenge.id)
-                    break
-                }
+        for (challenge in allChallenge) {
+            Log.d(TAG, "current challenge: ${challenge.name}")
+            if (challenge.isAchieved(time, level, trashKind, totalTrash)) {
+                challenge.status = ChallengeStatus.DONE
+            } else {
+                challenge.status = ChallengeStatus.NOW
+                setSpInt(SP_CHALLENGE_ID, challenge.id)
+                break
             }
-
-            freshmanChallenges.notifyChange()
-            sophomoreJuniorChallenges.notifyChange()
-            seniorChallenges.notifyChange()
-            graduationChallenge.notifyChange()
-
-            setSpInt(SP_TOTAL_TIME, time)
-            setSpInt(SP_LEVEL, level)
-            setSpInt(SP_TRASH_KIND, trashKind)
-            setSpInt(SP_TOTAL_TRASH, totalTrash)
         }
+
+        freshmanChallenges.notifyChange()
+        sophomoreJuniorChallenges.notifyChange()
+        seniorChallenges.notifyChange()
+        graduationChallenge.notifyChange()
+
+        setSpInt(SP_TOTAL_TIME, time)
+        setSpInt(SP_LEVEL, level)
+        setSpInt(SP_TRASH_KIND, trashKind)
+        setSpInt(SP_TOTAL_TRASH, totalTrash)
     }
+
 }

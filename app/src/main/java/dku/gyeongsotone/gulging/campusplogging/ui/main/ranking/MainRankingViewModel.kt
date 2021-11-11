@@ -28,6 +28,10 @@ class MainRankingViewModel : ViewModel() {
     private val _toastMsg = MutableLiveData<String>()
     val toastMsg: LiveData<String> = _toastMsg
 
+    init {
+        updateData()
+    }
+
 
     /**
      * 데이터 갱신
@@ -38,6 +42,9 @@ class MainRankingViewModel : ViewModel() {
         joinAll(updateRankingJob)
     }
 
+    /**
+     * 랭킹 정보 업데이트
+     */
     private fun updateRankingInfo() = viewModelScope.launch {
         val token = getSpString(SP_TOKEN)!!
         val response = repository.getRanking(token)

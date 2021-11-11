@@ -34,7 +34,9 @@ class PloggingActivity : AppCompatActivity() {
         processIntent(intent)
     }
 
-    /** 플로깅 종료 여부 묻는 다이얼로그 띄우고 결과에 따라 처리 */
+    /**
+     * 플로깅 종료 여부 묻는 다이얼로그 띄우고 결과에 따라 처리
+     */
     override fun onBackPressed() {
         if (!backPressable) return
 

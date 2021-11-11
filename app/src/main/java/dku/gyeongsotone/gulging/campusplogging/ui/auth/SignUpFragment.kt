@@ -33,13 +33,13 @@ class SignUpFragment : Fragment() {
     ): View {
 
         init(inflater, container)
-        setClickListener()
-        setObserver()
 
         return binding.root
     }
 
-    /** binding, view model, spannable text 설정 */
+    /**
+     * 초기 설정
+     */
     private fun init(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(
             inflater,
@@ -52,9 +52,12 @@ class SignUpFragment : Fragment() {
         application = getApplication(requireActivity())
 
         setSpannableText()
+        setObserver()
     }
 
-    /** spannable text 설정 */
+    /**
+     * pannable text 설정
+     */
     private fun setSpannableText() {
         val titleTextViewSpannable = SpannableStringBuilder("반갑습니다!\n캠퍼스플로깅을 시작해봐요")
         titleTextViewSpannable.setSpan(
@@ -66,20 +69,21 @@ class SignUpFragment : Fragment() {
         binding.tvTitle.text = titleTextViewSpannable
     }
 
-    /** 클릭 리스너 설정 */
-    private fun setClickListener() {}
 
-    /** observer 설정 */
+    /**
+     * observer 설정
+     */
     private fun setObserver() {
         setSignUpResultObserver()
         setToastMsgObserver()
     }
 
-    /** 회원가입 성공 시, 유저를 application에 넣고 회원가입 완료 페이지로 이동 */
+    /**
+     * 회원가입 성공 시, 유저를 application에 넣고 회원가입 완료 페이지로 이동
+     */
     private fun setSignUpResultObserver() {
         viewModel.signUpResult.observe(viewLifecycleOwner) { result ->
             if (result == SignUpStatus.SUCCESS) {
-
                 application.user = viewModel.user
                 findNavController().navigate(
                     SignUpFragmentDirections.actionSignUpFragmentToSignUpCompleteFragment()

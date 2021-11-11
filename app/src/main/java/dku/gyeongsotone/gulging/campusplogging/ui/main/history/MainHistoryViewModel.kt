@@ -45,13 +45,18 @@ class MainHistoryViewModel(val user: User) : ViewModel() {
         updateData()
     }
 
-    fun updateData() {
-        viewModelScope.launch {
-            setTotalData()
-            setMonthlyData()
-        }
+    /**
+     * 데이터 갱신
+     */
+    fun updateData() = viewModelScope.launch {
+        setTotalData()
+        setMonthlyData()
     }
 
+
+    /**
+     * 총 누적 데이터 설정
+     */
     private suspend fun setTotalData() {
         val lTotalDistance: Double = repository.getTotalDistance()
         val lTotalTrash: Int = repository.getTotalTrash()
@@ -66,6 +71,9 @@ class MainHistoryViewModel(val user: User) : ViewModel() {
         totalBadge.set(lTotalBadge)
     }
 
+    /**
+     * 월별 데이터 설정
+     */
     private suspend fun setMonthlyData() {
         Log.d(TAG, "setMonthlyData() called!! month: ${month.get()}")
         calendar.set(Calendar.DAY_OF_MONTH, 1)
@@ -87,6 +95,9 @@ class MainHistoryViewModel(val user: User) : ViewModel() {
         monthlyTrash.set(lMonthlyTrash)
     }
 
+    /**
+     * 이전 달로 이동
+     */
     fun setPreMonth() {
         calendar.add(Calendar.MONTH, -1)
         year.set(calendar.get(Calendar.YEAR))
@@ -98,7 +109,9 @@ class MainHistoryViewModel(val user: User) : ViewModel() {
         }
     }
 
-
+    /**
+     * 다음 달로 이동
+     */
     fun setNextMonth() {
         calendar.add(Calendar.MONTH, 1)
         year.set(calendar.get(Calendar.YEAR))

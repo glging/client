@@ -40,6 +40,9 @@ class PloggingDetailActivity : AppCompatActivity() {
         processIntent()
     }
 
+    /**
+     * 초기 설정
+     */
     private fun init() {
         binding = DataBindingUtil.inflate(
             layoutInflater,
@@ -53,11 +56,13 @@ class PloggingDetailActivity : AppCompatActivity() {
         setClickListener()
     }
 
-    /** intent에서 플로깅의 id 받고, 플로깅 set */
+    /**
+     * intent에서 플로깅의 id 받고, 플로깅 set
+     */
     private fun processIntent() {
         ploggingId = intent.extras!!.getInt(EXTRA_PLOGGING_ID)
 
-        CoroutineScope(Dispatchers.Main).launch {
+        uiScope.launch {
             val plogging = repository.getPlogging(ploggingId!!)
             Log.d(TAG, "received plogging: $plogging")
 
@@ -72,12 +77,17 @@ class PloggingDetailActivity : AppCompatActivity() {
     }
 
 
-    /** 클릭 리스너 설정 */
+    /**
+     * 클릭 리스너 설정
+     */
     private fun setClickListener() {
         binding.layoutPloggingDetail.btnMenu.setOnClickListener { onMenuBtnClick() }
         binding.layoutPloggingDetail.btnExit.setOnClickListener { finish() }
     }
 
+    /**
+     * 햄버거 버튼 클릭 시, 메뉴 보여주기
+     */
     private fun onMenuBtnClick() {
         val popupMenu = PopupMenu(this, binding.layoutPloggingDetail.btnMenu)
         popupMenu.inflate(R.menu.menu_plogging_detail)
@@ -91,6 +101,9 @@ class PloggingDetailActivity : AppCompatActivity() {
         popupMenu.show()
     }
 
+    /**
+     * 플로깅 디테일 화면을 bitmap으로 변환해서 공유
+     */
     private fun sharePlogging() {
         val bitmap = getBitmapFromView(binding)
         val file = File.createTempFile("picture_", ".jpeg")
@@ -110,6 +123,9 @@ class PloggingDetailActivity : AppCompatActivity() {
         startActivity(shareIntent)
     }
 
+    /**
+     * 플로깅 데이터 삭제
+     */
     private fun deletePlogging() = uiScope.launch {
         val token = getSpString(SP_TOKEN)!!
 
@@ -119,6 +135,9 @@ class PloggingDetailActivity : AppCompatActivity() {
         finish()
     }
 
+    /**
+     * 현재 화면을 bitmpa으로 변환해서 리턴
+     */
     private fun getBitmapFromView(binding: ActivityPloggingDetailBinding): Bitmap {
         val bitmap: Bitmap?
 
