@@ -28,6 +28,7 @@ import dku.gyeongsotone.gulging.campusplogging.ui.custom.TrashCountView
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.TRASH_COUNT_MAX
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.TRASH_COUNT_MIN
+import dku.gyeongsotone.gulging.campusplogging.utils.compress
 import java.io.File
 
 
@@ -45,7 +46,8 @@ class TrashCountFragment : Fragment() {
     private val takePicture =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
             if (success) {
-                viewModel.picture = getBitmapFromUri()
+                val picture = getBitmapFromUri()
+                viewModel.picture = picture.compress()
                 navigateToPloggingFinishFragment()
             } else {
                 showToast("사진을 불러오지 못했습니다. 다시 시도해주세요.")
@@ -98,7 +100,7 @@ class TrashCountFragment : Fragment() {
 
     /** 사진 촬영 후 plogging finish 프래그먼트로 이동 */
     private fun onNextBtnClick() {
-        imageFile = File.createTempFile("picture_", ".png")
+        imageFile = File.createTempFile("picture_", ".jpeg")
         imageUri = FileProvider.getUriForFile(
             requireContext(),
             "fileprovider",

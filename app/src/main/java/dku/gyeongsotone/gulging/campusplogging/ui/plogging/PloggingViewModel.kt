@@ -127,7 +127,7 @@ class PloggingViewModel : ViewModel() {
         )
 
         plogging.set(lPlogging)
-        joinAll(saveOnDatabase())   // , backUpPlogging()
+        joinAll(saveOnDatabase(), backUpPlogging())
     }
 
     /** 플로깅 기록을 DB에 저장 */
@@ -138,14 +138,14 @@ class PloggingViewModel : ViewModel() {
     /**
      * 플로깅 기록을 서버에 백업
      */
-//    private fun backUpPlogging() = viewModelScope.launch {
-//        val token = getSpString(SP_TOKEN)!!
-//        val response = CamploRepository.backUpPlogging(token, plogging.get()!!)
-//
-//        if (response is Result.Error) {
-//            _toastMsg.value = response.message
-//        }
-//    }
+    private fun backUpPlogging() = viewModelScope.launch {
+        val token = getSpString(SP_TOKEN)!!
+        val response = CamploRepository.backUpPlogging(token, plogging.get()!!)
+
+        if (response is Result.Error) {
+            _toastMsg.value = response.message
+        }
+    }
 }
 
 enum class PloggingStatus {

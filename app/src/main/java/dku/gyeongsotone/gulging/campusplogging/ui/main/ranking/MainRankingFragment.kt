@@ -27,20 +27,8 @@ class MainRankingFragment : Fragment() {
     ): View {
 
         init(inflater, container)
-        getRankingInfo()
 
         return binding.root
-    }
-
-
-    private fun getRankingInfo() {
-        uiScope.launch {
-            LoadingDialog.showWhileDoJob(
-                requireContext(),
-                viewModel.updateData(),
-                "랭킹 정보를 불러오고 있습니다"
-            )
-        }
     }
 
 

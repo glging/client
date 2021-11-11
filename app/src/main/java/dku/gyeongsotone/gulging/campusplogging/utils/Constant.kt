@@ -39,6 +39,9 @@ object Constant {
     const val TRASH_COUNT_MIN = 0
     const val TRASH_COUNT_MAX = 99
 
+    /** 기타 상수 */
+    const val MAX_IMAGE_SIZE = 3
+
     /** 권한 관련 상수 */
     const val REQUEST_CODE_LOCATION_PERMISSION = 101
     val REQUIRE_PERMISSIONS =

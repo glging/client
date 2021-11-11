@@ -29,18 +29,9 @@ class Converters {
     }
     @TypeConverter
     fun fromBitmap(bitmap: Bitmap): ByteArray {
-        val sizeMB = bitmap.byteCount.toDouble() / 1024 / 1024
-
-        var quality = 100.0
-        if (sizeMB > 10) {
-            quality = 1000.0 / sizeMB
-        }
-
-        Log.d("SIZE_TEST", "raw sizeMB: $sizeMB, quality: $quality")
         val outputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, floor(quality).toInt(), outputStream)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
 
-        Log.d("SIZE_TEST", "compressed sizeMB: ${bitmap.byteCount.toDouble() / 1024 / 1024}")
         return outputStream.toByteArray()
     }
 }

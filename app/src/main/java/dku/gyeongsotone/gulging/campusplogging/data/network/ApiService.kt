@@ -2,6 +2,7 @@ package dku.gyeongsotone.gulging.campusplogging.data.network
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -46,9 +47,9 @@ interface CamploRepositoryService {
 
     @Multipart
     @POST("/plogging-result")
-    suspend fun backUpPlogging(@PartMap params: Map<String, @JvmSuppressWildcards RequestBody>): Response<Unit>
+    suspend fun backUpPlogging(@PartMap params: Map<String, @JvmSuppressWildcards RequestBody>, @Part picture: MultipartBody.Part): Response<Unit>
 
-    @DELETE
+    @DELETE("/plogging-result")
     suspend fun deletePlogging(
         @Query("access_token") token: String,
         @Query("id") id: Int

@@ -93,9 +93,9 @@ class PloggingDetailActivity : AppCompatActivity() {
 
     private fun sharePlogging() {
         val bitmap = getBitmapFromView(binding)
-        val file = File.createTempFile("picture_", ".png")
+        val file = File.createTempFile("picture_", ".jpeg")
         val outputStream = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
 
         val uri =
             FileProvider.getUriForFile(this, "fileprovider", file)

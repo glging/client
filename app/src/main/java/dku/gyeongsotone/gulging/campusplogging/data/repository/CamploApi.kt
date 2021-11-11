@@ -158,7 +158,7 @@ object CamploRepository {
 
     suspend fun backUpPlogging(token: String, plogging: Plogging): Result<Unit> =
         withContext(Dispatchers.IO) {
-            val response = client.backUpPlogging(plogging.toBackUpRequestMap(token))
+            val response = client.backUpPlogging(plogging.toBackUpRequestMap(token), plogging.picture.toMultipartBody())
 
             return@withContext when (response.isSuccessful) {
                 true -> Result.Success(Unit)

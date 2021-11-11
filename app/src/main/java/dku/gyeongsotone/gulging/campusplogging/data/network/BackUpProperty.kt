@@ -7,6 +7,7 @@ import com.squareup.picasso.Picasso
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.Plogging
 import dku.gyeongsotone.gulging.campusplogging.utils.toDate
 import okhttp3.MediaType
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 import java.io.FileOutputStream
@@ -69,16 +70,18 @@ fun Plogging.toBackUpRequestMap(token: String): HashMap<String, RequestBody> =
         put("can", can.toRequestBody())
         put("paper", paper.toRequestBody())
         put("general", general.toRequestBody())
-        put("picture", picture.toRequestBody())
     }
 
 
-fun Bitmap.toRequestBody(): RequestBody {
-    val file = File.createTempFile("picture_", ".png")
+fun Bitmap.toMultipartBody(): MultipartBody.Part {
+    val file = File.createTempFile("picture_", ".jpeg")
     val outputStream = FileOutputStream(file)
-    this.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+    this.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
 
-    return RequestBody.create(MediaType.parse("image/jpeg"), file)
+    val requestBody: RequestBody =
+        RequestBody.create(MediaType.parse("image/jpeg"), file)
+
+    return MultipartBody.Part.createFormData("picture", file.name, requestBody)
 }
 
 @SuppressLint("SimpleDateFormat")
