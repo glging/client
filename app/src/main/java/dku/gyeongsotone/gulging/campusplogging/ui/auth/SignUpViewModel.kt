@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.User
 import dku.gyeongsotone.gulging.campusplogging.data.repository.CamploRepository
+import dku.gyeongsotone.gulging.campusplogging.data.repository.Result
 import kotlinx.coroutines.launch
 
 class SignUpViewModel : ViewModel() {
@@ -81,11 +82,14 @@ class SignUpViewModel : ViewModel() {
     /** 아이디 중복 체크 */
     fun onClickUserIdDupCheckBtn() {
         viewModelScope.launch {
-            val result: Pair<String?, Boolean?> = repository.idDupCheck(userId.get()!!)
-            if (result.first != null) { // error
-                _toastMsg.value = result.first!!
+            val response = repository.idDupCheck(userId.get()!!)
+
+            // 오류가 발생했을 경우, 에러 메시지 띄운 후 리턴
+            if (response is Result.Error) { // error
+                _toastMsg.value = response.message
                 return@launch
             }
+
             if (userIdStatus.get() == UserIdStatus.BEFORE_CHECK) {
                 userIdStatus.set(UserIdStatus.POSSIBLE)
             }
@@ -95,14 +99,15 @@ class SignUpViewModel : ViewModel() {
     /** 회원가입 서버에 요청 */
     fun onClickSignUpBtn() {
         viewModelScope.launch {
-            val result: Pair<String?, User?> = repository.signUp(userId.get()!!, password1.get()!!)
+            val response = repository.signUp(userId.get()!!, password1.get()!!)
 
-            if (result.first != null) { // error
-                _toastMsg.value = result.first!!
+            // 오류가 발생했을 경우, 에러 메시지 띄운 후 리턴
+            if (response is Result.Error) { // error
+                _toastMsg.value = response.message
                 return@launch
             }
 
-            user = result.second!!
+            user = (response as Result.Success<User>).data
             _signUpResult.value = SignUpStatus.SUCCESS
         }
     }

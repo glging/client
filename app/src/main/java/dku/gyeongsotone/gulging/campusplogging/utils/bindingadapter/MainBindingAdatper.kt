@@ -1,5 +1,6 @@
 package dku.gyeongsotone.gulging.campusplogging.utils.bindingadapter
 
+import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.os.Build
 import android.text.Spannable
@@ -27,6 +28,7 @@ import dku.gyeongsotone.gulging.campusplogging.ui.main.ranking.RankingAdapter
 
 private val TAG = "MainBindingAdapter"
 
+@SuppressLint("NotifyDataSetChanged")
 @BindingAdapter("ploggingHistory")
 fun RecyclerView.setPloggingHistory(items: List<Plogging>?) {
     if (adapter == null) {
@@ -41,6 +43,7 @@ fun RecyclerView.setPloggingHistory(items: List<Plogging>?) {
     }
 }
 
+@SuppressLint("NotifyDataSetChanged")
 @BindingAdapter("challenges")
 fun RecyclerView.setChallenge(items: List<Challenge>) {
     if (adapter == null) {

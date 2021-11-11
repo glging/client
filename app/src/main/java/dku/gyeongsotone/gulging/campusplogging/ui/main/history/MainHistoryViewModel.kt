@@ -1,6 +1,6 @@
 package dku.gyeongsotone.gulging.campusplogging.ui.main.history
 
-import androidx.databinding.ObservableArrayList
+import android.util.Log
 import androidx.databinding.ObservableDouble
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
@@ -16,12 +16,15 @@ import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpDouble
 import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpInt
 import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.setSpDouble
 import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.setSpInt
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.math.floor
 
 class MainHistoryViewModel(val user: User) : ViewModel() {
+    companion object {
+        private val TAG = this::class.java.name
+    }
+
     private val repository = PloggingRepository
 
     val totalDistance = ObservableDouble(getSpDouble(SP_TOTAL_DISTANCE))
@@ -64,6 +67,7 @@ class MainHistoryViewModel(val user: User) : ViewModel() {
     }
 
     private suspend fun setMonthlyData() {
+        Log.d(TAG, "setMonthlyData() called!! month: ${month.get()}")
         calendar.set(Calendar.DAY_OF_MONTH, 1)
         val from = calendar.time
 
@@ -74,6 +78,8 @@ class MainHistoryViewModel(val user: User) : ViewModel() {
         val lMonthlyTime = floor(repository.getMonthlyTime(from, to)).toInt()
         val lMonthlyTrash = floor(repository.getMonthlyTrash(from, to)).toInt()
         val lMonthlyPlogging = repository.getMonthlyPlogging(from, to)
+
+        Log.d(TAG, "monthly plogging: $lMonthlyPlogging")
 
         monthlyPlogging.set(lMonthlyPlogging)
         monthlyDistance.set(lMonthlyDistance)
@@ -86,18 +92,20 @@ class MainHistoryViewModel(val user: User) : ViewModel() {
         year.set(calendar.get(Calendar.YEAR))
         month.set(calendar.get(Calendar.MONTH) + 1)
 
-        viewModelScope.launch(Dispatchers.IO) {
+        Log.d(TAG, "viewModelScope: $viewModelScope")
+        viewModelScope.launch {
             setMonthlyData()
         }
     }
+
 
     fun setNextMonth() {
         calendar.add(Calendar.MONTH, 1)
         year.set(calendar.get(Calendar.YEAR))
         month.set(calendar.get(Calendar.MONTH) + 1)
 
-
-        viewModelScope.launch(Dispatchers.IO) {
+        Log.d(TAG, "viewModelScope: $viewModelScope")
+        viewModelScope.launch {
             setMonthlyData()
         }
     }

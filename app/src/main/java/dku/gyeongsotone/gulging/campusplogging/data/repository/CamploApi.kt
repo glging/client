@@ -21,7 +21,7 @@ object CamploRepository {
      * @return [String] error message (null if success)
      * @return [User] user(null if fail)
      */
-    suspend fun signUp(userId: String, password: String): Pair<String?, User?> =
+    suspend fun signUp(userId: String, password: String): Result<User> =
         withContext(Dispatchers.IO) {
             val request = SignUpRequest(userId, password)
             val response = client.signUp(request)
@@ -30,12 +30,11 @@ object CamploRepository {
 
             return@withContext when (response.body()?.success) {
                 true -> {
-                    val body = response.body()!!
-                    setSpString(SP_TOKEN, body.token!!)
-                    Pair(null, body.user!!.toUser())
+                    setSpString(SP_TOKEN, response.body()!!.token!!)
+                    Result.Success(response.body()!!.user!!.toUser())
                 }
-                false -> Pair(response.body()!!.description, null)
-                null -> Pair(response.message(), null)
+                false -> Result.Error(response.body()!!.description ?: "로그인에 실패하였습니다.")
+                else -> Result.Error(response.message())
             }
         }
 
@@ -65,15 +64,15 @@ object CamploRepository {
      * @return [String] error message (null if success)
      * @return [Boolean] true if can use userId (null if fail)
      */
-    suspend fun idDupCheck(userId: String): Pair<String?, Boolean?> = withContext(Dispatchers.IO) {
+    suspend fun idDupCheck(userId: String): Result<Unit> = withContext(Dispatchers.IO) {
         val response = client.idDupCheck(userId)
         Log.d(TAG, "idDupCheck response: \n${response}")
         Log.d(TAG, "idDupCheck body: \n${response.body()}")
 
         return@withContext when (response.body()?.isExisting?.let { !it }) {
-            true -> Pair(null, true)
-            false -> Pair("이미 존재하는 아이디입니다.", null)
-            null -> Pair(response.message(), null)
+            true ->  Result.Success(Unit)
+            false -> Result.Error("이미 존재하는 아이디입니다.")
+            null -> Result.Error(response.message())
         }
     }
 
@@ -97,7 +96,7 @@ object CamploRepository {
      *
      * @return [String] error message (null if success)
      */
-    suspend fun sendMailAuth(studentId: String): String? = withContext(Dispatchers.IO) {
+    suspend fun sendMailAuth(studentId: String): Result<Unit> = withContext(Dispatchers.IO) {
         val token = getSpString(SP_TOKEN)!!
         val request = SendMailAuthRequest(token, studentId)
         val response = client.sendMailAuth(request)
@@ -105,9 +104,9 @@ object CamploRepository {
         Log.d(TAG, "sendMailAuth body: \n${response.body()}")
 
         return@withContext when (response.body()?.success) {
-            true -> null
-            false -> response.body()!!.description
-            null -> response.message()
+            true -> Result.Success(Unit)
+            false -> Result.Error(response.body()!!.description ?: "인증 메일 전송이 실패하였습니다")
+            null -> Result.Error(response.message())
         }
     }
 
@@ -116,7 +115,7 @@ object CamploRepository {
      *
      * @return [String] error message (null if success)
      */
-    suspend fun verifyMailAuth(token: String, verificationCode: String): String? =
+    suspend fun verifyMailAuth(token: String, verificationCode: String): Result<Unit> =
         withContext(Dispatchers.IO) {
             val request = VerifyMailAuthRequest(token, verificationCode)
             val response = client.verifyMailAuth(request)
@@ -124,9 +123,9 @@ object CamploRepository {
             Log.d(TAG, "verifyMailAuth body: \n${response.body()}")
 
             return@withContext when (response.body()?.success) {
-                true -> null
-                false -> response.body()!!.description
-                null -> response.message()
+                true -> Result.Success(Unit)
+                false -> Result.Error(response.body()!!.description ?: "인증 코드 확인이 실패하였습니다")
+                null -> Result.Error(response.message())
             }
         }
 
@@ -158,7 +157,10 @@ object CamploRepository {
 
     suspend fun backUpPlogging(token: String, plogging: Plogging): Result<Unit> =
         withContext(Dispatchers.IO) {
-            val response = client.backUpPlogging(plogging.toBackUpRequestMap(token), plogging.picture.toMultipartBody())
+            val response = client.backUpPlogging(
+                plogging.toBackUpRequestMap(token),
+                plogging.picture.toMultipartBody()
+            )
 
             return@withContext when (response.isSuccessful) {
                 true -> Result.Success(Unit)

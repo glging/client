@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dku.gyeongsotone.gulging.campusplogging.data.repository.CamploRepository
+import dku.gyeongsotone.gulging.campusplogging.data.repository.Result
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant
 import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil
 import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpString
@@ -39,9 +40,11 @@ class MailAuthViewModel : ViewModel() {
     /** 인증번호 전송 */
     fun onClickSendVerificationCodeBtn() {
         viewModelScope.launch {
-            val result: String? = repository.sendMailAuth(studentId.get()!!)
-            if (result != null) {
-                _toastMsg.value = result!!
+            val response = repository.sendMailAuth(studentId.get()!!)
+
+            // 오류가 발생했을 경우, 에러 메시지 띄운 후 리턴
+            if (response is Result.Error) { // error
+                _toastMsg.value = response.message
                 return@launch
             }
 
@@ -57,9 +60,11 @@ class MailAuthViewModel : ViewModel() {
 
         viewModelScope.launch {
             val token = getSpString(Constant.SP_TOKEN)!!
-            val result: String? = repository.verifyMailAuth(token, verificationCode.get()!!)
-            if (result != null) {
-                _toastMsg.value = result!!
+            val response = repository.verifyMailAuth(token, verificationCode.get()!!)
+
+            // 오류가 발생했을 경우, 에러 메시지 띄운 후 리턴
+            if (response is Result.Error) { // error
+                _toastMsg.value = response.message
                 return@launch
             }
 
