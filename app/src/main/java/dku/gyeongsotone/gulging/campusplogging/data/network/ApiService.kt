@@ -2,13 +2,11 @@ package dku.gyeongsotone.gulging.campusplogging.data.network
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 private const val BASE_URL = "http://18.119.6.206:8001"
 
@@ -21,7 +19,7 @@ private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .build()
 
-interface CamploApiService {
+interface CamploRepositoryService {
     @POST("/login")
     suspend fun signIn(@Body signInRequest: SignInRequest): Response<SignInResponse>
 
@@ -44,9 +42,19 @@ interface CamploApiService {
     suspend fun getRanking(@Query("access_token") token: String): Response<GetRankingResponse>
 
     @GET("/plogging-history")
-    suspend fun getPloggingHistory(@Query("access_token") token: String): Response<GetPloggingHistory>
+    suspend fun restorePloggingData(@Query("access_token") token: String): Response<RestorePloggingDataResponse>
+
+    @Multipart
+    @POST("/plogging-result")
+    suspend fun backUpPlogging(@PartMap params: Map<String, @JvmSuppressWildcards RequestBody>): Response<Unit>
+
+    @DELETE
+    suspend fun deletePlogging(
+        @Query("access_token") token: String,
+        @Query("id") id: Int
+    ): Response<Unit>
 }
 
-object RestApi {
-    val CamploApi: CamploApiService by lazy { retrofit.create(CamploApiService::class.java) }
+object CamploApi {
+    val client: CamploRepositoryService by lazy { retrofit.create(CamploRepositoryService::class.java) }
 }

@@ -5,16 +5,20 @@ import android.util.Log
 import androidx.databinding.ObservableDouble
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
-import androidx.databinding.ObservableLong
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.Plogging
+import dku.gyeongsotone.gulging.campusplogging.data.repository.CamploRepository
 import dku.gyeongsotone.gulging.campusplogging.data.repository.PloggingRepository
+import dku.gyeongsotone.gulging.campusplogging.data.repository.Result
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_TOKEN
 import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil
+import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpString
 import dku.gyeongsotone.gulging.campusplogging.utils.getCurrentDate
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.math.floor
@@ -55,6 +59,10 @@ class PloggingViewModel : ViewModel() {
 
     // 플로깅 -> 플로깅이 끝난 뒤 생성 (in PloggingFinishFragment)
     val plogging = ObservableField<Plogging>()
+
+    // 토스트 메시지
+    private val _toastMsg = MutableLiveData<String>()
+    val toastMsg: LiveData<String> = _toastMsg
 
     /** distance 갱신하고 그에 따라서 level, progress도 갱신 */
     fun updateDistance(data: Double) {
@@ -99,9 +107,11 @@ class PloggingViewModel : ViewModel() {
     }
 
 
-    /** 플로깅 기록을 DB에 저장 */
-    fun saveOnDatabase() {
-        val plogging = Plogging(
+    /**
+     * save
+     */
+    fun savePloggingData() = viewModelScope.launch {
+        val lPlogging = Plogging(
             startDate = startDate.get()!!,
             endDate = endDate.get()!!,
             distance = distance.get(),
@@ -115,12 +125,27 @@ class PloggingViewModel : ViewModel() {
             paper = papers.get(),
             general = generals.get()
         )
-        this.plogging.set(plogging)
 
-        viewModelScope.launch {
-            repository.insert(plogging)
-        }
+        plogging.set(lPlogging)
+        joinAll(saveOnDatabase())   // , backUpPlogging()
     }
+
+    /** 플로깅 기록을 DB에 저장 */
+    private fun saveOnDatabase() = viewModelScope.launch {
+        repository.insert(plogging.get()!!)
+    }
+
+    /**
+     * 플로깅 기록을 서버에 백업
+     */
+//    private fun backUpPlogging() = viewModelScope.launch {
+//        val token = getSpString(SP_TOKEN)!!
+//        val response = CamploRepository.backUpPlogging(token, plogging.get()!!)
+//
+//        if (response is Result.Error) {
+//            _toastMsg.value = response.message
+//        }
+//    }
 }
 
 enum class PloggingStatus {

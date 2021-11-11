@@ -12,6 +12,7 @@ object Constant {
     const val EXTRA_PLOGGING_ID = "EXTRA_PLOGGING_ID"
 
     /** shared preference 관련 상수*/
+    const val SP_USER_ID = "SP_USER_ID"
     const val SP_TOKEN = "SP_TOKEN"
     const val SP_TOTAL_DISTANCE = "SP_TOTAL_DISTANCE"
     const val SP_TOTAL_BADGE = "SP_TOTAL_BADGE"
@@ -29,7 +30,7 @@ object Constant {
 
     /** 학교 관련 상수 */
     const val UNIV_NAME = "단국대학교"
-    const val UNIV_DISTANCE = 0.8 // 6.4
+    const val UNIV_DISTANCE = 6.4
 
     /** 플로깅 관련 상수 */
     val TRASH_TYPES_ENG = listOf("plastic", "vinyl", "glass", "can", "paper", "general")
@@ -56,8 +57,8 @@ object Constant {
 
     const val ACTION_SHOW_PLOGGING_FRAGMENT = "ACTION_SHOW_PLOGGING_FRAGMENT"
 
-    const val LOCATION_UPDATE_INTERVAL = 10_000L
-    const val FASTEST_LOCATION_INTERVAL = 10_000L
+    const val LOCATION_UPDATE_INTERVAL = 5_000L
+    const val FASTEST_LOCATION_INTERVAL = 5_000L
     const val TIMER_UPDATE_INTERVAL = 500L
 
 

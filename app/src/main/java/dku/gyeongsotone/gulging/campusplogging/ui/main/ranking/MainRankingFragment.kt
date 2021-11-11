@@ -10,20 +10,44 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentMainRankingBinding
+import dku.gyeongsotone.gulging.campusplogging.ui.custom.LoadingDialog
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 
 class MainRankingFragment : Fragment() {
 
     private lateinit var binding: FragmentMainRankingBinding
     private val viewModel: MainRankingViewModel by viewModels()
+    private val uiScope = MainScope()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         init(inflater, container)
+        getRankingInfo()
 
         return binding.root
+    }
+
+
+    private fun getRankingInfo() {
+        uiScope.launch {
+            LoadingDialog.showWhileDoJob(
+                requireContext(),
+                viewModel.updateData(),
+                "랭킹 정보를 불러오고 있습니다"
+            )
+        }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.updateData()
     }
 
 
@@ -41,16 +65,8 @@ class MainRankingFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-
-        setClickListener()  // 클릭 리스너 설정
         setObserver()   // Observer 설정
     }
-
-
-    /**
-     * 클릭 리스너 설정
-     */
-    private fun setClickListener() {}
 
 
     /**

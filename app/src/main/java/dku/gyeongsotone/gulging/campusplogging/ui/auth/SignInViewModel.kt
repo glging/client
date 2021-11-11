@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.Plogging
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.User
-import dku.gyeongsotone.gulging.campusplogging.data.repository.ApiRepository
+import dku.gyeongsotone.gulging.campusplogging.data.repository.CamploRepository
 import dku.gyeongsotone.gulging.campusplogging.data.repository.PloggingRepository
 import dku.gyeongsotone.gulging.campusplogging.data.repository.Result
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_TOKEN
@@ -20,7 +20,7 @@ class SignInViewModel : ViewModel() {
         private val TAG = this::class.java.name
     }
 
-    private val repository = ApiRepository
+    private val repository = CamploRepository
 
     // 사용자가 입력한 아이디/비밀번호 정보
     val userId = ObservableField<String>()
@@ -40,6 +40,7 @@ class SignInViewModel : ViewModel() {
     private val _toastMsg = MutableLiveData<String>()
     val toastMsg: LiveData<String> = _toastMsg
 
+
     /**
      * 비밀번호 입력창 옆 눈 아이콘 클릭 시 비밀번호 보이게/안보이게 여부 반전
      */
@@ -47,44 +48,38 @@ class SignInViewModel : ViewModel() {
         showPassword.set(!showPassword.get())
     }
 
-    fun tokenLogin(token: String) {
-        viewModelScope.launch {
-            val result: Pair<String?, User?> = repository.tokenLogin(token)
+    /**
+     * 토큰으로 로그인
+     */
+    fun tokenLogin(token: String) = viewModelScope.launch {
+        val response: Result<User> = repository.tokenLogin(token)
 
-            if (result.first != null) { // error
-                _toastMsg.value = result.first!!
-                return@launch
-            }
-
-            user = result.second!!
-            _signInResult.value = SignInStatus.SUCCESS
+        // 오류가 발생했을 경우, 에러 메시지 띄운 후 리턴
+        if (response is Result.Error) { // error
+            _toastMsg.value = response.message
+            return@launch
         }
+
+        user = (response as Result.Success<User>).data
+        _signInResult.value = SignInStatus.SUCCESS
     }
+
 
     /**
      * 로그인 성공 여부 판단해서 결과 저장
      */
-    fun onClickSignInBtn() {
-        viewModelScope.launch {
-            val result: Pair<String?, User?> = repository.signIn(userId.get()!!, password.get()!!)
+    fun signIn() = viewModelScope.launch {
+        val response: Result<User> = repository.signIn(userId.get()!!, password.get()!!)
 
-            if (result.first != null) { // error
-                _toastMsg.value = result.first!!
-                return@launch
-            }
-
-            val token = getSpString(SP_TOKEN)!!
-            val ploggingHistory =
-                (repository.getPloggingHistory(token) as Result.Success<List<Plogging>>).data
-            val ploggingDao = PloggingRepository.dao
-
-            ploggingHistory.forEach { ploggingDao.insert(it) }
-
-            user = result.second!!
-            _signInResult.value = SignInStatus.SUCCESS
+        // 오류가 발생했을 경우, 에러 메시지 띄운 후 리턴
+        if (response is Result.Error) { // error
+            _toastMsg.value = response.message
+            return@launch
         }
-    }
 
+        user = (response as Result.Success<User>).data
+        _signInResult.value = SignInStatus.SUCCESS
+    }
 }
 
 enum class SignInStatus {

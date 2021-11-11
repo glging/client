@@ -21,11 +21,14 @@ import dku.gyeongsotone.gulging.campusplogging.APP
 import dku.gyeongsotone.gulging.campusplogging.R
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.UnivCertStatus
 import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentSignInBinding
+import dku.gyeongsotone.gulging.campusplogging.ui.custom.LoadingDialog
 import dku.gyeongsotone.gulging.campusplogging.ui.main.MainActivity
 import dku.gyeongsotone.gulging.campusplogging.ui.univcertification.UnivCertificationActivity
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_TOKEN
 import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpString
 import dku.gyeongsotone.gulging.campusplogging.utils.getApplication
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 class SignInFragment : Fragment() {
     companion object {
@@ -35,6 +38,7 @@ class SignInFragment : Fragment() {
     private lateinit var application: APP
     private lateinit var binding: FragmentSignInBinding
     private val viewModel: SignInViewModel by viewModels()
+    private val uiScope = MainScope()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +47,6 @@ class SignInFragment : Fragment() {
 
         init(inflater, container)
         checkAccessToken()
-        setClickListener()
         setObserver()
 
         return binding.root
@@ -62,6 +65,7 @@ class SignInFragment : Fragment() {
         application = getApplication(requireActivity())
 
         setSpannableText()
+        setClickListener()
     }
 
     /** spannable text 설정 */
@@ -89,6 +93,13 @@ class SignInFragment : Fragment() {
     /** 클릭 리스너 설정 */
     private fun setClickListener() {
         binding.btnSignUp.setOnClickListener { onSignUpBtnClick() }
+        binding.btnSignIn.setOnClickListener { onSignInBtnClick() }
+    }
+
+    private fun onSignInBtnClick() {
+        uiScope.launch {
+            LoadingDialog.showWhileDoJob(requireContext(), viewModel.signIn(), "로그인 중입니다")
+        }
     }
 
     /** 회원가입 버튼 클릭 시, 회원가입 프래그먼트로 이동 */

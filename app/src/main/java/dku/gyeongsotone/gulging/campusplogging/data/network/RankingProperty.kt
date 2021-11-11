@@ -38,7 +38,7 @@ data class GetRankingResponse(
 fun GetRankingResponse.toRankingInfo() = RankingInfo(
     allUserCount = allUserCount,
     allBadgeCount = allBadgeCount,
-    ranking = ranking.subList(0, 5).map { it.toRankingUser() },
+    ranking = ranking.map { it.toRankingUser() },
     myRanking = RankingUser(
         badge = myBadge,
         profileImage = Picasso.get().load(myProfile).get(),

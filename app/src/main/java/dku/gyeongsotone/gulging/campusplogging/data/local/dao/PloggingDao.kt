@@ -15,6 +15,9 @@ interface PloggingDao {
     @Delete
     suspend fun delete(item: Plogging)
 
+    @Query("DELETE FROM plogging WHERE id = :id")
+    suspend fun deleteById(id: Int)
+
     @Query("SELECT * FROM plogging WHERE id = :id LIMIT 1")
     suspend fun getPlogging(id: Int): Plogging?
 
@@ -42,7 +45,7 @@ interface PloggingDao {
     @Query("SELECT avg(plastic + vinyl + can + paper + glass + general) FROM plogging WHERE startDate BETWEEN :from AND :to")
     suspend fun getMonthlyTrash(from: Date, to: Date): Double?
 
-    @Query("SELECT * FROM plogging WHERE startDate BETWEEN :from AND :to")
+    @Query("SELECT * FROM plogging WHERE startDate BETWEEN :from AND :to ORDER BY startDate DESC")
     suspend fun getMonthlyPlogging(from: Date, to: Date): List<Plogging>?
 
 }

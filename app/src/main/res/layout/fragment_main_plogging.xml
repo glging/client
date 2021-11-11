@@ -127,16 +127,15 @@
         <!-- 플러깅 시작 버튼 -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_start_plogging"
-            style="@style/text_btn"
+            style="@style/text_18_bold_white"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:layout_marginBottom="56dp"
             android:background="@drawable/background_btn_round_yellow"
             android:gravity="center"
-            android:paddingVertical="8dp"
+            android:paddingVertical="10dp"
             android:text="바로 시작하기"
-            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

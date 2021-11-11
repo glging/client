@@ -3,33 +3,23 @@ package dku.gyeongsotone.gulging.campusplogging.ui.plogging
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.core.view.drawToBitmap
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import dku.gyeongsotone.gulging.campusplogging.APP
 import dku.gyeongsotone.gulging.campusplogging.R
-import dku.gyeongsotone.gulging.campusplogging.data.local.dao.PloggingDao
-import dku.gyeongsotone.gulging.campusplogging.data.local.model.Plogging
-import dku.gyeongsotone.gulging.campusplogging.data.repository.PloggingRepository
 import dku.gyeongsotone.gulging.campusplogging.databinding.FragmentPloggingFinishBinding
-import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_LEVEL
-import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_TOTAL_DISTANCE
-import dku.gyeongsotone.gulging.campusplogging.utils.Constant.UNIV_DISTANCE
-import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpDouble
-import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpInt
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
-import kotlin.math.floor
 
 
 class PloggingFinishFragment : Fragment() {
@@ -39,6 +29,7 @@ class PloggingFinishFragment : Fragment() {
 
     private lateinit var binding: FragmentPloggingFinishBinding
     private val viewModel: PloggingViewModel by activityViewModels()
+    private val uiScope = MainScope()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,9 +37,8 @@ class PloggingFinishFragment : Fragment() {
     ): View {
 
         viewModel.setBadges()
-        viewModel.saveOnDatabase()
+        uiScope.launch { viewModel.savePloggingData() }
         init(inflater, container)
-        setClickListener()
         showTrashCount()
         (requireActivity() as PloggingActivity).setBackPressable(false)
 
@@ -65,15 +55,32 @@ class PloggingFinishFragment : Fragment() {
         )
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.layoutPloggingDetail.btnMenu.isGone = true
+
+        setClickListener()
+        setObserver()
+    }
+
+    private fun setObserver() {
+        setToastMsgObserver()
+    }
+
+    private fun setToastMsgObserver() {
+        viewModel.toastMsg.observe(viewLifecycleOwner) { msg ->
+            if (msg.isNotEmpty()) {
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     /** 클릭 리스너 설정 */
     private fun setClickListener() {
-        binding.layoutPloggingDetail.btnShare.setOnClickListener { onShareBtnClick() }
-        binding.layoutPloggingDetail.btnExit.setOnClickListener { onExitBtnClick() }
+        binding.layoutPloggingDetail.btnShare.setOnClickListener { sharePlogging() }
+        binding.layoutPloggingDetail.btnExit.setOnClickListener { requireActivity().finish() }
     }
 
-    private fun onShareBtnClick() {
+
+    private fun sharePlogging() {
         val bitmap = getBitmapFromView(binding)
         val file = File.createTempFile("picture_", ".png")
         val outputStream = FileOutputStream(file)
@@ -92,6 +99,7 @@ class PloggingFinishFragment : Fragment() {
         startActivity(shareIntent)
     }
 
+
     private fun getBitmapFromView(binding: FragmentPloggingFinishBinding): Bitmap {
         val bitmap: Bitmap?
 
@@ -102,11 +110,6 @@ class PloggingFinishFragment : Fragment() {
         binding.layoutPloggingDetail.btnExit.isVisible = true
 
         return bitmap
-    }
-
-    private fun onExitBtnClick() {
-        Log.d(TAG, "onExitBtnClicked!!!")
-        requireActivity().finish()
     }
 
 

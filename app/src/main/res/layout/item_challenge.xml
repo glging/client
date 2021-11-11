@@ -17,8 +17,9 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:minHeight="130dp"
         android:orientation="vertical"
         android:padding="16dp"
         app:challengeStatus="@{item.status}"

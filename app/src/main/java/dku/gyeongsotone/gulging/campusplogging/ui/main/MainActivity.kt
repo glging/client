@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity() {
 
         // set view pager adapter
         mainViewPagerAdapter = MainViewPagerAdapter(this)
+        binding.viewPager.offscreenPageLimit = 1
         binding.viewPager.adapter = mainViewPagerAdapter
 
         // connect tab layout and view page, create tab item

@@ -8,14 +8,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.RankingInfo
 import dku.gyeongsotone.gulging.campusplogging.data.local.model.RankingUser
-import dku.gyeongsotone.gulging.campusplogging.data.repository.ApiRepository
+import dku.gyeongsotone.gulging.campusplogging.data.repository.CamploRepository
 import dku.gyeongsotone.gulging.campusplogging.data.repository.Result
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_TOKEN
 import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpString
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 
 class MainRankingViewModel : ViewModel() {
-    private val repository = ApiRepository
+    private val repository = CamploRepository
 
     val allUserCount = ObservableInt()
     val allBadgeCount = ObservableInt()
@@ -27,15 +29,13 @@ class MainRankingViewModel : ViewModel() {
     val toastMsg: LiveData<String> = _toastMsg
 
 
-    init {
-        updateData()
-    }
-
     /**
      * 데이터 갱신
      */
-    fun updateData() {
-        updateRankingInfo()
+    fun updateData(): Job = viewModelScope.launch {
+        val updateRankingJob = updateRankingInfo()
+
+        joinAll(updateRankingJob)
     }
 
     private fun updateRankingInfo() = viewModelScope.launch {

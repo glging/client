@@ -32,29 +32,43 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="8월 29일 토" />
 
-        <!-- 공유 버튼 -->
+        <!-- 메뉴 버튼 -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_menu"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_marginTop="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_menu"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_date" />
+
+        <!-- 메뉴 버튼 -->
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_share"
             android:layout_width="23dp"
             android:layout_height="23dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="24dp"
             android:scaleType="fitXY"
             android:src="@drawable/ic_share"
+            android:layout_marginEnd="24dp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_date"
-            app:layout_constraintEnd_toStartOf="@+id/btn_exit"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_date" />
 
         <!-- 화면 닫기 -->
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_exit"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:layout_marginEnd="24dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="2dp"
+            android:layout_marginStart="24dp"
             android:scaleType="fitXY"
             android:src="@drawable/ic_exit"
             app:layout_constraintBottom_toBottomOf="@+id/tv_date"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_date" />
 
         <!-- 사진 -->
@@ -97,7 +111,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_picture"
             app:ploggingDistance="@{plogging.distance}"
-            tools:text="1.3학교, 8.2km" />
+            tools:text="1.3학교 (8.2km)" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_distance"

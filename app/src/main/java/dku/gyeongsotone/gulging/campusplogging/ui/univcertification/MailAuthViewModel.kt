@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dku.gyeongsotone.gulging.campusplogging.data.repository.ApiRepository
+import dku.gyeongsotone.gulging.campusplogging.data.repository.CamploRepository
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant
 import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil
 import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpString
@@ -16,7 +16,7 @@ class MailAuthViewModel : ViewModel() {
         private val TAG = this::class.java.name
     }
 
-    private val repository = ApiRepository
+    private val repository = CamploRepository
 
     // 사용자가 입력한 학번/인증번호
     val studentId = ObservableField<String>()

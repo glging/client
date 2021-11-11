@@ -4,19 +4,22 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
+import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.view.drawToBitmap
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import dku.gyeongsotone.gulging.campusplogging.R
+import dku.gyeongsotone.gulging.campusplogging.data.repository.CamploRepository
 import dku.gyeongsotone.gulging.campusplogging.data.repository.PloggingRepository
 import dku.gyeongsotone.gulging.campusplogging.databinding.ActivityPloggingDetailBinding
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.EXTRA_PLOGGING_ID
+import dku.gyeongsotone.gulging.campusplogging.utils.Constant.SP_TOKEN
+import dku.gyeongsotone.gulging.campusplogging.utils.PreferenceUtil.getSpString
 import dku.gyeongsotone.gulging.campusplogging.utils.showToast
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.io.File
 import java.io.FileOutputStream
 
@@ -27,13 +30,14 @@ class PloggingDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPloggingDetailBinding
     private val repository = PloggingRepository
+    private val uiScope = MainScope()
+    private var ploggingId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         init()
         processIntent()
-        setClickListener()
     }
 
     private fun init() {
@@ -43,16 +47,18 @@ class PloggingDetailActivity : AppCompatActivity() {
             null,
             false
         )
+        binding.layoutPloggingDetail.btnShare.isGone = true
 
         setContentView(binding.root)
+        setClickListener()
     }
 
     /** intent에서 플로깅의 id 받고, 플로깅 set */
     private fun processIntent() {
-        val ploggingId = intent.extras!!.getInt(EXTRA_PLOGGING_ID)
+        ploggingId = intent.extras!!.getInt(EXTRA_PLOGGING_ID)
 
         CoroutineScope(Dispatchers.Main).launch {
-            val plogging = repository.getPlogging(ploggingId)
+            val plogging = repository.getPlogging(ploggingId!!)
             Log.d(TAG, "received plogging: $plogging")
 
             if (plogging == null) {
@@ -68,11 +74,24 @@ class PloggingDetailActivity : AppCompatActivity() {
 
     /** 클릭 리스너 설정 */
     private fun setClickListener() {
-        binding.layoutPloggingDetail.btnShare.setOnClickListener { onShareBtnClick() }
-        binding.layoutPloggingDetail.btnExit.setOnClickListener { onExitBtnClick() }
+        binding.layoutPloggingDetail.btnMenu.setOnClickListener { onMenuBtnClick() }
+        binding.layoutPloggingDetail.btnExit.setOnClickListener { finish() }
     }
 
-    private fun onShareBtnClick() {
+    private fun onMenuBtnClick() {
+        val popupMenu = PopupMenu(this, binding.layoutPloggingDetail.btnMenu)
+        popupMenu.inflate(R.menu.menu_plogging_detail)
+        popupMenu.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.share -> sharePlogging()
+                R.id.delete -> deletePlogging()
+            }
+            false
+        }
+        popupMenu.show()
+    }
+
+    private fun sharePlogging() {
         val bitmap = getBitmapFromView(binding)
         val file = File.createTempFile("picture_", ".png")
         val outputStream = FileOutputStream(file)
@@ -91,20 +110,24 @@ class PloggingDetailActivity : AppCompatActivity() {
         startActivity(shareIntent)
     }
 
+    private fun deletePlogging() = uiScope.launch {
+        val token = getSpString(SP_TOKEN)!!
+
+        repository.deleteById(ploggingId!!)
+        CamploRepository.deletePlogging(token, ploggingId!!)
+        showToast(this@PloggingDetailActivity, "삭제되었습니다")
+        finish()
+    }
+
     private fun getBitmapFromView(binding: ActivityPloggingDetailBinding): Bitmap {
         val bitmap: Bitmap?
 
-        binding.layoutPloggingDetail.btnShare.isVisible = false
+        binding.layoutPloggingDetail.btnMenu.isVisible = false
         binding.layoutPloggingDetail.btnExit.isVisible = false
         bitmap = binding.layoutPloggingDetail.layout.drawToBitmap()
-        binding.layoutPloggingDetail.btnShare.isVisible = true
+        binding.layoutPloggingDetail.btnMenu.isVisible = true
         binding.layoutPloggingDetail.btnExit.isVisible = true
 
         return bitmap
-    }
-
-    private fun onExitBtnClick() {
-        Log.d(TAG, "onExitBtnClicked!!!")
-        finish()
     }
 }

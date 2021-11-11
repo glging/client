@@ -7,7 +7,7 @@ import kotlinx.coroutines.withContext
 import java.util.*
 
 object PloggingRepository {
-    lateinit var dao: PloggingDao
+    private lateinit var dao: PloggingDao
 
     fun initPloggingRepository(ploggingDao: PloggingDao) {
         dao = ploggingDao
@@ -23,6 +23,10 @@ object PloggingRepository {
 
     suspend fun delete(item: Plogging) = withContext(Dispatchers.IO) {
         dao.delete(item)
+    }
+
+    suspend fun deleteById(id: Int) = withContext(Dispatchers.IO) {
+        dao.deleteById(id)
     }
 
     suspend fun getPlogging(id: Int): Plogging? = withContext(Dispatchers.IO) {
