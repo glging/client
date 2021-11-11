@@ -10,7 +10,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import dku.gyeongsotone.gulging.campusplogging.APP
-import dku.gyeongsotone.gulging.campusplogging.data.network.toMultipartBody
 import dku.gyeongsotone.gulging.campusplogging.utils.Constant.MAX_IMAGE_SIZE
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
@@ -40,23 +39,29 @@ fun String.toDate(): Date = SimpleDateFormat("yyyy-MM-dd").parse(this)!!
 fun getCurrentDate(): Date = Date(System.currentTimeMillis())
 
 fun Bitmap.compress(): Bitmap {
-    val sizeMB = this.byteCount / 1024 / 1024
+    val sizeMB = this.byteCount.toDouble() / 1024 / 1024
     Log.d("SIZE_TEST", "before sizeMB: ${this.byteCount.toDouble() / 1024 / 1024}")
 
-    if (sizeMB <= MAX_IMAGE_SIZE) {
+    if (sizeMB <= MAX_IMAGE_SIZE)
         return this
-    }
 
-    val quality = (MAX_IMAGE_SIZE * 100.0 / sizeMB).toInt()
+    val ratio = MAX_IMAGE_SIZE / sizeMB
+    val scaledBitmap =
+        Bitmap.createScaledBitmap(this, (width * ratio).toInt(), (height * ratio).toInt(), true)
+
     val outputStream = ByteArrayOutputStream()
-    this.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
+    scaledBitmap.compress(Bitmap.CompressFormat.JPEG, (ratio * 100).toInt(), outputStream)
 
     val byteArray = outputStream.toByteArray()
     val compressedBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
 
-    Log.d("SIZE_TEST", "compressed sizeMB: ${compressedBitmap.byteCount / 1024 / 1024}, quality: $quality")
+    Log.d(
+        "SIZE_TEST",
+        "compressed sizeMB: ${compressedBitmap.byteCount.toDouble() / 1024 / 1024}, ratio: $ratio"
+    )
     return compressedBitmap
 }
+
 fun showToast(context: Context, msg: String) {
     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
 }
